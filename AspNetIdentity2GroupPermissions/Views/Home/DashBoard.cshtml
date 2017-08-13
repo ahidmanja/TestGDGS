@@ -1,0 +1,141 @@
+﻿@model IEnumerable<IdentitySample.Models.DownloadViewModel>
+<div class="row">
+    <div class="col-md-3 col-sm-6 col-xs-12">
+        <div class="info-box">
+            <span class="info-box-icon bg-aqua"><i class="fa fa-folder-open-o"></i></span>
+
+            <div class="info-box-content">
+                <span class="info-box-text">Template Types</span>
+                <span class="info-box-number">@Html.Raw(ViewBag.T)</span>
+            </div>
+            <!-- /.info-box-content -->
+        </div>
+        <!-- /.info-box -->
+    </div>
+    <!-- /.col -->
+    <div class="col-md-3 col-sm-6 col-xs-12">
+        <div class="info-box">
+            <span class="info-box-icon bg-red"><i class="fa fa-sitemap"></i></span>
+
+            <div class="info-box-content">
+                <span class="info-box-text">Entities</span>
+                <span class="info-box-number">@Html.Raw(ViewBag.E)</span>
+            </div>
+            <!-- /.info-box-content -->
+        </div>
+        <!-- /.info-box -->
+    </div>
+    <div class="col-md-3 col-sm-6 col-xs-12">
+        <div class="info-box">
+            <span class="info-box-icon bg-blue"><i class="fa fa-file-word-o"></i></span>
+
+            <div class="info-box-content">
+                <span class="info-box-text">Templates</span>
+                <span class="info-box-number">@Html.Raw(ViewBag.temp)</span>
+            </div>
+            <!-- /.info-box-content -->
+        </div>
+        <!-- /.info-box -->
+    </div>
+    <div class="col-md-3 col-sm-6 col-xs-12">
+        <div class="info-box">
+            <span class="info-box-icon bg-olive"><i class="fa fa-users"></i></span>
+
+            <div class="info-box-content">
+                <span class="info-box-text">Users</span>
+                <span class="info-box-number">@Html.Raw(ViewBag.U)</span>
+            </div>
+            <!-- /.info-box-content -->
+        </div>
+        <!-- /.info-box -->
+    </div>
+    </div>
+<br />
+<div class="form-horizontal">
+    <h4 style="text-align:left;padding-left:16px"><b>Search Template Name*</b> </h4>
+</div>
+
+<br />
+@using (Html.BeginForm())
+{
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-primary list-panel" id="list-panel">
+            <div class="panel-heading list-panel-heading">
+                @*<label class="control-label col-sm-5" for="name" style="font-size:14px !important"> User Managment</label>*@
+                <div class="col-sm-3">
+                    <b>Retrieve Template</b>
+                </div>
+                <br />
+                <br />
+
+            </div>
+            <div class="panel-body">
+                <table id="assets-data-table"
+                       class="table table-striped table-bordered"
+                       style="width:100%">
+                    <thead>
+                        <tr>
+                           
+                            <th>Entity</th>
+                            <th>Document Type</th>
+                            <th>Category</th>
+                            <th>Template</th>
+                            <th></th>
+                        </tr>
+
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>  
+                                <td>@item.Comm</td>
+                                <td>@item.Type</td>
+                                <td>@item.Category</td>
+                                <td>@item.File</td>
+                                <td>
+                                    @Html.ActionLink("English Version", "downloadE", new { name = item.File })|@Html.ActionLink("French Version", "downloadF", new { name = item.File })| @Html.ActionLink("Spanich Version", "downloadS", new { name = item.File }) 
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+}
+@section Scripts
+{
+    <script type="text/javascript">
+     $(document).ready(function () {
+
+         $('#assets-data-table').DataTable();
+         $('#NewUser').click(function (e) {
+             location.href = '@Url.Content("~/UsersAdmin/Create/")';
+         });
+     });
+
+
+    </script>
+}
+
+<style>
+    .demo-section p {
+        margin: 0 0 30px;
+        line-height: 50px;
+    }
+
+    .NewClass {
+        background-color: #337ab7;
+    }
+
+    .demo-section p .k-button {
+        margin: 0 10px 0 0;
+    }
+
+    .k-primary {
+        min-width: 150px;
+        background-color: #4080b9;
+    }
+</style>

@@ -1,0 +1,52 @@
+﻿<br />
+<br />
+
+@(Html.Kendo().Grid<IdentitySample.Models.CountriesViewModel>()
+    .Name("Count")
+    .Columns(columns =>
+    {
+        columns.Bound(p => p.Article).Title("Report Article");
+        columns.Bound(p => p.Article1).Title("Country Article");
+        columns.Bound(p => p.Name).Title("Long Name");
+        columns.Bound(p => p.SName).Title("Short Name");
+        columns.Bound(p => p.ISO).Title("ISO Code");
+        columns.ForeignKey(p => p.Lang_ID, (System.Collections.IEnumerable)ViewData["languages"], "ID", "Name")
+         .Title("Languages").Width(200);
+        columns.Command(command => { command.Edit(); command.Destroy(); }).Width(200);
+    })
+    .ToolBar(toolbar => toolbar.Create())
+    .Editable(editable => editable.Mode(GridEditMode.InLine))
+    .Filterable()
+    .Groupable()
+    .Pageable()
+    .Sortable()
+    .Scrollable()
+    .HtmlAttributes(new { style = "height:800px;" })
+    .DataSource(dataSource => dataSource
+        .Ajax()
+        //.Group(a => a.Add(x => x.Lang_ID))
+        .PageSize(20)
+        .Events(events => events.Error("error_handler"))
+        .Model(model => model.Id(p => p.ID))
+        .Create(update => update.Action("Create", "Countries"))
+                        .Read(read => read.Action("Read", "Countries"))
+                        .Update(update => update.Action("Update", "Countries"))
+                        .Destroy(update => update.Action("Destroy", "Countries"))
+    )
+)
+<script type="text/javascript">
+    function error_handler(e) {
+        if (e.errors) {
+            var message = "Errors:\n";
+            $.each(e.errors, function (key, value) {
+                if ('errors' in value) {
+                    $.each(value.errors, function() {
+                        message += this + "\n";
+                    });
+                }
+            });
+            alert(message);
+        }
+    }
+</script>
+

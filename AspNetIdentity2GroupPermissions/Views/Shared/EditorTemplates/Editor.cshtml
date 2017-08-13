@@ -1,0 +1,259 @@
+﻿@model IdentitySample.Models.FinalTempViewModel
+
+<div class="wrapper11">
+    <b style="font-size:medium">Template Information:</b>
+    <br />
+    <br />
+    <div class="first">
+        <b style="font-size:small">Template Type:  </b>
+    </div>
+    <div class="second">
+        @(Html.Kendo().DropDownListFor(model => model.temptype_ID)
+          .Name("temptype_ID")
+          .Filter("contains")
+          
+          .OptionLabel("Please Select Template Type ....")
+          .HtmlAttributes(new { style = "width:100%;align-self:center;" })
+          .DataTextField("Name")
+          .DataValueField("ID")
+          .DataSource(source =>
+           {
+               source.Read(read =>
+                 {
+                     read.Action("GetTempType", "Helper");
+                 })
+                 .ServerFiltering(false);
+                
+           })
+        )
+    </div>
+</div>
+<div class="wrapper11">
+    <br />
+    <div class="first">
+        <b style="font-size:small">
+            Committee:
+        </b>
+    </div>
+    <div class="second">
+        @(Html.Kendo().DropDownListFor(model => model.com_ID)
+                  .Name("com_ID")
+                  .OptionLabel("Please Select Committee ....")
+                  .HtmlAttributes(new { style = "width:100%;align-self:center;" })
+
+                  .Filter("contains")
+                  .DataTextField("Name")
+                  .DataValueField("ID")
+                  .DataSource(source =>
+                   {
+                       source.Read(read =>
+                         {
+                             read.Action("getcascadecommittees", "helper")
+                              .Data("FilterTempT");
+                         })
+                           .ServerFiltering(true);
+                   })
+                  .Enable(false)
+                  .AutoBind(false)
+                  .CascadeFrom("temptype_ID")
+        )
+    </div>
+</div>
+<div class="wrapper11">
+    <br />
+    <div class="first">
+        <b style="font-size:small">
+            Document Type:
+        </b>
+    </div>
+    <div class="second">
+        @(Html.Kendo().DropDownListFor(model => model.Doctype_ID)
+                  .Name("Doctype_ID")
+                  .OptionLabel("Please Select Document Type ....")
+                  .HtmlAttributes(new { style = "width:100%" })
+                  .DataTextField("Name")
+                  .DataValueField("ID")
+                  //.Events(e => e.Select("doctselect"))
+                  .DataSource(source =>
+                   {
+                       source.Read(read =>
+                        {
+                            read.Action("getcascadedoct", "helper")
+                                .Data("filtercomm");
+                        })
+                            .ServerFiltering(true);
+                   })
+                 .Enable(false)
+                 .AutoBind(false)
+                 .CascadeFrom("com_ID")
+        )
+    </div>
+</div>
+<div class="wrapper11">
+    <br />
+    <div class="first">
+        <b style="font-size:small">
+            Categories:
+        </b>
+    </div>
+    <div class="second">
+        @(Html.Kendo().DropDownListFor(model => model.Cat_ID)
+                  .Name("Cat_ID")
+                  .OptionLabel("Please Select Category....")
+                  .HtmlAttributes(new { style = "width:100%;align-self:center;" })
+                  .Filter("contains")
+                 // .Events(e => e.Open("oncascade"))
+                  .DataValueField("CID")
+                  .DataTextField("CName")
+                  .DataSource(source =>
+                      {
+                          source.Read(read =>
+                          {
+                              read.Action("GetCascadeCat", "Helper")
+                                  .Data("filterdoct1");
+                          })
+                          .ServerFiltering(true);
+                      })
+                  .Enable(false)
+                  .AutoBind(false)
+                  .CascadeFrom("Doctype_ID")
+        )
+    </div>
+</div>
+<div class="wrapper11">
+    <br />
+    <div class="first">
+        <b style="font-size:small">
+            Name:
+        </b>
+    </div>
+    <div class="second">
+        @Html.Kendo().TextBoxFor(model => model.Name).Name("Name").HtmlAttributes(new { style = "width: 100%;" })
+    </div>
+</div>
+<div class="wrapper11">
+    <br />
+    <div class="first">
+        <b style="font-size:small">
+           Symbole:
+        </b>
+    </div>
+    <div class="second">
+        @Html.Kendo().TextBoxFor(model => model.Symbole).HtmlAttributes(new { style = "width: 100%;" })
+    </div>
+</div>
+<div class="wrapper11">
+    <br />
+    <div class="first">
+        <b style="font-size:small">
+            Title:
+        </b>
+    </div>
+    <div class="second">
+        @Html.Kendo().TextBoxFor(model => model.Title).HtmlAttributes(new { style = "width: 100%;" })
+    </div>
+</div>
+<div>
+    <br />
+    <div class="col-sm-8 col-md-offset-4">
+        <br />
+        @(Html.Kendo().Upload()
+        .Name("filesE")
+        .Multiple(false)
+        .Async(a => a
+            .Save("SaveE", "Upload")
+            .Remove("RemoveE", "Upload")
+            .AutoUpload(true)
+        )
+        .Events(c => c
+                .Upload("onUpload")
+                .Remove("onRemove")
+                //   .Success("onSuccess")
+                )
+        )
+
+    </div>
+@*</div>
+<div>*@
+    <div class="col-sm-8 col-md-offset-4">
+        @(Html.Kendo().Upload()
+        .Name("filesF")
+        .Multiple(false)
+        .Async(a => a
+            .Save("SaveF", "Upload")
+            .Remove("RemoveF", "Upload")
+            .AutoUpload(true)
+        )
+        .Events(c => c
+                .Upload("onUpload")
+                .Remove("onRemove")
+                )
+        )
+
+    </div>
+@*</div>
+<div>*@
+    <div class="col-sm-8 col-md-offset-4">
+        @(Html.Kendo().Upload()
+        .Name("filesS")
+        .Multiple(false)
+        .Async(a => a
+            .Save("SaveS", "Upload")
+            .Remove("RemoveS", "Upload")
+            .AutoUpload(true)
+        )
+        .Events(c => c
+                .Upload("onUpload")
+                .Remove("onRemove")
+                )
+        )
+
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+
+        $("#filesE").closest(".k-upload-button")
+               .find("span")
+               .text("English");
+        $("#filesF").closest(".k-upload-button")
+              .find("span")
+              .text("French");
+        $("#filesS").closest(".k-upload-button")
+              .find("span")
+              .text("Spanish");
+
+    });
+
+    //function onSuccess(e) {
+    //    var Newname = e.response.name;
+    //}
+
+</script>
+<style>
+
+  
+    div.wrapper11 {
+        width: 500px;
+        padding-left: 0.5em;
+        clear: both;
+    }
+        div.wrapper111 {
+        width: 700px;
+        padding-left: 0.5em;
+        clear: both;
+    }
+
+    div.first {
+        padding-left: 0.9em;
+        text-align: left;
+        width: 100px;
+        float: left;
+    }
+
+    div.second {
+        width: 250px;
+        float: left;
+    }
+</style>
+

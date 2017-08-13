@@ -1,0 +1,67 @@
+﻿<br />
+<br />
+<div class="mdiv1">
+    @(Html.Kendo().Grid<IdentitySample.Models.TempTypeViewModel>()
+    .Name("TempType")
+    .Columns(columns =>
+    {
+        columns.Bound(p => p.TName).Title("Template Type");
+
+        columns.Command(command => { command.Edit(); command.Destroy(); });
+    })
+    .ToolBar(toolbar => toolbar.Create())
+    .Editable(editable => editable.Mode(GridEditMode.InLine))
+    .Filterable()
+    .Groupable()
+    .Pageable()
+    .Sortable()
+    .Scrollable()
+    .HtmlAttributes(new { style = "width:100%;" })
+    .DataSource(dataSource => dataSource
+        .Ajax()
+        
+        .PageSize(20)
+        .Events(events => events.Error("error_handler"))
+        .Model(model => model.Id(p => p.ID))
+        .Create(update => update.Action("Create", "TempType"))
+                    .Read(read => read.Action("Read", "TempType"))
+                    .Update(update => update.Action("Update", "TempType"))
+                    .Destroy(update => update.Action("Destroy", "TempType"))
+    )
+    )
+</div>
+    <script type="text/javascript">
+        function error_handler(e) {
+            if (e.errors) {
+                var message = "Errors:\n";
+                $.each(e.errors, function (key, value) {
+                    if ('errors' in value) {
+                        $.each(value.errors, function () {
+                            message += this + "\n";
+                        });
+                    }
+                });
+                alert(message);
+            }
+        }
+    </script>
+<style>
+
+       #mdiv1 {
+        position: absolute;
+        margin: auto;
+        width: 800px;
+        height: auto;
+        padding: 10px;
+        top: 30%;
+        left:40%;
+        background-color: #ffffff;
+        border: 2px solid #2a6496;
+        border-radius: 5px;
+        background-image: url('/assets/UN_logo.png');
+        /*background-size: 100px 300px;*/
+        background-repeat: no-repeat;
+        background-position: 50% 0%;
+    }
+ 
+</style>

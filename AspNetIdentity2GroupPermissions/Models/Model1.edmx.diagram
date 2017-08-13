@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="6ec5bee6495a4b309c546f8b0e29de20" Name="Diagram1">
+        <EntityTypeShape EntityType="gdgs1Model.C__migrationhistory" Width="1.5" PointX="5.75" PointY="10.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="gdgs1Model.applicationgrouprole" Width="1.5" PointX="3" PointY="11" IsExpanded="true" />
+        <EntityTypeShape EntityType="gdgs1Model.applicationgroup" Width="1.5" PointX="0.75" PointY="11.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="gdgs1Model.applicationusergroup" Width="1.5" PointX="3" PointY="13.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="gdgs1Model.aspnetrole" Width="1.5" PointX="5.75" PointY="2.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="gdgs1Model.aspnetuserclaim" Width="1.5" PointX="10.25" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="gdgs1Model.aspnetuserlogin" Width="1.5" PointX="10.25" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="gdgs1Model.aspnetuser" Width="1.5" PointX="8" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="gdgs1Model.category" Width="1.5" PointX="12.5" PointY="7.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="gdgs1Model.committee" Width="1.5" PointX="8" PointY="7.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="gdgs1Model.country" Width="1.5" PointX="3" PointY="1.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="gdgs1Model.distrbution" Width="1.5" PointX="3" PointY="4.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="gdgs1Model.doc_type" Width="1.5" PointX="10.25" PointY="7.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="gdgs1Model.language" Width="1.5" PointX="0.75" PointY="4" IsExpanded="true" />
+        <EntityTypeShape EntityType="gdgs1Model.my_aspnet_applications" Width="1.5" PointX="7.75" PointY="10.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="gdgs1Model.my_aspnet_membership" Width="1.5" PointX="9.75" PointY="10.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="gdgs1Model.my_aspnet_paths" Width="1.5" PointX="11.75" PointY="10.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="gdgs1Model.my_aspnet_personalizationallusers" Width="1.5" PointX="12.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="gdgs1Model.my_aspnet_personalizationperuser" Width="1.5" PointX="12.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="gdgs1Model.my_aspnet_profiles" Width="1.5" PointX="5.75" PointY="13.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="gdgs1Model.my_aspnet_roles" Width="1.5" PointX="13.75" PointY="10.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="gdgs1Model.my_aspnet_sessioncleanup" Width="1.5" PointX="11.75" PointY="13.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="gdgs1Model.my_aspnet_sessions" Width="1.5" PointX="13.75" PointY="13.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="gdgs1Model.my_aspnet_sitemap" Width="1.5" PointX="14.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="gdgs1Model.my_aspnet_users" Width="1.5" PointX="14.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="gdgs1Model.my_aspnet_usersinroles" Width="1.5" PointX="0.75" PointY="15.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="gdgs1Model.olanguage" Width="1.5" PointX="3" PointY="7" IsExpanded="true" />
+        <EntityTypeShape EntityType="gdgs1Model.organaization" Width="1.5" PointX="2.75" PointY="15.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="gdgs1Model.template_type" Width="1.5" PointX="5.75" PointY="7.375" IsExpanded="true" />
+        <AssociationConnector Association="gdgs1Model.ApplicationGroup_ApplicationRoles" ManuallyRouted="false" />
+        <AssociationConnector Association="gdgs1Model.ApplicationGroup_ApplicationUsers" ManuallyRouted="false" />
+        <AssociationConnector Association="gdgs1Model.ApplicationUser_Claims" ManuallyRouted="false" />
+        <AssociationConnector Association="gdgs1Model.ApplicationUser_Logins" ManuallyRouted="false" />
+        <AssociationConnector Association="gdgs1Model.fk_categories_doc_type1" ManuallyRouted="false" />
+        <AssociationConnector Association="gdgs1Model.fk_committee_template_type1" ManuallyRouted="false" />
+        <AssociationConnector Association="gdgs1Model.fk_doc_type_committee1" ManuallyRouted="false" />
+        <AssociationConnector Association="gdgs1Model.fk_countries_languages" ManuallyRouted="false" />
+        <AssociationConnector Association="gdgs1Model.fk_distrbution_languages1" ManuallyRouted="false" />
+        <AssociationConnector Association="gdgs1Model.fk_Olanguage_languages1" ManuallyRouted="false" />
+        <AssociationConnector Association="gdgs1Model.aspnetuserroles" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="gdgs1Model.final_temp" Width="1.5" PointX="14.75" PointY="7" />
+        <AssociationConnector Association="gdgs1Model.fk_final_temp_categories1" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

@@ -1,0 +1,87 @@
+﻿@model IdentitySample.Models.EditUserViewModel
+<br />
+<br />
+<br />
+<div id="mdivG">
+
+    @using (Html.BeginForm())
+    {<br />
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            @Html.ValidationSummary(true)
+            @Html.HiddenFor(model => model.Id)
+            <div class="form-group">
+                <label class="control-label col-sm-5" for="name" style="font-size:14px !important">First Name*</label>
+                <div class="col-sm-3 col-md-3">
+                    @Html.TextBoxFor(m => m.Fname, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Fname)
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-5" for="name" style="font-size:14px !important">Last Name*</label>
+                <div class="col-sm-3 col-md-3">
+                    @Html.TextBoxFor(m => m.Lname, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Lname)
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-5" for="name" style="font-size:14px !important">Email*</label>
+                <div class="col-sm-3 col-md-3">
+                    @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Email)
+                </div>
+            </div>
+            <div class="form-group">
+            <label class="control-label col-sm-5" for="name" style="font-size:14px !important">Assign to Groups</label>
+           <div class="col-sm-3 col-md-3">
+    @foreach (var item in Model.GroupsList)
+                {
+        <div>
+            <input type="checkbox" name="selectedGroups" value="@item.Value" checked="@item.Selected" class="checkbox-inline" />
+            @Html.Label(item.Text, new { @class = "control-label" })
+        </div>
+    }
+    </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-5" for="name" style="font-size:14px !important"></label>
+                <div class="col-sm-3 col-md-3">
+                    <input type="submit" value="Save" class="btn btn-default" />
+                </div>
+            </div>
+        </div>
+    }
+    </div>
+   
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+<style>
+    #mdiv {
+        margin: auto;
+        width: 50%;
+        padding: 10px;
+    }
+
+    #mdivG {
+        margin: auto;
+        width: 800px;
+        height: auto;
+        padding: 0px;
+        background-color: #ffffff;
+        border: 2px solid #2a6496;
+        border-radius: 5px;
+        /*background-image: url('/assets/UN-Logo (1).png');
+           background-size: 300px 300px;*/
+        background-repeat: no-repeat;
+        background-position: 90% 30%;
+    }
+
+
+    #mdiv section {
+        margin-left: auto;
+        margin-right: auto;
+        display: block;
+    }
+</style>

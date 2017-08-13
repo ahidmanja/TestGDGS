@@ -1,0 +1,49 @@
+﻿<br />
+<br />
+
+@(Html.Kendo().Grid<IdentitySample.Models.OlangViewModel>()
+    .Name("Olang")
+    .Columns(columns =>
+    {
+        columns.Bound(p => p.LName).Title("Language Name").Width(200);
+        columns.ForeignKey(p => p.Lang_ID, (System.Collections.IEnumerable)ViewData["languages"], "ID", "Name")
+         .Title("Languages").Width(200);
+        columns.Command(command => { command.Edit(); command.Destroy(); }).Width(200);
+    })
+    .ToolBar(toolbar => toolbar.Create())
+    .Editable(editable => editable.Mode(GridEditMode.InLine))
+    .Filterable()
+    .Groupable()
+    .Pageable()
+    .Sortable()
+    .Scrollable()
+    .HtmlAttributes(new { style = "height:800px;" })
+    .DataSource(dataSource => dataSource
+        .Ajax()
+        .PageSize(20)
+        .Group(a => a.Add(x => x.Lang_ID))
+        .Events(events => events.Error("error_handler"))
+        .Model(model => model.Id(p => p.ID))
+        .Create(update => update.Action("Create", "Olang"))
+                    .Read(read => read.Action("Read", "Olang"))
+                    .Update(update => update.Action("Update", "Olang"))
+                    .Destroy(update => update.Action("Destroy", "Olang"))
+    )
+)
+<script type="text/javascript">
+    function error_handler(e) {
+        if (e.errors) {
+            var message = "Errors:\n";
+            $.each(e.errors, function (key, value) {
+                if ('errors' in value) {
+                    $.each(value.errors, function() {
+                        message += this + "\n";
+                    });
+                }
+            });
+            alert(message);
+        }
+    }
+</script>
+
+

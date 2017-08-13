@@ -1,0 +1,279 @@
+﻿@model IdentitySample.Models.UnogViewModel
+<br />
+<br />
+<br />
+<div id="mdivG">
+    @using (Html.BeginForm("FindTemplate", "OhchrSymb", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+    {
+        @Html.AntiForgeryToken()
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-horizontal">
+            <h4 style="text-align:left;padding-left:10px"><b>Template Information*</b> </h4>
+            <hr />
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="sym" style="font-size:14px !important">Symbol*</label>
+                <div class="col-sm-4 col-md-4">
+                    @(Html.Kendo().TextBoxFor(m => m.Sym)
+                    .Name("Sym")
+               .HtmlAttributes(new { placeholder = "Symbol 1", required = "required", data_required_msg = "Type Symbol", style = "width: 100%" })
+                    )
+                    <span class="k-invalid-msg" data-for="sym"></span>
+                </div>
+                <div class="col-sm-4 col-md-4">
+                    @(Html.Kendo().TextBox()
+                    .Name("Sym2")
+               .HtmlAttributes(new { placeholder = "Symbol 2", style = "width: 100%" })
+                    )
+                    <span class="k-invalid-msg" data-for="sym"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="lang" style="font-size:14px !important">Original Language*</label>
+                <div class="col-sm-4 col-md-4">
+                    @(Html.Kendo().DropDownListFor(m => m.lang_ID)
+                        .Name("lang_ID")
+                        .OptionLabel("Select Language...")
+                        .Value("1")
+                        .DataTextField("Name")
+                     .HtmlAttributes(new { required = "required", data_required_msg = "Select Language", style = "width: 100%" })
+                        .DataValueField("ID")
+                        .Events(e => e.Change("select"))
+                        .DataSource(source =>
+                        {
+                            source.Read(read =>
+                            {
+                                read.Action("GetLanguages", "helper");
+                            });
+
+                        }
+                        )
+                    )
+                    <span class="k-invalid-msg" data-for="lang"></span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="dist" style="font-size:14px !important">Distrbution*</label>
+                <div class="col-sm-4 col-md-4">
+                    @(Html.Kendo().DropDownListFor(m => m.dist)
+                        .Name("dist")
+                        .OptionLabel("Select distribution")
+                        .DataTextField("Name")
+                        .HtmlAttributes(new { required = "required", data_required_msg = "Select Distrbution", style = "width: 100%" })
+                        .DataValueField("ID")
+                        .DataSource(source =>
+                        {
+                            source.Read(read =>
+                             {
+                                 read.Action("GetCascadedist", "helper")
+                                    .Data("filterdiste");
+                             })
+                             .ServerFiltering(true);
+                        })
+                      .Enable(false)
+                      .AutoBind(false)
+                      .CascadeFrom("lang_ID")
+                    )
+                    <span class="k-invalid-msg" data-for="dist"></span>
+
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="name" style="font-size:14px !important">Versions Required</label>
+                <div class="col-sm-4 col-md-4">
+                    @(Html.Kendo().MultiSelectFor(m => m.version)
+                                .Name("version1")
+                                .Placeholder("Select Versions...")
+                                .DataTextField("Text")
+                                .DataValueField("Text")
+                                .DataSource(source =>
+                                {
+                                    source.Read(read =>
+                                    {
+                                        read.Action("GetVersions", "Helper")
+                                            .Data("LangID");
+                                    });
+
+                                }
+
+
+                                )
+                    )
+               
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="date" style="font-size:14px !important">Date*</label>
+                <div class="col-sm-4 col-md-4">
+                    @(Html.Kendo().DatePickerFor(m => m.date).Name("date").Value(DateTime.Now).HtmlAttributes(new { required = "required", style = "width: 100%" }))
+                    <span class="k-invalid-msg" data-for="date"></span>
+                 </div>
+            </div>
+            <h5 style="text-align:left;padding-left:10px"><b>Extra Information</b> </h5>
+            <hr />
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="name" style="font-size:14px !important">Session</label>
+                <div class="col-sm-3 col-md-3">
+                    @(Html.Kendo().TextBoxFor(m => m.SNum)
+                    .Name("SNum")
+                    .HtmlAttributes(new { @placeholder = "Session Number" })
+                    )
+                </div>
+                <div class="col-sm-3 col-md-3">
+                    @(Html.Kendo().DatePickerFor(m => m.Sdate).Name("Sdate").Value("").Format("MM/dd/yyyy").HtmlAttributes(new { @placeholder = "Start Date" }))
+                </div>
+
+                <div class="col-sm-3 col-md-3">
+                    @(Html.Kendo().DatePickerFor(m => m.Edate).Name("Edate").Value("").Format("MM/dd/yyyy").HtmlAttributes(new { @placeholder = "End Date" }))
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="name" style="font-size:14px !important">Agenda </label>
+
+                <div class="col-sm-3 col-md-3">
+                    @(Html.Kendo().TextBoxFor(m => m.AgendaItem)
+                        .Name("AgendaItem")
+                          .HtmlAttributes(new { @placeholder = "Title" })
+                    )
+                </div>
+                <div class="col-sm-3 col-md-3">
+                    @(Html.Kendo().TextBoxFor(m => m.AgendaNum)
+            .Name("AgendaNum")
+            .HtmlAttributes(new { @placeholder = "Item" })
+                    )
+                </div>
+                <div class="col-sm-3 col-md-3">
+                    @(Html.Kendo().TextBox()
+            .Name("subItem")
+            .HtmlAttributes(new { @placeholder = "Sub Item" })
+                    )
+                </div>
+
+            </div>
+            <br />
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="name" style="font-size:14px !important">Created By</label>
+                <div class="col-sm-4 col-md-4">
+                    @(Html.Kendo().TextBoxFor(m => m.Author)
+                        .Name("Author")
+                    // .HtmlAttributes(new { @placeholder = "Type Number" })
+                    )
+                </div>
+            </div>
+            @*<div class="form-group">*@
+                @*<label class="control-label col-sm-2" for="name" style="font-size:14px !important">Session Number</label>
+                <div class="col-sm-3 col-md-3">
+                    @(Html.Kendo().TextBoxFor(m => m.SNum)
+                    .Name("SNum")
+                    .HtmlAttributes(new { @placeholder = "Type Session Number" })
+                    )
+                </div>*@
+                @*<label class="control-label col-sm-2" for="name" style="font-size:14px !important">Agenda Number</label>
+                <div class="col-sm-3 col-md-3">
+                    @(Html.Kendo().TextBoxFor(m => m.AgendaNum)
+            .Name("AgendaNum")
+            .HtmlAttributes(new { @placeholder = "Type Number" })
+                    )
+                </div>*@
+
+            @*</div>*@
+            @*<div class="form-group">
+                <label class="control-label col-sm-2" for="name" style="font-size:14px !important">Session Title</label>
+                <div class="col-sm-3 col-md-3">
+                    @(Html.Kendo().TextBoxFor(m => m.STitle)
+                        .Name("STitle"))
+                </div>
+                <label class="control-label col-sm-2" for="name" style="font-size:14px !important">Agenda Item</label>
+                <div class="col-sm-3 col-md-3">
+                    @(Html.Kendo().TextBoxFor(m => m.AgendaItem)
+                        .Name("AgendaItem"))
+                </div>
+            </div>*@
+            @*<div class="form-group">
+                <label class="control-label col-sm-2" for="name" style="font-size:14px !important">Session Start</label>
+                <div class="col-sm-3 col-md-3">
+                    @(Html.Kendo().DatePickerFor(m => m.Sdate).Name("Sdate").Value("").Format("MM/dd/yyyy"))
+
+                </div>
+                <label class="control-label col-sm-2" for="name" style="font-size:14px !important">Session End</label>
+                <div class="col-sm-3 col-md-3">
+                    @(Html.Kendo().DatePickerFor(m => m.Edate).Name("Edate").Value("").Format("MM/dd/yyyy"))
+                </div>
+            </div>*@
+            <div class="form-group">
+                <div style="text-align:center">
+                    <input type="submit" value="Next" class="btn btn-default" id="next" />
+                </div>
+            </div>
+
+        </div>
+        @*@(Html.HiddenFor(m => m.Gdoc))*@
+    }
+</div>
+<script type="text/javascript">
+    $(function () {
+        $("form").kendoValidator();
+    });
+    //function ChangeLang() {
+    //    $("#version1").data("kendoMultiSelect").enable();
+    //   // $('#version1').data('kendoMultiSelect').dataSource.read({ text: $('#lang_ID').val() });
+    //}
+    function select(e) {
+        //var dropdownlist = $("#lang_id").data("kendodropdownlist");
+        //dropdownlist.select(e.item.val());
+
+        var multiselect = $("#version1").data("kendoMultiSelect");
+        multiselect.dataSource.read();
+       // multiselect.enable(true);
+
+    };
+
+    function filterdiste() {
+        return {
+            t: $("#lang_ID").val()
+        };
+    }
+    function LangID() {
+        return {
+            t: $("#lang_ID").val()
+        };
+    }
+    //function onBound() {
+    //    $('#version').data('kendoMultiSelect').dataSource.read({ t: $('#lang_ID').val() });
+    //}
+
+    function filterOlang() {
+        return {
+            t: $("#lang_ID").val()
+        };
+    }
+</script>
+<style>
+    #mdiv {
+        margin: auto;
+        width: 50%;
+        padding: 10px;
+    }
+
+    #mdivG {
+        margin: auto;
+        width: 800px;
+        height: auto;
+        padding: 0px;
+        background-color: #ffffff;
+        border: 2px solid #2a6496;
+        border-radius: 5px;
+        /*background-image: url('/assets/UN-Logo (1).png');
+           background-size: 300px 300px;*/
+        background-repeat: no-repeat;
+        background-position: 90% 30%;
+    }
+
+
+    #mdiv section {
+        margin-left: auto;
+        margin-right: auto;
+        display: block;
+    }
+</style>

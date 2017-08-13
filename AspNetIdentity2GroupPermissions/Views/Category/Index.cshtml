@@ -1,0 +1,91 @@
+﻿@{
+    Layout = "~/Views/Shared/_AdminLteLayout.cshtml";
+}
+@(Html.Kendo().Grid<IdentitySample.Models.CatViewModel>()
+    .Name("Cat")
+    .Columns(columns =>
+    {
+        columns.Bound(p => p.temptype).Title("Template Type").Width(200);
+        columns.Bound(p => p.comm).Title("Entity").Width(200);
+        columns.Bound(p => p.doctype).Title("Document Type").Width(200);
+        columns.Bound(p => p.Name).Title("Category").Width(200);
+
+        //columns.ForeignKey(p => p.DocT_ID, (System.Collections.IEnumerable)ViewData["DocTypes"], "ID", "Name")
+        // .Title("Document Type").Width(200);
+        columns.Command(command => { command.Edit(); command.Destroy(); }).Width(200);
+    })
+        .ToolBar(toolbar => { toolbar.Create(); toolbar.Excel(); })
+    .Editable(editable => editable.Mode(GridEditMode.PopUp).TemplateName("CatEditor1").Window(w => w.Title("Category Details")))
+    //.Editable(editable => editable.Mode(GridEditMode.InCell))   
+    .Filterable()
+    .Groupable()
+    .Pageable()
+        .Excel(excel => excel
+        .FileName("Categories.xlsx")
+        .AllPages(true)
+        .Filterable(true)
+        .ProxyURL(Url.Action("Excel_Export_Save", "Helper"))
+            )
+    .Sortable()
+    .Scrollable()
+    .HtmlAttributes(new { style = "height:800px;" })
+    .DataSource(dataSource => dataSource
+        .Ajax()
+        .Group(a => a.Add(x => x.comm))
+        .PageSize(20)
+            .Events(events =>
+            {
+                //   events.Error("errorHandler1");
+
+                events.RequestEnd("onchange1");
+            })
+        .Model(model => model.Id(p => p.ID))
+        .Create(update => update.Action("Create", "Category"))
+                            .Read(read => read.Action("Read", "Category"))
+                            .Update(update => update.Action("Update", "Category"))
+                            .Destroy(update => update.Action("Destroy", "Category"))
+    )
+)
+
+<script type="text/javascript">
+    function CatCascade() {
+        $("#DocT_ID").data("kendoDropDownList").dataSource.read();
+    }
+    function FilterTempT() {
+        return {
+            t: $("#temptype_ID").val()
+        };
+    }
+    function filtercomm() {
+        return {
+            comm: $("#com_ID").val()
+        };
+    }
+    function filterdoct1() {
+        return {
+            doctype: $("#DocT_ID").val()
+        };
+    }
+    function onchange1(e) {
+        if (e.type == "update") {
+            $("#Cat").data("kendoGrid").dataSource.read();
+        }
+        if (e.type == "create") {
+            $("#Cat").data("kendoGrid").dataSource.read();
+        }
+    }
+    function error_handler1(e) {
+        if (e.errors) {
+            var message = "Errors:\n";
+            $.each(e.errors, function (key, value) {
+                if ('errors' in value) {
+                    $.each(value.errors, function() {
+                        message += this + "\n";
+                    });
+                }
+            });
+            alert(message);
+        }
+    }
+</script>
+

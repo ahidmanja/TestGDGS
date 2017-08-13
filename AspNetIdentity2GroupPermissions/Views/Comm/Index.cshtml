@@ -1,0 +1,48 @@
+﻿<br />
+<br />
+
+@(Html.Kendo().Grid<IdentitySample.Models.CommitteeViewModel>()
+    .Name("Comm")
+    .Columns(columns =>
+    {
+        columns.Bound(p => p.Name).Title("Entity Name").Width(200);
+        columns.ForeignKey(p => p.TType_ID, (System.Collections.IEnumerable)ViewData["Templates"], "ID", "Name")
+         .Title("Template Type").Width(200);
+        columns.Command(command => { command.Edit(); command.Destroy(); }).Width(200);
+    })
+    .ToolBar(toolbar => toolbar.Create())
+    .Editable(editable => editable.Mode(GridEditMode.InLine))
+    .Filterable()
+    .Groupable()
+    .Pageable()
+    .Sortable()
+    .Scrollable()
+    .HtmlAttributes(new { style = "height:800px;" })
+    .DataSource(dataSource => dataSource
+        .Ajax()
+        .PageSize(20)
+        .Group(a => a.Add(x => x.TType_ID))
+        .Events(events => events.Error("error_handler"))
+        .Model(model => model.Id(p => p.ID))
+        .Create(update => update.Action("Create", "Comm"))
+                    .Read(read => read.Action("Read", "Comm"))
+                    .Update(update => update.Action("Update", "Comm"))
+                    .Destroy(update => update.Action("Destroy", "Comm"))
+    )
+)
+<script type="text/javascript">
+    function error_handler(e) {
+        if (e.errors) {
+            var message = "Errors:\n";
+            $.each(e.errors, function (key, value) {
+                if ('errors' in value) {
+                    $.each(value.errors, function() {
+                        message += this + "\n";
+                    });
+                }
+            });
+            alert(message);
+        }
+    }
+</script>
+

@@ -1,0 +1,144 @@
+﻿
+@{
+    Layout = null;
+}
+@model IdentitySample.Models.CatViewModel
+
+
+<div class="wrapper11">
+    <br />
+    <div class="first">
+        <b style="font-size:small">Template Type:  </b>
+    </div>
+    <div class="second">
+        @(Html.Kendo().DropDownListFor(model => model.temptype_ID)
+          .Name("temptype_ID")
+          .Filter("Contains")
+          .OptionLabel("Please Select Template Type ....")
+          .HtmlAttributes(new { style = "width:100%;align-self:center;" })
+          .DataTextField("Name")
+          .DataValueField("ID")
+          .DataSource(source =>
+           {
+               source.Read(read =>
+                 {
+                     read.Action("GetTempType", "Helper");
+                 });
+
+           })
+        )
+    </div>
+</div>
+<div class="wrapper11">
+    <br />
+    <div class="first">
+        <b style="font-size:small">
+            Committee:
+        </b>
+    </div>
+    <div class="second">
+        @(Html.Kendo().DropDownListFor(model => model.com_ID)
+                  .Name("com_ID")
+                  .OptionLabel("Please Select Committee ....")
+                  .HtmlAttributes(new { style = "width:100%;align-self:center;" })
+
+                  .Filter("contains")
+                  .DataTextField("Name")
+                  .DataValueField("ID")
+                  .DataSource(source =>
+                   {
+                       source.Read(read =>
+                         {
+                             read.Action("getcascadecommittees", "helper")
+                              .Data("FilterTempT");
+                         })
+                           .ServerFiltering(true);
+                   })
+                  .Enable(false)
+                  .AutoBind(false)
+                  .CascadeFrom("temptype_ID")
+        )
+    </div>
+</div>
+<div class="wrapper11">
+    <br />
+    <div class="first">
+        <b style="font-size:small">
+            Document type:
+        </b>
+    </div>
+    <div class="second">
+        @(Html.Kendo().DropDownListFor(model => model.DocT_ID)
+                   .Name("DocT_ID")
+                  .OptionLabel("Please Select Document Type ....")
+                  .HtmlAttributes(new { style = "width:100%" })
+                  .DataTextField("Name")
+                  .DataValueField("ID")
+                  .Events(e => e.Cascade("CatCascade"))
+                  .DataSource(source =>
+                  {
+                      source.Read(read =>
+                      {
+                          read.Action("GetCascadeDocT", "helper")
+                              .Data("filtercomm");
+                      })
+                           .ServerFiltering(true);
+                  })
+                  .Enable(false)
+                  .AutoBind(false)
+                 .CascadeFrom("com_ID")
+        )
+    </div>
+</div>
+
+<div class="wrapper11">
+    <br />
+    <div class="first">
+        <b style="font-size:small">
+            Name:
+        </b>
+    </div>
+    <div class="second">
+        @Html.Kendo().TextBoxFor(model => model.Name).HtmlAttributes(new { style = "width: 100%;" })
+    </div>
+</div>
+
+@*<script type="text/javascript">
+        function FilterTempT() {
+            return {
+                t: $("#temptype").val()
+            };
+        }
+        function filtercomm() {
+            return {
+                comm: $("#comm").val()
+            };
+        }
+        function filterdoct() {
+            return {
+                doctype: $("#doctype").val()
+            };
+        }
+    </script>*@
+
+<style>
+    div.wrapper11 {
+        width: 500px;
+        padding-left: 0.5em;
+        clear: both;
+    }
+
+    div.first {
+        padding-left: 0.9em;
+        text-align: left;
+        width: 100px;
+        float: left;
+    }
+
+    div.second {
+        width: 250px;
+        float: left;
+    }
+</style>
+
+

@@ -1,0 +1,212 @@
+﻿@model IdentitySample.Models.FinalTempViewModel
+
+<div class="wrapper">
+    <b style="font-size:medium">Template Information:</b>
+    <br />
+    <br />
+    <div class="first">
+        <b style="font-size:small">Template Type:  </b>
+    </div>
+    <div class="second">
+        @(Html.Kendo().DropDownListFor(model => model.temptype_ID)
+          .Name("temptype_ID")
+          .Filter("Contains")
+          .OptionLabel("Please Select Template Type ....")
+          .HtmlAttributes(new { style = "width:100%;align-self:center;" })
+          .DataTextField("Name")
+          .DataValueField("ID")
+          .DataSource(source =>
+           {
+               source.Read(read =>
+                 {
+                     read.Action("GetTempType", "Helper");
+                 });
+
+           })
+        )
+    </div>
+</div>
+<div class="wrapper">
+    <br />
+    <div class="first">
+        <b style="font-size:small">
+            committee:
+        </b>
+    </div>
+    <div class="second">
+        @(Html.Kendo().DropDownListFor(model => model.com_ID)
+                  .Name("com_ID")
+                  .OptionLabel("Please Select Committee ....")
+                  .HtmlAttributes(new { style = "width:100%;align-self:center;" })
+
+                  .Filter("contains")
+                  .DataTextField("Name")
+                  .DataValueField("ID")
+                  .DataSource(source =>
+                   {
+                       source.Read(read =>
+                         {
+                             read.Action("getcascadecommittees", "helper")
+                              .Data("FilterTempT");
+                         })
+                           .ServerFiltering(true);
+                   })
+                  .Enable(false)
+                  .AutoBind(false)
+                  .CascadeFrom("temptype_ID")
+        )
+    </div>
+</div>
+<div class="wrapper">
+    <br />
+    <div class="first">
+        <b style="font-size:small">
+            document type:
+        </b>
+    </div>
+    <div class="second">
+        @(Html.Kendo().DropDownListFor(model => model.Doctype_ID)
+                  .Name("Doctype_ID")
+                  .OptionLabel("Please Select Document Type ....")
+                  .HtmlAttributes(new { style = "width:100%" })
+                  .DataTextField("Name")
+                          
+                  .DataValueField("ID")
+                  .DataSource(source =>
+                   {
+                       source.Read(read =>
+                        {
+                            read.Action("getcascadedoct", "helper")
+                                .Data("filtercomm");
+                        })
+                            .ServerFiltering(true);
+                   })
+                  .Enable(false)
+                  .AutoBind(false)
+                 .CascadeFrom("com_ID")
+        )
+    </div>
+</div>
+<div class="wrapper">
+    <br />
+    <div class="first">
+        <b style="font-size:small">
+            categories:
+        </b>
+    </div>
+    <div class="second">
+        @(Html.Kendo().DropDownListFor(model => model.Cat_ID)
+                  .Name("Cat_ID")
+                  .OptionLabel("Please Select Category....")
+                  .HtmlAttributes(new { style = "width:100%;align-self:center;" })
+                  .Filter("contains")
+                  .DataValueField("ID")
+                          .Events(e => e.Cascade("onDataBound"))
+                  .DataTextField("Name")
+                  .DataSource(source =>
+                      {
+                          source.Read(read =>
+                          {
+                              read.Action("getcascadecat", "helper")
+                                  .Data("filterdoct");
+                          })
+                          .ServerFiltering(false);
+                      })
+                  .Enable(false)
+                  .AutoBind(false)
+                  .CascadeFrom("Doctype_ID")
+        )
+    </div>
+</div>
+<div class="wrapper">
+    <br />
+    <div class="first">
+        <b style="font-size:small">
+            name:
+        </b>
+    </div>
+    <div class="second">
+        @Html.Kendo().TextBoxFor(model => model.Name).HtmlAttributes(new { style = "width: 100%;" })
+    </div>
+</div>
+<div class="wrapper">
+    <br />
+    <div class="first">
+        <b style="font-size:small">
+            symbole:
+        </b>
+    </div>
+    <div class="second">
+        @Html.Kendo().TextBoxFor(model => model.Symbole).HtmlAttributes(new { style = "width: 100%;" })
+    </div>
+</div>
+<div class="wrapper">
+    <br />
+    <div class="first">
+        <b style="font-size:small">
+            title:
+        </b>
+    </div>
+    <div class="second">
+        @Html.Kendo().TextBoxFor(model => model.Title).HtmlAttributes(new { style = "width: 100%;" })
+    </div>
+</div>
+<script type="text/javascript">
+    function onDataBound() {
+        $("#Cat_ID").data("kendoDropDownList").dataSource.read();
+    }
+
+    function FilterTempT() {
+        return {
+            t: $("#temptype_ID").val()
+        };
+    }
+    function filtercomm() {
+        return {
+            comm: $("#com_ID").val()
+        };
+    }
+    function filterdoct() {
+        return {
+            doctype: $("#Doctype_ID").val()
+        };
+    }
+</script>
+@*<script type="text/javascript">
+        function FilterTempT() {
+            return {
+                t: $("#temptype").val()
+            };
+        }
+        function filtercomm() {
+            return {
+                comm: $("#comm").val()
+            };
+        }
+        function filterdoct() {
+            return {
+                doctype: $("#doctype").val()
+            };
+        }
+    </script>*@
+
+<style>
+    div.wrapper {
+        width: 500px;
+        padding-left: 0.5em;
+        clear: both;
+    }
+
+    div.first {
+        padding-left: 0.9em;
+        text-align: left;
+        width: 100px;
+        float: left;
+    }
+
+    div.second {
+        width: 250px;
+        float: left;
+    }
+</style>
+

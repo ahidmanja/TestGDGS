@@ -1,0 +1,213 @@
+﻿@model IdentitySample.Models.OHCHRViewModel
+<br />
+<br />
+<br />
+<div id="mdivG">
+    @using (Html.BeginForm("Generate", "OHCHR", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+    {
+        @Html.AntiForgeryToken()
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-horizontal">
+            <h4 style="text-align:left;padding-left:10px"><b>Extra Information*</b> </h4>
+            <hr />
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="prep" style="font-size:14px !important">Periodic Report*</label>
+                <div class="col-sm-3 col-md-3">
+                    @(Html.Kendo().TextBoxFor(m => m.Prep)
+                    .Name("Prep")
+                 .HtmlAttributes(new { placeholder = "Report Number", required = "required", data_required_msg = "Report Number", style = "width: 100%" })
+                    )
+                    <span class="k-invalid-msg" data-for="prep"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="addu" style="font-size:14px !important">Addendendum*</label>
+                <div class="col-sm-3 col-md-3">
+                    @(Html.Kendo().TextBoxFor(m => m.Add)
+                 .Name("Add")
+                 .HtmlAttributes(new { placeholder = "Addendum Number", required = "required", data_required_msg = "Enter Addendum Number", style = "width: 100%" })
+                    // .HtmlAttributes(new { @placeholder = "Type Number" })
+                    )
+                    <span class="k-invalid-msg" data-for="addu"></span>
+                </div>
+
+            </div>
+            <br />
+            <br />
+
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="name" style="font-size:14px !important">Session</label>
+                <div class="col-sm-3 col-md-3">
+                    @(Html.Kendo().TextBoxFor(m => m.SNum)
+                    .Name("SNum")
+                    .HtmlAttributes(new { @placeholder = "Session Number" })
+                    )
+                </div>
+                <div class="col-sm-3 col-md-3">
+                    @(Html.Kendo().DatePickerFor(m => m.Sdate).Name("Sdate").Value("").Format("MM/dd/yyyy").HtmlAttributes(new { @placeholder = "Start Date" }))
+                </div>
+
+                <div class="col-sm-3 col-md-3">
+                    @(Html.Kendo().DatePickerFor(m => m.Edate).Name("Edate").Value("").Format("MM/dd/yyyy").HtmlAttributes(new { @placeholder = "End Date" }))
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="name" style="font-size:14px !important">Agenda </label>
+               
+                    <div class="col-sm-3 col-md-3">
+                        @(Html.Kendo().TextBoxFor(m => m.AgendaItem)
+                        .Name("AgendaItem")
+                          .HtmlAttributes(new { @placeholder = "Title" })
+                        )
+                    </div>
+                    <div class="col-sm-3 col-md-3">
+                        @(Html.Kendo().TextBoxFor(m => m.AgendaNum)
+            .Name("AgendaNum")
+            .HtmlAttributes(new { @placeholder = "Item" })
+                        )
+                    </div>
+                <div class="col-sm-3 col-md-3">
+                    @(Html.Kendo().TextBox()
+            .Name("subItem")
+            .HtmlAttributes(new { @placeholder = "Sub Item" })
+                    )
+                </div>
+
+            </div>
+            <br />
+            <br />
+
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="name" style="font-size:14px !important">   Versions Required</label>
+                <div class="col-sm-3 col-md-3">
+                    @(Html.Kendo().MultiSelectFor(m => m.version)
+                                .Name("version1")
+                                .Placeholder("Select Versions...")
+                                .DataTextField("Text")
+                                .DataValueField("Text")
+                                .DataSource(source =>
+                                {
+                                    source.Read(read =>
+                                    {
+                                        read.Action("GetVersions", "Helper")
+                                            .Data("LangID");
+                                    });
+
+                                }
+
+
+                                )
+                    )
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="name" style="font-size:14px !important">Creator / Author </label>
+                <div class="col-sm-3 col-md-3">
+                    @(Html.Kendo().TextBoxFor(m => m.Author)
+     .Name("Author")
+            // .HtmlAttributes(new { @placeholder = "Type Number" })
+                    )
+                </div>
+                </div>
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="name" style="font-size:14px !important">QR Code</label>
+                <div class="col-sm-3 col-md-3">
+                    @(Html.Kendo().CheckBoxFor(m => m.qrcode)
+            .Checked(true)
+                    )
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-15 col-md-15">
+                    <hr />
+                </div>
+            </div>
+           
+               
+            @*<div class="form-group">
+                <label class="control-label col-sm-5" for="name" style="font-size:14px !important">Session Title</label>
+                <div class="col-sm-3 col-md-3">
+                    @(Html.Kendo().TextBoxFor(m => m.STitle)
+                        .Name("STitle"))
+                </div>
+            </div>*@
+            @*<div class="form-group">
+                <label class="control-label col-sm-5" for="name" style="font-size:14px !important">Agenda Item</label>
+                <div class="col-sm-3 col-md-3">
+                    @(Html.Kendo().TextBoxFor(m => m.AgendaItem)
+                        .Name("AgendaItem"))
+                </div>
+            </div>*@
+            @*<div class="form-group">
+                <label class="control-label col-sm-5" for="name" style="font-size:14px !important">Session Start</label>
+                <div class="col-sm-3 col-md-3">
+                    @(Html.Kendo().DatePickerFor(m => m.Sdate).Name("Sdate").Value("").Format("MM/dd/yyyy"))
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-5" for="name" style="font-size:14px !important">Session End</label>
+                <div class="col-sm-3 col-md-3">
+                    @(Html.Kendo().DatePickerFor(m => m.Edate).Name("Edate").Value("").Format("MM/dd/yyyy"))
+                </div>
+            </div>*@
+            <div class="form-group">
+                <div style="text-align:center">
+                    <input type="submit" value="Next" class="btn btn-default" />
+                </div>
+            </div>
+
+        </div>
+
+
+
+
+        @(Html.HiddenFor(m => m.date))
+        @(Html.HiddenFor(m => m.STitle))
+        @(Html.HiddenFor(m => m.dist))
+        @(Html.HiddenFor(m => m.lang_ID))
+        @(Html.HiddenFor(m => m.count_ID))
+        @(Html.HiddenFor(m => m.Cat))
+    }
+</div>
+<script>
+    $(function () {
+        $("form").kendoValidator();
+    });
+    function LangID() {
+        return {
+            t: $("#lang_ID").val()
+        };
+    }
+</script>
+<style>
+    #mdiv {
+        margin: auto;
+        width: 50%;
+        padding: 10px;
+    }
+
+    #mdivG {
+        margin: auto;
+        width: 800px;
+        height: auto;
+        padding: 0px;
+        background-color: #ffffff;
+        border: 2px solid #5a6496;
+        border-radius:2px;
+        /*background-image: url('/assets/UN-Logo (1).png');
+            background-size: 300px 300px;*/
+        background-repeat: no-repeat;
+        background-position: 90% 30%;
+    }
+
+
+    #mdiv section {
+        margin-left: auto;
+        margin-right: auto;
+        display: block;
+    }
+</style>
+
+
+

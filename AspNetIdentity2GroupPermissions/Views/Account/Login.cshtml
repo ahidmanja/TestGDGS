@@ -1,0 +1,164 @@
+﻿@model IdentitySample.Models.LoginViewModel
+
+<div id="mdiv1">
+    @*<p style="text-align:center">Sign-In to start your session</p>*@
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            <div class="col-sm-3 col-md-3">
+            </div>
+            <div class="col-sm-6 col-md-6">
+                @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                @(Html.Kendo().TextBoxFor(model => model.Email)
+                      .Name("Email")
+                    .HtmlAttributes(new { placeholder = "Email", required = "required" })
+                )
+
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-3 col-md-3">
+            </div>
+            <div class="col-sm-9 col-md-9">
+                @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                @(Html.Kendo().TextBoxFor(model => model.Password)
+                    .Name("Password")
+                    .HtmlAttributes(new { placeholder = "Password", required = "required", type = "password" })
+                )
+            </div>
+
+        </div>
+
+        @*<div class="form-group">
+                <div class="col-sm-3 col-md-3">
+                </div>
+                <div class="col-sm-6 col-md-6">
+                    <input type="submit" value="Log in" class="btn btn-default" />
+                </div>
+            </div>*@
+        @*<div class="form-group">
+                <div class="col-sm-3 col-md-3">
+                    <div class="checkbox">
+                        @Html.CheckBoxFor(m => m.RememberMe)
+                        @Html.LabelFor(m => m.RememberMe)
+                    </div>
+                </div>
+            </div>*@
+        <div class="form-group">
+            <div class="col-sm-3 col-md-3">
+            </div>
+            <div class="col-sm-3 col-md-3">
+                <input type="submit" value="Log in" class="btn btn-default" />
+            </div>
+            <div class="col-sm-5 col-md-5">
+                <p style="font-size:x-small">
+                    <br />
+                    @Html.ActionLink("Forgot your password?", "ForgotPassword")
+                </p>
+
+            </div>
+
+        </div>
+    }
+
+</div>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+<style>
+    #mdiv {
+        margin: auto;
+        width: 50%;
+        padding: 10px;
+    }
+
+    #mdiv1 {
+        position: absolute;
+        margin: auto;
+        width: 400px;
+        height: auto;
+        padding: 10px;
+        top: 30%;
+        left:40%;
+        background-color: #ffffff;
+        border: 2px solid #2a6496;
+        border-radius: 5px;
+        background-image: url('/GDGS/assets/UN_logo.png');
+        /*background-size: 100px 300px;*/
+        background-repeat: no-repeat;
+        background-position: 50% 0%;
+    }
+
+    /*#mdiv img {
+            margin-left: auto;
+            margin-right: 100px;
+            display: block;
+
+        }*/
+    #mdiv section {
+        margin-left: auto;
+        margin-right: auto;
+        display: block;
+    }
+</style>
+
+
+
+
+
+
+
+
+
+@*<div class="row">
+    <div class="col-md-8">
+        <section id="loginForm">
+            @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" })) {
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
+                    <div class="col-md-10">
+                        @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <div class="checkbox">
+                            @Html.CheckBoxFor(m => m.RememberMe)
+                            @Html.LabelFor(m => m.RememberMe)
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Log in" class="btn btn-default" />
+                    </div>
+                </div>
+                               <p>
+                    @Html.ActionLink("Forget your password?", "ForgotPassword")
+                </p>
+            }
+        </section>
+    </div>
+
+</div>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}*@

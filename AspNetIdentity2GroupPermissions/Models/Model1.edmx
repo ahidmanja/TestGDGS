@@ -1,0 +1,1485 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="gdgs1Model.Store" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.5" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="__migrationhistory">
+          <Key>
+            <PropertyRef Name="MigrationId" />
+            <PropertyRef Name="ContextKey" />
+          </Key>
+          <Property Name="MigrationId" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="ContextKey" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="Model" Type="longblob" Nullable="false" />
+          <Property Name="ProductVersion" Type="varchar" MaxLength="32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="applicationgrouproles">
+          <Key>
+            <PropertyRef Name="ApplicationRoleId" />
+            <PropertyRef Name="ApplicationGroupId" />
+          </Key>
+          <Property Name="ApplicationRoleId" Type="varchar" MaxLength="128" Nullable="false" />
+          <Property Name="ApplicationGroupId" Type="varchar" MaxLength="128" Nullable="false" />
+        </EntityType>
+        <EntityType Name="applicationgroups">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="varchar" MaxLength="128" Nullable="false" />
+          <Property Name="Name" Type="longtext" />
+          <Property Name="Org" Type="int" Nullable="false" />
+          <Property Name="Description" Type="longtext" />
+        </EntityType>
+        <EntityType Name="applicationusergroups">
+          <Key>
+            <PropertyRef Name="ApplicationUserId" />
+            <PropertyRef Name="ApplicationGroupId" />
+          </Key>
+          <Property Name="ApplicationUserId" Type="varchar" MaxLength="128" Nullable="false" />
+          <Property Name="ApplicationGroupId" Type="varchar" MaxLength="128" Nullable="false" />
+        </EntityType>
+        <EntityType Name="aspnetroles">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="varchar" MaxLength="128" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="256" Nullable="false" />
+        </EntityType>
+        <EntityType Name="aspnetuserclaims">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="varchar" MaxLength="128" Nullable="false" />
+          <Property Name="ClaimType" Type="longtext" />
+          <Property Name="ClaimValue" Type="longtext" />
+        </EntityType>
+        <EntityType Name="aspnetuserlogins">
+          <Key>
+            <PropertyRef Name="LoginProvider" />
+            <PropertyRef Name="ProviderKey" />
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="LoginProvider" Type="varchar" MaxLength="128" Nullable="false" />
+          <Property Name="ProviderKey" Type="varchar" MaxLength="128" Nullable="false" />
+          <Property Name="UserId" Type="varchar" MaxLength="128" Nullable="false" />
+        </EntityType>
+        <EntityType Name="aspnetuserroles">
+          <Key>
+            <PropertyRef Name="UserId" />
+            <PropertyRef Name="RoleId" />
+          </Key>
+          <Property Name="UserId" Type="varchar" MaxLength="128" Nullable="false" />
+          <Property Name="RoleId" Type="varchar" MaxLength="128" Nullable="false" />
+        </EntityType>
+        <EntityType Name="aspnetusers">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="varchar" MaxLength="128" Nullable="false" />
+          <Property Name="Fname" Type="longtext" />
+          <Property Name="Lname" Type="longtext" />
+          <Property Name="Email" Type="varchar" MaxLength="256" />
+          <Property Name="EmailConfirmed" Type="bool" Nullable="false" />
+          <Property Name="PasswordHash" Type="longtext" />
+          <Property Name="SecurityStamp" Type="longtext" />
+          <Property Name="PhoneNumber" Type="longtext" />
+          <Property Name="PhoneNumberConfirmed" Type="bool" Nullable="false" />
+          <Property Name="TwoFactorEnabled" Type="bool" Nullable="false" />
+          <Property Name="LockoutEndDateUtc" Type="datetime" Precision="0" />
+          <Property Name="LockoutEnabled" Type="bool" Nullable="false" />
+          <Property Name="AccessFailedCount" Type="int" Nullable="false" />
+          <Property Name="UserName" Type="varchar" MaxLength="256" Nullable="false" />
+        </EntityType>
+        <EntityType Name="categories">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="type_ID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="committee">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="template_type_ID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="countries">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Article" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="Article1" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="Short_Name" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="languages_ID" Type="int" Nullable="false" />
+          <Property Name="ISO" Type="varchar" MaxLength="45" Nullable="false" />
+        </EntityType>
+        <EntityType Name="distrbution">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="languages_ID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="doc_type">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="committee_ID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="final_temp">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="Title" Type="varchar" MaxLength="100" />
+          <Property Name="categories_ID" Type="int" Nullable="false" />
+          <Property Name="Symbole" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="Count" Type="int" Nullable="false" />
+          <Property Name="Reg" Type="varchar" MaxLength="500" Nullable="false" />
+        </EntityType>
+        <EntityType Name="languages">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Lang_Name" Type="varchar" MaxLength="45" Nullable="false" />
+        </EntityType>
+        <EntityType Name="my_aspnet_applications">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="256" />
+          <Property Name="description" Type="varchar" MaxLength="256" />
+        </EntityType>
+        <EntityType Name="my_aspnet_membership">
+          <Key>
+            <PropertyRef Name="userId" />
+          </Key>
+          <Property Name="userId" Type="int" Nullable="false" />
+          <Property Name="Email" Type="varchar" MaxLength="128" />
+          <Property Name="Comment" Type="varchar" MaxLength="255" />
+          <Property Name="Password" Type="varchar" MaxLength="128" Nullable="false" />
+          <Property Name="PasswordKey" Type="char" MaxLength="32" />
+          <Property Name="PasswordFormat" Type="tinyint" />
+          <Property Name="PasswordQuestion" Type="varchar" MaxLength="255" />
+          <Property Name="PasswordAnswer" Type="varchar" MaxLength="255" />
+          <Property Name="IsApproved" Type="bool" />
+          <Property Name="LastActivityDate" Type="datetime" Precision="0" />
+          <Property Name="LastLoginDate" Type="datetime" Precision="0" />
+          <Property Name="LastPasswordChangedDate" Type="datetime" Precision="0" />
+          <Property Name="CreationDate" Type="datetime" Precision="0" />
+          <Property Name="IsLockedOut" Type="bool" />
+          <Property Name="LastLockedOutDate" Type="datetime" Precision="0" />
+          <Property Name="FailedPasswordAttemptCount" Type="uint" />
+          <Property Name="FailedPasswordAttemptWindowStart" Type="datetime" Precision="0" />
+          <Property Name="FailedPasswordAnswerAttemptCount" Type="uint" />
+          <Property Name="FailedPasswordAnswerAttemptWindowStart" Type="datetime" Precision="0" />
+        </EntityType>
+        <EntityType Name="my_aspnet_paths">
+          <Key>
+            <PropertyRef Name="pathId" />
+          </Key>
+          <Property Name="applicationId" Type="int" Nullable="false" />
+          <Property Name="pathId" Type="varchar" MaxLength="36" Nullable="false" />
+          <Property Name="path" Type="varchar" MaxLength="256" Nullable="false" />
+          <Property Name="loweredPath" Type="varchar" MaxLength="256" Nullable="false" />
+        </EntityType>
+        <EntityType Name="my_aspnet_personalizationallusers">
+          <Key>
+            <PropertyRef Name="pathId" />
+          </Key>
+          <Property Name="pathId" Type="varchar" MaxLength="36" Nullable="false" />
+          <Property Name="pageSettings" Type="blob" Nullable="false" />
+          <Property Name="lastUpdatedDate" Type="datetime" Precision="0" Nullable="false" />
+        </EntityType>
+        <EntityType Name="my_aspnet_personalizationperuser">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="applicationId" Type="int" Nullable="false" />
+          <Property Name="pathId" Type="varchar" MaxLength="36" />
+          <Property Name="userId" Type="int" />
+          <Property Name="pageSettings" Type="blob" Nullable="false" />
+          <Property Name="lastUpdatedDate" Type="datetime" Precision="0" Nullable="false" />
+        </EntityType>
+        <EntityType Name="my_aspnet_profiles">
+          <Key>
+            <PropertyRef Name="userId" />
+          </Key>
+          <Property Name="userId" Type="int" Nullable="false" />
+          <Property Name="valueindex" Type="longtext" />
+          <Property Name="stringdata" Type="longtext" />
+          <Property Name="binarydata" Type="longblob" />
+          <Property Name="lastUpdatedDate" Type="timestamp" Precision="0" Nullable="false" />
+        </EntityType>
+        <EntityType Name="my_aspnet_roles">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="applicationId" Type="int" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="255" Nullable="false" />
+        </EntityType>
+        <EntityType Name="my_aspnet_sessioncleanup">
+          <Key>
+            <PropertyRef Name="ApplicationId" />
+          </Key>
+          <Property Name="LastRun" Type="datetime" Precision="0" Nullable="false" />
+          <Property Name="IntervalMinutes" Type="int" Nullable="false" />
+          <Property Name="ApplicationId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="my_aspnet_sessions">
+          <Key>
+            <PropertyRef Name="SessionId" />
+            <PropertyRef Name="ApplicationId" />
+          </Key>
+          <Property Name="SessionId" Type="varchar" MaxLength="191" Nullable="false" />
+          <Property Name="ApplicationId" Type="int" Nullable="false" />
+          <Property Name="Created" Type="datetime" Precision="0" Nullable="false" />
+          <Property Name="Expires" Type="datetime" Precision="0" Nullable="false" />
+          <Property Name="LockDate" Type="datetime" Precision="0" Nullable="false" />
+          <Property Name="LockId" Type="int" Nullable="false" />
+          <Property Name="Timeout" Type="int" Nullable="false" />
+          <Property Name="Locked" Type="bool" Nullable="false" />
+          <Property Name="SessionItems" Type="longblob" />
+          <Property Name="Flags" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="my_aspnet_sitemap">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Title" Type="varchar" MaxLength="50" />
+          <Property Name="Description" Type="varchar" MaxLength="512" />
+          <Property Name="Url" Type="varchar" MaxLength="512" />
+          <Property Name="Roles" Type="varchar" MaxLength="1000" />
+          <Property Name="ParentId" Type="int" />
+        </EntityType>
+        <EntityType Name="my_aspnet_users">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="applicationId" Type="int" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="256" Nullable="false" />
+          <Property Name="isAnonymous" Type="bool" Nullable="false" />
+          <Property Name="lastActivityDate" Type="datetime" Precision="0" />
+        </EntityType>
+        <EntityType Name="my_aspnet_usersinroles">
+          <Key>
+            <PropertyRef Name="userId" />
+            <PropertyRef Name="roleId" />
+          </Key>
+          <Property Name="userId" Type="int" Nullable="false" />
+          <Property Name="roleId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="olanguage">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="languages_ID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="organaization">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="45" Nullable="false" />
+        </EntityType>
+        <EntityType Name="template_type">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="45" Nullable="false" />
+        </EntityType>
+        <Association Name="ApplicationGroup_ApplicationRoles">
+          <End Role="applicationgroups" Type="Self.applicationgroups" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="applicationgrouproles" Type="Self.applicationgrouproles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="applicationgroups">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="applicationgrouproles">
+              <PropertyRef Name="ApplicationGroupId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ApplicationGroup_ApplicationUsers">
+          <End Role="applicationgroups" Type="Self.applicationgroups" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="applicationusergroups" Type="Self.applicationusergroups" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="applicationgroups">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="applicationusergroups">
+              <PropertyRef Name="ApplicationGroupId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ApplicationRole_Users">
+          <End Role="aspnetroles" Type="Self.aspnetroles" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="aspnetuserroles" Type="Self.aspnetuserroles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="aspnetroles">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="aspnetuserroles">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ApplicationUser_Claims">
+          <End Role="aspnetusers" Type="Self.aspnetusers" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="aspnetuserclaims" Type="Self.aspnetuserclaims" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="aspnetusers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="aspnetuserclaims">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ApplicationUser_Logins">
+          <End Role="aspnetusers" Type="Self.aspnetusers" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="aspnetuserlogins" Type="Self.aspnetuserlogins" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="aspnetusers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="aspnetuserlogins">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ApplicationUser_Roles">
+          <End Role="aspnetusers" Type="Self.aspnetusers" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="aspnetuserroles" Type="Self.aspnetuserroles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="aspnetusers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="aspnetuserroles">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_categories_doc_type1">
+          <End Role="doc_type" Type="Self.doc_type" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="categories" Type="Self.categories" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="doc_type">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="categories">
+              <PropertyRef Name="type_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_committee_template_type1">
+          <End Role="template_type" Type="Self.template_type" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="committee" Type="Self.committee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="template_type">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="committee">
+              <PropertyRef Name="template_type_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_countries_languages">
+          <End Role="languages" Type="Self.languages" Multiplicity="1" />
+          <End Role="countries" Type="Self.countries" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="languages">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="countries">
+              <PropertyRef Name="languages_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_distrbution_languages1">
+          <End Role="languages" Type="Self.languages" Multiplicity="1" />
+          <End Role="distrbution" Type="Self.distrbution" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="languages">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="distrbution">
+              <PropertyRef Name="languages_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_doc_type_committee1">
+          <End Role="committee" Type="Self.committee" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="doc_type" Type="Self.doc_type" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="committee">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="doc_type">
+              <PropertyRef Name="committee_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_final_temp_categories1">
+          <End Role="categories" Type="Self.categories" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="final_temp" Type="Self.final_temp" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="categories">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="final_temp">
+              <PropertyRef Name="categories_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Olanguage_languages1">
+          <End Role="languages" Type="Self.languages" Multiplicity="1" />
+          <End Role="olanguage" Type="Self.olanguage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="languages">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="olanguage">
+              <PropertyRef Name="languages_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="gdgs1ModelStoreContainer">
+          <EntitySet Name="__migrationhistory" EntityType="Self.__migrationhistory" Schema="gdgs1" store:Type="Tables" />
+          <EntitySet Name="applicationgrouproles" EntityType="Self.applicationgrouproles" Schema="gdgs1" store:Type="Tables" />
+          <EntitySet Name="applicationgroups" EntityType="Self.applicationgroups" Schema="gdgs1" store:Type="Tables" />
+          <EntitySet Name="applicationusergroups" EntityType="Self.applicationusergroups" Schema="gdgs1" store:Type="Tables" />
+          <EntitySet Name="aspnetroles" EntityType="Self.aspnetroles" Schema="gdgs1" store:Type="Tables" />
+          <EntitySet Name="aspnetuserclaims" EntityType="Self.aspnetuserclaims" Schema="gdgs1" store:Type="Tables" />
+          <EntitySet Name="aspnetuserlogins" EntityType="Self.aspnetuserlogins" Schema="gdgs1" store:Type="Tables" />
+          <EntitySet Name="aspnetuserroles" EntityType="Self.aspnetuserroles" Schema="gdgs1" store:Type="Tables" />
+          <EntitySet Name="aspnetusers" EntityType="Self.aspnetusers" Schema="gdgs1" store:Type="Tables" />
+          <EntitySet Name="categories" EntityType="Self.categories" Schema="gdgs1" store:Type="Tables" />
+          <EntitySet Name="committee" EntityType="Self.committee" Schema="gdgs1" store:Type="Tables" />
+          <EntitySet Name="countries" EntityType="Self.countries" Schema="gdgs1" store:Type="Tables" />
+          <EntitySet Name="distrbution" EntityType="Self.distrbution" Schema="gdgs1" store:Type="Tables" />
+          <EntitySet Name="doc_type" EntityType="Self.doc_type" Schema="gdgs1" store:Type="Tables" />
+          <EntitySet Name="final_temp" EntityType="Self.final_temp" Schema="gdgs1" store:Type="Tables" />
+          <EntitySet Name="languages" EntityType="Self.languages" Schema="gdgs1" store:Type="Tables" />
+          <EntitySet Name="my_aspnet_applications" EntityType="Self.my_aspnet_applications" Schema="gdgs1" store:Type="Tables" />
+          <EntitySet Name="my_aspnet_membership" EntityType="Self.my_aspnet_membership" Schema="gdgs1" store:Type="Tables" />
+          <EntitySet Name="my_aspnet_paths" EntityType="Self.my_aspnet_paths" Schema="gdgs1" store:Type="Tables" />
+          <EntitySet Name="my_aspnet_personalizationallusers" EntityType="Self.my_aspnet_personalizationallusers" Schema="gdgs1" store:Type="Tables" />
+          <EntitySet Name="my_aspnet_personalizationperuser" EntityType="Self.my_aspnet_personalizationperuser" Schema="gdgs1" store:Type="Tables" />
+          <EntitySet Name="my_aspnet_profiles" EntityType="Self.my_aspnet_profiles" Schema="gdgs1" store:Type="Tables" />
+          <EntitySet Name="my_aspnet_roles" EntityType="Self.my_aspnet_roles" Schema="gdgs1" store:Type="Tables" />
+          <EntitySet Name="my_aspnet_sessioncleanup" EntityType="Self.my_aspnet_sessioncleanup" Schema="gdgs1" store:Type="Tables" />
+          <EntitySet Name="my_aspnet_sessions" EntityType="Self.my_aspnet_sessions" Schema="gdgs1" store:Type="Tables" />
+          <EntitySet Name="my_aspnet_sitemap" EntityType="Self.my_aspnet_sitemap" Schema="gdgs1" store:Type="Tables" />
+          <EntitySet Name="my_aspnet_users" EntityType="Self.my_aspnet_users" Schema="gdgs1" store:Type="Tables" />
+          <EntitySet Name="my_aspnet_usersinroles" EntityType="Self.my_aspnet_usersinroles" Schema="gdgs1" store:Type="Tables" />
+          <EntitySet Name="olanguage" EntityType="Self.olanguage" Schema="gdgs1" store:Type="Tables" />
+          <EntitySet Name="organaization" EntityType="Self.organaization" Schema="gdgs1" store:Type="Tables" />
+          <EntitySet Name="template_type" EntityType="Self.template_type" Schema="gdgs1" store:Type="Tables" />
+          <AssociationSet Name="ApplicationGroup_ApplicationRoles" Association="Self.ApplicationGroup_ApplicationRoles">
+            <End Role="applicationgroups" EntitySet="applicationgroups" />
+            <End Role="applicationgrouproles" EntitySet="applicationgrouproles" />
+          </AssociationSet>
+          <AssociationSet Name="ApplicationGroup_ApplicationUsers" Association="Self.ApplicationGroup_ApplicationUsers">
+            <End Role="applicationgroups" EntitySet="applicationgroups" />
+            <End Role="applicationusergroups" EntitySet="applicationusergroups" />
+          </AssociationSet>
+          <AssociationSet Name="ApplicationRole_Users" Association="Self.ApplicationRole_Users">
+            <End Role="aspnetroles" EntitySet="aspnetroles" />
+            <End Role="aspnetuserroles" EntitySet="aspnetuserroles" />
+          </AssociationSet>
+          <AssociationSet Name="ApplicationUser_Claims" Association="Self.ApplicationUser_Claims">
+            <End Role="aspnetusers" EntitySet="aspnetusers" />
+            <End Role="aspnetuserclaims" EntitySet="aspnetuserclaims" />
+          </AssociationSet>
+          <AssociationSet Name="ApplicationUser_Logins" Association="Self.ApplicationUser_Logins">
+            <End Role="aspnetusers" EntitySet="aspnetusers" />
+            <End Role="aspnetuserlogins" EntitySet="aspnetuserlogins" />
+          </AssociationSet>
+          <AssociationSet Name="ApplicationUser_Roles" Association="Self.ApplicationUser_Roles">
+            <End Role="aspnetusers" EntitySet="aspnetusers" />
+            <End Role="aspnetuserroles" EntitySet="aspnetuserroles" />
+          </AssociationSet>
+          <AssociationSet Name="fk_categories_doc_type1" Association="Self.fk_categories_doc_type1">
+            <End Role="doc_type" EntitySet="doc_type" />
+            <End Role="categories" EntitySet="categories" />
+          </AssociationSet>
+          <AssociationSet Name="fk_committee_template_type1" Association="Self.fk_committee_template_type1">
+            <End Role="template_type" EntitySet="template_type" />
+            <End Role="committee" EntitySet="committee" />
+          </AssociationSet>
+          <AssociationSet Name="fk_countries_languages" Association="Self.fk_countries_languages">
+            <End Role="languages" EntitySet="languages" />
+            <End Role="countries" EntitySet="countries" />
+          </AssociationSet>
+          <AssociationSet Name="fk_distrbution_languages1" Association="Self.fk_distrbution_languages1">
+            <End Role="languages" EntitySet="languages" />
+            <End Role="distrbution" EntitySet="distrbution" />
+          </AssociationSet>
+          <AssociationSet Name="fk_doc_type_committee1" Association="Self.fk_doc_type_committee1">
+            <End Role="committee" EntitySet="committee" />
+            <End Role="doc_type" EntitySet="doc_type" />
+          </AssociationSet>
+          <AssociationSet Name="fk_final_temp_categories1" Association="Self.fk_final_temp_categories1">
+            <End Role="categories" EntitySet="categories" />
+            <End Role="final_temp" EntitySet="final_temp" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Olanguage_languages1" Association="Self.fk_Olanguage_languages1">
+            <End Role="languages" EntitySet="languages" />
+            <End Role="olanguage" EntitySet="olanguage" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="gdgs1Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="C__migrationhistory">
+          <Key>
+            <PropertyRef Name="MigrationId" />
+            <PropertyRef Name="ContextKey" />
+          </Key>
+          <Property Name="MigrationId" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ContextKey" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Model" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
+          <Property Name="ProductVersion" Type="String" MaxLength="32" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityType Name="applicationgrouprole">
+          <Key>
+            <PropertyRef Name="ApplicationRoleId" />
+            <PropertyRef Name="ApplicationGroupId" />
+          </Key>
+          <Property Name="ApplicationRoleId" Type="String" MaxLength="128" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ApplicationGroupId" Type="String" MaxLength="128" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="applicationgroup" Relationship="Self.ApplicationGroup_ApplicationRoles" FromRole="applicationgrouproles" ToRole="applicationgroups" />
+        </EntityType>
+        <EntityType Name="applicationgroup">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="1073741823" FixedLength="false" Unicode="false" />
+          <Property Name="Org" Type="Int32" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="1073741823" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="applicationgrouproles" Relationship="Self.ApplicationGroup_ApplicationRoles" FromRole="applicationgroups" ToRole="applicationgrouproles" />
+          <NavigationProperty Name="applicationusergroups" Relationship="Self.ApplicationGroup_ApplicationUsers" FromRole="applicationgroups" ToRole="applicationusergroups" />
+        </EntityType>
+        <EntityType Name="applicationusergroup">
+          <Key>
+            <PropertyRef Name="ApplicationUserId" />
+            <PropertyRef Name="ApplicationGroupId" />
+          </Key>
+          <Property Name="ApplicationUserId" Type="String" MaxLength="128" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ApplicationGroupId" Type="String" MaxLength="128" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="applicationgroup" Relationship="Self.ApplicationGroup_ApplicationUsers" FromRole="applicationusergroups" ToRole="applicationgroups" />
+        </EntityType>
+        <EntityType Name="aspnetrole">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="256" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="aspnetusers" Relationship="Self.aspnetuserroles" FromRole="aspnetroles" ToRole="aspnetusers" />
+        </EntityType>
+        <EntityType Name="aspnetuserclaim">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ClaimType" Type="String" MaxLength="1073741823" FixedLength="false" Unicode="false" />
+          <Property Name="ClaimValue" Type="String" MaxLength="1073741823" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="aspnetuser" Relationship="Self.ApplicationUser_Claims" FromRole="aspnetuserclaims" ToRole="aspnetusers" />
+        </EntityType>
+        <EntityType Name="aspnetuserlogin">
+          <Key>
+            <PropertyRef Name="LoginProvider" />
+            <PropertyRef Name="ProviderKey" />
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="LoginProvider" Type="String" MaxLength="128" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ProviderKey" Type="String" MaxLength="128" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="aspnetuser" Relationship="Self.ApplicationUser_Logins" FromRole="aspnetuserlogins" ToRole="aspnetusers" />
+        </EntityType>
+        <EntityType Name="aspnetuser">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Fname" Type="String" MaxLength="1073741823" FixedLength="false" Unicode="false" />
+          <Property Name="Lname" Type="String" MaxLength="1073741823" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+          <Property Name="EmailConfirmed" Type="Boolean" Nullable="false" />
+          <Property Name="PasswordHash" Type="String" MaxLength="1073741823" FixedLength="false" Unicode="false" />
+          <Property Name="SecurityStamp" Type="String" MaxLength="1073741823" FixedLength="false" Unicode="false" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="1073741823" FixedLength="false" Unicode="false" />
+          <Property Name="PhoneNumberConfirmed" Type="Boolean" Nullable="false" />
+          <Property Name="TwoFactorEnabled" Type="Boolean" Nullable="false" />
+          <Property Name="LockoutEndDateUtc" Type="DateTime" />
+          <Property Name="LockoutEnabled" Type="Boolean" Nullable="false" />
+          <Property Name="AccessFailedCount" Type="Int32" Nullable="false" />
+          <Property Name="UserName" Type="String" MaxLength="256" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="aspnetuserclaims" Relationship="Self.ApplicationUser_Claims" FromRole="aspnetusers" ToRole="aspnetuserclaims" />
+          <NavigationProperty Name="aspnetuserlogins" Relationship="Self.ApplicationUser_Logins" FromRole="aspnetusers" ToRole="aspnetuserlogins" />
+          <NavigationProperty Name="aspnetroles" Relationship="Self.aspnetuserroles" FromRole="aspnetusers" ToRole="aspnetroles" />
+        </EntityType>
+        <EntityType Name="category">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="type_ID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="doc_type" Relationship="Self.fk_categories_doc_type1" FromRole="categories" ToRole="doc_type" />
+          <NavigationProperty Name="final_temp" Relationship="gdgs1Model.fk_final_temp_categories1" FromRole="category" ToRole="final_temp" />
+        </EntityType>
+        <EntityType Name="committee">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="template_type_ID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="template_type" Relationship="Self.fk_committee_template_type1" FromRole="committee" ToRole="template_type" />
+          <NavigationProperty Name="doc_type" Relationship="Self.fk_doc_type_committee1" FromRole="committee" ToRole="doc_type" />
+        </EntityType>
+        <EntityType Name="country">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Article" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Article1" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Short_Name" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="languages_ID" Type="Int32" Nullable="false" />
+          <Property Name="ISO" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="language" Relationship="Self.fk_countries_languages" FromRole="countries" ToRole="languages" />
+        </EntityType>
+        <EntityType Name="distrbution">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="languages_ID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="language" Relationship="Self.fk_distrbution_languages1" FromRole="distrbution" ToRole="languages" />
+        </EntityType>
+        <EntityType Name="doc_type">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="committee_ID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="categories" Relationship="Self.fk_categories_doc_type1" FromRole="doc_type" ToRole="categories" />
+          <NavigationProperty Name="committee" Relationship="Self.fk_doc_type_committee1" FromRole="doc_type" ToRole="committee" />
+        </EntityType>
+        <EntityType Name="language">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Lang_Name" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="countries" Relationship="Self.fk_countries_languages" FromRole="languages" ToRole="countries" />
+          <NavigationProperty Name="distrbutions" Relationship="Self.fk_distrbution_languages1" FromRole="languages" ToRole="distrbution" />
+          <NavigationProperty Name="olanguages" Relationship="Self.fk_Olanguage_languages1" FromRole="languages" ToRole="olanguage" />
+        </EntityType>
+        <EntityType Name="my_aspnet_applications">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+          <Property Name="description" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="my_aspnet_membership">
+          <Key>
+            <PropertyRef Name="userId" />
+          </Key>
+          <Property Name="userId" Type="Int32" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="128" FixedLength="false" Unicode="false" />
+          <Property Name="Comment" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Password" Type="String" MaxLength="128" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="PasswordKey" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
+          <Property Name="PasswordFormat" Type="SByte" />
+          <Property Name="PasswordQuestion" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="PasswordAnswer" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="IsApproved" Type="Boolean" />
+          <Property Name="LastActivityDate" Type="DateTime" />
+          <Property Name="LastLoginDate" Type="DateTime" />
+          <Property Name="LastPasswordChangedDate" Type="DateTime" />
+          <Property Name="CreationDate" Type="DateTime" />
+          <Property Name="IsLockedOut" Type="Boolean" />
+          <Property Name="LastLockedOutDate" Type="DateTime" />
+          <Property Name="FailedPasswordAttemptCount" Type="Int64" />
+          <Property Name="FailedPasswordAttemptWindowStart" Type="DateTime" />
+          <Property Name="FailedPasswordAnswerAttemptCount" Type="Int64" />
+          <Property Name="FailedPasswordAnswerAttemptWindowStart" Type="DateTime" />
+        </EntityType>
+        <EntityType Name="my_aspnet_paths">
+          <Key>
+            <PropertyRef Name="pathId" />
+          </Key>
+          <Property Name="applicationId" Type="Int32" Nullable="false" />
+          <Property Name="pathId" Type="String" MaxLength="36" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="path" Type="String" MaxLength="256" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="loweredPath" Type="String" MaxLength="256" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityType Name="my_aspnet_personalizationallusers">
+          <Key>
+            <PropertyRef Name="pathId" />
+          </Key>
+          <Property Name="pathId" Type="String" MaxLength="36" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="pageSettings" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
+          <Property Name="lastUpdatedDate" Type="DateTime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="my_aspnet_personalizationperuser">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="applicationId" Type="Int32" Nullable="false" />
+          <Property Name="pathId" Type="String" MaxLength="36" FixedLength="false" Unicode="false" />
+          <Property Name="userId" Type="Int32" />
+          <Property Name="pageSettings" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
+          <Property Name="lastUpdatedDate" Type="DateTime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="my_aspnet_profiles">
+          <Key>
+            <PropertyRef Name="userId" />
+          </Key>
+          <Property Name="userId" Type="Int32" Nullable="false" />
+          <Property Name="valueindex" Type="String" MaxLength="1073741823" FixedLength="false" Unicode="false" />
+          <Property Name="stringdata" Type="String" MaxLength="1073741823" FixedLength="false" Unicode="false" />
+          <Property Name="binarydata" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="lastUpdatedDate" Type="DateTime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="my_aspnet_roles">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="applicationId" Type="Int32" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityType Name="my_aspnet_sessioncleanup">
+          <Key>
+            <PropertyRef Name="ApplicationId" />
+          </Key>
+          <Property Name="LastRun" Type="DateTime" Nullable="false" />
+          <Property Name="IntervalMinutes" Type="Int32" Nullable="false" />
+          <Property Name="ApplicationId" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="my_aspnet_sessions">
+          <Key>
+            <PropertyRef Name="SessionId" />
+            <PropertyRef Name="ApplicationId" />
+          </Key>
+          <Property Name="SessionId" Type="String" MaxLength="191" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ApplicationId" Type="Int32" Nullable="false" />
+          <Property Name="Created" Type="DateTime" Nullable="false" />
+          <Property Name="Expires" Type="DateTime" Nullable="false" />
+          <Property Name="LockDate" Type="DateTime" Nullable="false" />
+          <Property Name="LockId" Type="Int32" Nullable="false" />
+          <Property Name="Timeout" Type="Int32" Nullable="false" />
+          <Property Name="Locked" Type="Boolean" Nullable="false" />
+          <Property Name="SessionItems" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="Flags" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="my_aspnet_sitemap">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Title" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Description" Type="String" MaxLength="512" FixedLength="false" Unicode="false" />
+          <Property Name="Url" Type="String" MaxLength="512" FixedLength="false" Unicode="false" />
+          <Property Name="Roles" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="ParentId" Type="Int32" />
+        </EntityType>
+        <EntityType Name="my_aspnet_users">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="applicationId" Type="Int32" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="256" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="isAnonymous" Type="Boolean" Nullable="false" />
+          <Property Name="lastActivityDate" Type="DateTime" />
+        </EntityType>
+        <EntityType Name="my_aspnet_usersinroles">
+          <Key>
+            <PropertyRef Name="userId" />
+            <PropertyRef Name="roleId" />
+          </Key>
+          <Property Name="userId" Type="Int32" Nullable="false" />
+          <Property Name="roleId" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="olanguage">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="languages_ID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="language" Relationship="Self.fk_Olanguage_languages1" FromRole="olanguage" ToRole="languages" />
+        </EntityType>
+        <EntityType Name="organaization">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityType Name="template_type">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="committees" Relationship="Self.fk_committee_template_type1" FromRole="template_type" ToRole="committee" />
+        </EntityType>
+        <Association Name="ApplicationGroup_ApplicationRoles">
+          <End Role="applicationgroups" Type="Self.applicationgroup" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="applicationgrouproles" Type="Self.applicationgrouprole" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="applicationgroups">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="applicationgrouproles">
+              <PropertyRef Name="ApplicationGroupId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ApplicationGroup_ApplicationUsers">
+          <End Role="applicationgroups" Type="Self.applicationgroup" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="applicationusergroups" Type="Self.applicationusergroup" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="applicationgroups">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="applicationusergroups">
+              <PropertyRef Name="ApplicationGroupId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ApplicationUser_Claims">
+          <End Role="aspnetusers" Type="Self.aspnetuser" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="aspnetuserclaims" Type="Self.aspnetuserclaim" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="aspnetusers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="aspnetuserclaims">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ApplicationUser_Logins">
+          <End Role="aspnetusers" Type="Self.aspnetuser" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="aspnetuserlogins" Type="Self.aspnetuserlogin" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="aspnetusers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="aspnetuserlogins">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_categories_doc_type1">
+          <End Role="doc_type" Type="Self.doc_type" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="categories" Type="Self.category" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="doc_type">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="categories">
+              <PropertyRef Name="type_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_committee_template_type1">
+          <End Role="template_type" Type="Self.template_type" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="committee" Type="Self.committee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="template_type">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="committee">
+              <PropertyRef Name="template_type_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_doc_type_committee1">
+          <End Role="committee" Type="Self.committee" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="doc_type" Type="Self.doc_type" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="committee">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="doc_type">
+              <PropertyRef Name="committee_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_countries_languages">
+          <End Role="languages" Type="Self.language" Multiplicity="1" />
+          <End Role="countries" Type="Self.country" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="languages">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="countries">
+              <PropertyRef Name="languages_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_distrbution_languages1">
+          <End Role="languages" Type="Self.language" Multiplicity="1" />
+          <End Role="distrbution" Type="Self.distrbution" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="languages">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="distrbution">
+              <PropertyRef Name="languages_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Olanguage_languages1">
+          <End Role="languages" Type="Self.language" Multiplicity="1" />
+          <End Role="olanguage" Type="Self.olanguage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="languages">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="olanguage">
+              <PropertyRef Name="languages_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="aspnetuserroles">
+          <End Role="aspnetroles" Type="Self.aspnetrole" Multiplicity="*" />
+          <End Role="aspnetusers" Type="Self.aspnetuser" Multiplicity="*" />
+        </Association>
+        <EntityContainer Name="gdgs1Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="C__migrationhistory" EntityType="Self.C__migrationhistory" />
+          <EntitySet Name="applicationgrouproles" EntityType="Self.applicationgrouprole" />
+          <EntitySet Name="applicationgroups" EntityType="Self.applicationgroup" />
+          <EntitySet Name="applicationusergroups" EntityType="Self.applicationusergroup" />
+          <EntitySet Name="aspnetroles" EntityType="Self.aspnetrole" />
+          <EntitySet Name="aspnetuserclaims" EntityType="Self.aspnetuserclaim" />
+          <EntitySet Name="aspnetuserlogins" EntityType="Self.aspnetuserlogin" />
+          <EntitySet Name="aspnetusers" EntityType="Self.aspnetuser" />
+          <EntitySet Name="categories" EntityType="Self.category" />
+          <EntitySet Name="committees" EntityType="Self.committee" />
+          <EntitySet Name="countries" EntityType="Self.country" />
+          <EntitySet Name="distrbutions" EntityType="Self.distrbution" />
+          <EntitySet Name="doc_type" EntityType="Self.doc_type" />
+          <EntitySet Name="languages" EntityType="Self.language" />
+          <EntitySet Name="my_aspnet_applications" EntityType="Self.my_aspnet_applications" />
+          <EntitySet Name="my_aspnet_membership" EntityType="Self.my_aspnet_membership" />
+          <EntitySet Name="my_aspnet_paths" EntityType="Self.my_aspnet_paths" />
+          <EntitySet Name="my_aspnet_personalizationallusers" EntityType="Self.my_aspnet_personalizationallusers" />
+          <EntitySet Name="my_aspnet_personalizationperuser" EntityType="Self.my_aspnet_personalizationperuser" />
+          <EntitySet Name="my_aspnet_profiles" EntityType="Self.my_aspnet_profiles" />
+          <EntitySet Name="my_aspnet_roles" EntityType="Self.my_aspnet_roles" />
+          <EntitySet Name="my_aspnet_sessioncleanup" EntityType="Self.my_aspnet_sessioncleanup" />
+          <EntitySet Name="my_aspnet_sessions" EntityType="Self.my_aspnet_sessions" />
+          <EntitySet Name="my_aspnet_sitemap" EntityType="Self.my_aspnet_sitemap" />
+          <EntitySet Name="my_aspnet_users" EntityType="Self.my_aspnet_users" />
+          <EntitySet Name="my_aspnet_usersinroles" EntityType="Self.my_aspnet_usersinroles" />
+          <EntitySet Name="olanguages" EntityType="Self.olanguage" />
+          <EntitySet Name="organaizations" EntityType="Self.organaization" />
+          <EntitySet Name="template_type" EntityType="Self.template_type" />
+          <AssociationSet Name="ApplicationGroup_ApplicationRoles" Association="Self.ApplicationGroup_ApplicationRoles">
+            <End Role="applicationgroups" EntitySet="applicationgroups" />
+            <End Role="applicationgrouproles" EntitySet="applicationgrouproles" />
+          </AssociationSet>
+          <AssociationSet Name="ApplicationGroup_ApplicationUsers" Association="Self.ApplicationGroup_ApplicationUsers">
+            <End Role="applicationgroups" EntitySet="applicationgroups" />
+            <End Role="applicationusergroups" EntitySet="applicationusergroups" />
+          </AssociationSet>
+          <AssociationSet Name="ApplicationUser_Claims" Association="Self.ApplicationUser_Claims">
+            <End Role="aspnetusers" EntitySet="aspnetusers" />
+            <End Role="aspnetuserclaims" EntitySet="aspnetuserclaims" />
+          </AssociationSet>
+          <AssociationSet Name="ApplicationUser_Logins" Association="Self.ApplicationUser_Logins">
+            <End Role="aspnetusers" EntitySet="aspnetusers" />
+            <End Role="aspnetuserlogins" EntitySet="aspnetuserlogins" />
+          </AssociationSet>
+          <AssociationSet Name="fk_categories_doc_type1" Association="Self.fk_categories_doc_type1">
+            <End Role="doc_type" EntitySet="doc_type" />
+            <End Role="categories" EntitySet="categories" />
+          </AssociationSet>
+          <AssociationSet Name="fk_committee_template_type1" Association="Self.fk_committee_template_type1">
+            <End Role="template_type" EntitySet="template_type" />
+            <End Role="committee" EntitySet="committees" />
+          </AssociationSet>
+          <AssociationSet Name="fk_doc_type_committee1" Association="Self.fk_doc_type_committee1">
+            <End Role="committee" EntitySet="committees" />
+            <End Role="doc_type" EntitySet="doc_type" />
+          </AssociationSet>
+          <AssociationSet Name="fk_countries_languages" Association="Self.fk_countries_languages">
+            <End Role="languages" EntitySet="languages" />
+            <End Role="countries" EntitySet="countries" />
+          </AssociationSet>
+          <AssociationSet Name="fk_distrbution_languages1" Association="Self.fk_distrbution_languages1">
+            <End Role="languages" EntitySet="languages" />
+            <End Role="distrbution" EntitySet="distrbutions" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Olanguage_languages1" Association="Self.fk_Olanguage_languages1">
+            <End Role="languages" EntitySet="languages" />
+            <End Role="olanguage" EntitySet="olanguages" />
+          </AssociationSet>
+          <AssociationSet Name="aspnetuserroles" Association="Self.aspnetuserroles">
+            <End Role="aspnetroles" EntitySet="aspnetroles" />
+            <End Role="aspnetusers" EntitySet="aspnetusers" />
+          </AssociationSet>
+          <EntitySet Name="final_temp" EntityType="gdgs1Model.final_temp" />
+          <AssociationSet Name="fk_final_temp_categories1" Association="gdgs1Model.fk_final_temp_categories1">
+            <End Role="category" EntitySet="categories" />
+            <End Role="final_temp" EntitySet="final_temp" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="final_temp">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="Title" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="categories_ID" Type="Int32" Nullable="false" />
+          <Property Name="Symbole" Type="String" Nullable="false" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="Count" Type="Int32" Nullable="false" />
+          <Property Name="Reg" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="category" Relationship="gdgs1Model.fk_final_temp_categories1" FromRole="final_temp" ToRole="category" />
+        </EntityType>
+        <Association Name="fk_final_temp_categories1">
+          <End Type="gdgs1Model.category" Role="category" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="gdgs1Model.final_temp" Role="final_temp" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="category">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="final_temp">
+              <PropertyRef Name="categories_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="gdgs1ModelStoreContainer" CdmEntityContainer="gdgs1Entities">
+          <EntitySetMapping Name="C__migrationhistory">
+            <EntityTypeMapping TypeName="gdgs1Model.C__migrationhistory">
+              <MappingFragment StoreEntitySet="__migrationhistory">
+                <ScalarProperty Name="MigrationId" ColumnName="MigrationId" />
+                <ScalarProperty Name="ContextKey" ColumnName="ContextKey" />
+                <ScalarProperty Name="Model" ColumnName="Model" />
+                <ScalarProperty Name="ProductVersion" ColumnName="ProductVersion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="applicationgrouproles">
+            <EntityTypeMapping TypeName="gdgs1Model.applicationgrouprole">
+              <MappingFragment StoreEntitySet="applicationgrouproles">
+                <ScalarProperty Name="ApplicationRoleId" ColumnName="ApplicationRoleId" />
+                <ScalarProperty Name="ApplicationGroupId" ColumnName="ApplicationGroupId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="applicationgroups">
+            <EntityTypeMapping TypeName="gdgs1Model.applicationgroup">
+              <MappingFragment StoreEntitySet="applicationgroups">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Org" ColumnName="Org" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="applicationusergroups">
+            <EntityTypeMapping TypeName="gdgs1Model.applicationusergroup">
+              <MappingFragment StoreEntitySet="applicationusergroups">
+                <ScalarProperty Name="ApplicationUserId" ColumnName="ApplicationUserId" />
+                <ScalarProperty Name="ApplicationGroupId" ColumnName="ApplicationGroupId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="aspnetroles">
+            <EntityTypeMapping TypeName="gdgs1Model.aspnetrole">
+              <MappingFragment StoreEntitySet="aspnetroles">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="aspnetuserclaims">
+            <EntityTypeMapping TypeName="gdgs1Model.aspnetuserclaim">
+              <MappingFragment StoreEntitySet="aspnetuserclaims">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="ClaimType" ColumnName="ClaimType" />
+                <ScalarProperty Name="ClaimValue" ColumnName="ClaimValue" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="aspnetuserlogins">
+            <EntityTypeMapping TypeName="gdgs1Model.aspnetuserlogin">
+              <MappingFragment StoreEntitySet="aspnetuserlogins">
+                <ScalarProperty Name="LoginProvider" ColumnName="LoginProvider" />
+                <ScalarProperty Name="ProviderKey" ColumnName="ProviderKey" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="aspnetusers">
+            <EntityTypeMapping TypeName="gdgs1Model.aspnetuser">
+              <MappingFragment StoreEntitySet="aspnetusers">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Fname" ColumnName="Fname" />
+                <ScalarProperty Name="Lname" ColumnName="Lname" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="EmailConfirmed" ColumnName="EmailConfirmed" />
+                <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
+                <ScalarProperty Name="SecurityStamp" ColumnName="SecurityStamp" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="PhoneNumberConfirmed" ColumnName="PhoneNumberConfirmed" />
+                <ScalarProperty Name="TwoFactorEnabled" ColumnName="TwoFactorEnabled" />
+                <ScalarProperty Name="LockoutEndDateUtc" ColumnName="LockoutEndDateUtc" />
+                <ScalarProperty Name="LockoutEnabled" ColumnName="LockoutEnabled" />
+                <ScalarProperty Name="AccessFailedCount" ColumnName="AccessFailedCount" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="categories">
+            <EntityTypeMapping TypeName="gdgs1Model.category">
+              <MappingFragment StoreEntitySet="categories">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="type_ID" ColumnName="type_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="committees">
+            <EntityTypeMapping TypeName="gdgs1Model.committee">
+              <MappingFragment StoreEntitySet="committee">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="template_type_ID" ColumnName="template_type_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="countries">
+            <EntityTypeMapping TypeName="gdgs1Model.country">
+              <MappingFragment StoreEntitySet="countries">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Article" ColumnName="Article" />
+                <ScalarProperty Name="Article1" ColumnName="Article1" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Short_Name" ColumnName="Short_Name" />
+                <ScalarProperty Name="languages_ID" ColumnName="languages_ID" />
+                <ScalarProperty Name="ISO" ColumnName="ISO" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="distrbutions">
+            <EntityTypeMapping TypeName="gdgs1Model.distrbution">
+              <MappingFragment StoreEntitySet="distrbution">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="languages_ID" ColumnName="languages_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="doc_type">
+            <EntityTypeMapping TypeName="gdgs1Model.doc_type">
+              <MappingFragment StoreEntitySet="doc_type">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="committee_ID" ColumnName="committee_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="languages">
+            <EntityTypeMapping TypeName="gdgs1Model.language">
+              <MappingFragment StoreEntitySet="languages">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Lang_Name" ColumnName="Lang_Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="my_aspnet_applications">
+            <EntityTypeMapping TypeName="gdgs1Model.my_aspnet_applications">
+              <MappingFragment StoreEntitySet="my_aspnet_applications">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="description" ColumnName="description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="my_aspnet_membership">
+            <EntityTypeMapping TypeName="gdgs1Model.my_aspnet_membership">
+              <MappingFragment StoreEntitySet="my_aspnet_membership">
+                <ScalarProperty Name="userId" ColumnName="userId" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Comment" ColumnName="Comment" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="PasswordKey" ColumnName="PasswordKey" />
+                <ScalarProperty Name="PasswordFormat" ColumnName="PasswordFormat" />
+                <ScalarProperty Name="PasswordQuestion" ColumnName="PasswordQuestion" />
+                <ScalarProperty Name="PasswordAnswer" ColumnName="PasswordAnswer" />
+                <ScalarProperty Name="IsApproved" ColumnName="IsApproved" />
+                <ScalarProperty Name="LastActivityDate" ColumnName="LastActivityDate" />
+                <ScalarProperty Name="LastLoginDate" ColumnName="LastLoginDate" />
+                <ScalarProperty Name="LastPasswordChangedDate" ColumnName="LastPasswordChangedDate" />
+                <ScalarProperty Name="CreationDate" ColumnName="CreationDate" />
+                <ScalarProperty Name="IsLockedOut" ColumnName="IsLockedOut" />
+                <ScalarProperty Name="LastLockedOutDate" ColumnName="LastLockedOutDate" />
+                <ScalarProperty Name="FailedPasswordAttemptCount" ColumnName="FailedPasswordAttemptCount" />
+                <ScalarProperty Name="FailedPasswordAttemptWindowStart" ColumnName="FailedPasswordAttemptWindowStart" />
+                <ScalarProperty Name="FailedPasswordAnswerAttemptCount" ColumnName="FailedPasswordAnswerAttemptCount" />
+                <ScalarProperty Name="FailedPasswordAnswerAttemptWindowStart" ColumnName="FailedPasswordAnswerAttemptWindowStart" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="my_aspnet_paths">
+            <EntityTypeMapping TypeName="gdgs1Model.my_aspnet_paths">
+              <MappingFragment StoreEntitySet="my_aspnet_paths">
+                <ScalarProperty Name="applicationId" ColumnName="applicationId" />
+                <ScalarProperty Name="pathId" ColumnName="pathId" />
+                <ScalarProperty Name="path" ColumnName="path" />
+                <ScalarProperty Name="loweredPath" ColumnName="loweredPath" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="my_aspnet_personalizationallusers">
+            <EntityTypeMapping TypeName="gdgs1Model.my_aspnet_personalizationallusers">
+              <MappingFragment StoreEntitySet="my_aspnet_personalizationallusers">
+                <ScalarProperty Name="pathId" ColumnName="pathId" />
+                <ScalarProperty Name="pageSettings" ColumnName="pageSettings" />
+                <ScalarProperty Name="lastUpdatedDate" ColumnName="lastUpdatedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="my_aspnet_personalizationperuser">
+            <EntityTypeMapping TypeName="gdgs1Model.my_aspnet_personalizationperuser">
+              <MappingFragment StoreEntitySet="my_aspnet_personalizationperuser">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="applicationId" ColumnName="applicationId" />
+                <ScalarProperty Name="pathId" ColumnName="pathId" />
+                <ScalarProperty Name="userId" ColumnName="userId" />
+                <ScalarProperty Name="pageSettings" ColumnName="pageSettings" />
+                <ScalarProperty Name="lastUpdatedDate" ColumnName="lastUpdatedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="my_aspnet_profiles">
+            <EntityTypeMapping TypeName="gdgs1Model.my_aspnet_profiles">
+              <MappingFragment StoreEntitySet="my_aspnet_profiles">
+                <ScalarProperty Name="userId" ColumnName="userId" />
+                <ScalarProperty Name="valueindex" ColumnName="valueindex" />
+                <ScalarProperty Name="stringdata" ColumnName="stringdata" />
+                <ScalarProperty Name="binarydata" ColumnName="binarydata" />
+                <ScalarProperty Name="lastUpdatedDate" ColumnName="lastUpdatedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="my_aspnet_roles">
+            <EntityTypeMapping TypeName="gdgs1Model.my_aspnet_roles">
+              <MappingFragment StoreEntitySet="my_aspnet_roles">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="applicationId" ColumnName="applicationId" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="my_aspnet_sessioncleanup">
+            <EntityTypeMapping TypeName="gdgs1Model.my_aspnet_sessioncleanup">
+              <MappingFragment StoreEntitySet="my_aspnet_sessioncleanup">
+                <ScalarProperty Name="LastRun" ColumnName="LastRun" />
+                <ScalarProperty Name="IntervalMinutes" ColumnName="IntervalMinutes" />
+                <ScalarProperty Name="ApplicationId" ColumnName="ApplicationId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="my_aspnet_sessions">
+            <EntityTypeMapping TypeName="gdgs1Model.my_aspnet_sessions">
+              <MappingFragment StoreEntitySet="my_aspnet_sessions">
+                <ScalarProperty Name="SessionId" ColumnName="SessionId" />
+                <ScalarProperty Name="ApplicationId" ColumnName="ApplicationId" />
+                <ScalarProperty Name="Created" ColumnName="Created" />
+                <ScalarProperty Name="Expires" ColumnName="Expires" />
+                <ScalarProperty Name="LockDate" ColumnName="LockDate" />
+                <ScalarProperty Name="LockId" ColumnName="LockId" />
+                <ScalarProperty Name="Timeout" ColumnName="Timeout" />
+                <ScalarProperty Name="Locked" ColumnName="Locked" />
+                <ScalarProperty Name="SessionItems" ColumnName="SessionItems" />
+                <ScalarProperty Name="Flags" ColumnName="Flags" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="my_aspnet_sitemap">
+            <EntityTypeMapping TypeName="gdgs1Model.my_aspnet_sitemap">
+              <MappingFragment StoreEntitySet="my_aspnet_sitemap">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Url" ColumnName="Url" />
+                <ScalarProperty Name="Roles" ColumnName="Roles" />
+                <ScalarProperty Name="ParentId" ColumnName="ParentId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="my_aspnet_users">
+            <EntityTypeMapping TypeName="gdgs1Model.my_aspnet_users">
+              <MappingFragment StoreEntitySet="my_aspnet_users">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="applicationId" ColumnName="applicationId" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="isAnonymous" ColumnName="isAnonymous" />
+                <ScalarProperty Name="lastActivityDate" ColumnName="lastActivityDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="my_aspnet_usersinroles">
+            <EntityTypeMapping TypeName="gdgs1Model.my_aspnet_usersinroles">
+              <MappingFragment StoreEntitySet="my_aspnet_usersinroles">
+                <ScalarProperty Name="userId" ColumnName="userId" />
+                <ScalarProperty Name="roleId" ColumnName="roleId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="olanguages">
+            <EntityTypeMapping TypeName="gdgs1Model.olanguage">
+              <MappingFragment StoreEntitySet="olanguage">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="languages_ID" ColumnName="languages_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="organaizations">
+            <EntityTypeMapping TypeName="gdgs1Model.organaization">
+              <MappingFragment StoreEntitySet="organaization">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="template_type">
+            <EntityTypeMapping TypeName="gdgs1Model.template_type">
+              <MappingFragment StoreEntitySet="template_type">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="aspnetuserroles" TypeName="gdgs1Model.aspnetuserroles" StoreEntitySet="aspnetuserroles">
+            <EndProperty Name="aspnetroles">
+              <ScalarProperty Name="Id" ColumnName="RoleId" />
+            </EndProperty>
+            <EndProperty Name="aspnetusers">
+              <ScalarProperty Name="Id" ColumnName="UserId" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <EntitySetMapping Name="final_temp">
+            <EntityTypeMapping TypeName="gdgs1Model.final_temp">
+              <MappingFragment StoreEntitySet="final_temp">
+                <ScalarProperty Name="Reg" ColumnName="Reg" />
+                <ScalarProperty Name="Count" ColumnName="Count" />
+                <ScalarProperty Name="Symbole" ColumnName="Symbole" />
+                <ScalarProperty Name="categories_ID" ColumnName="categories_ID" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
