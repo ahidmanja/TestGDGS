@@ -112,10 +112,10 @@ namespace IdentitySample.Controllers
 
             g_assembly = Assembly.GetExecutingAssembly();
 
-          //  string source = Server.MapPath(Path.Combine("/", "GDGS/IN/" + fname + ".docx"));
-           // string Dest = Server.MapPath(Path.Combine("/", "GDGS/OUT/" + fname + ".docx"));
-            string source = Server.MapPath(Path.Combine("/", "IN/" + fname + ".docx"));
-            string Dest = Server.MapPath(Path.Combine("/", "OUT/" + fname + ".docx"));
+       string source = Server.MapPath(Path.Combine("/", "GDGS/IN/" + fname + ".docx"));
+       string Dest = Server.MapPath(Path.Combine("/", "GDGS/OUT/" + fname + ".docx"));
+          //  string source = Server.MapPath(Path.Combine("/", "IN/" + fname + ".docx"));
+         //   string Dest = Server.MapPath(Path.Combine("/", "OUT/" + fname + ".docx"));
 
             g_document = DocX.Load(source);
             g_document = CreateDocA(DocX.Load(source), model);
@@ -133,11 +133,11 @@ namespace IdentitySample.Controllers
             string fname = model.tempname.ToString();
             g_assembly = Assembly.GetExecutingAssembly();
 
-            string source = Server.MapPath(Path.Combine("/", "IN/" + fname + ".docx"));
-            string Dest = Server.MapPath(Path.Combine("/", "OUT/" + fname + ".docx"));
+        //    string source = Server.MapPath(Path.Combine("/", "IN/" + fname + ".docx"));
+         //  string Dest = Server.MapPath(Path.Combine("/", "OUT/" + fname + ".docx"));
 
-          //  string source = Server.MapPath(Path.Combine("/", "GDGS/IN/" + fname + ".docx"));
-          //  string Dest = Server.MapPath(Path.Combine("/", "GDGS/OUT/" + fname + ".docx"));
+          string source = Server.MapPath(Path.Combine("/", "GDGS/IN/" + fname + ".docx"));
+           string Dest = Server.MapPath(Path.Combine("/", "GDGS/OUT/" + fname + ".docx"));
 
             string tempname= fname.Remove(fname.Length - 1);
             model.tempname = tempname;
@@ -153,9 +153,9 @@ namespace IdentitySample.Controllers
         
         public ActionResult download(string name)
         {
-            // return File(Url.Content("/GDGS/OUT/" + name + ".docx"), "text/plain", name + ".docx");
+            return File(Url.Content("/GDGS/OUT/" + name + ".docx"), "text/plain", name + ".docx");
          
-            return File(Url.Content("/OUT/" + name + ".docx"), "text/plain", name + ".docx");
+          // return File(Url.Content("/OUT/" + name + ".docx"), "text/plain", name + ".docx");
         }
         public static string formatdate(string date, UnogViewModel model)
         {
@@ -231,12 +231,12 @@ namespace IdentitySample.Controllers
             {
                 case "French":
                     {
-                        lname = "Français";
+                        lname = "français";
                         break;
                     }
                 case "Spanish":
                     {
-                        lname = "Español";
+                        lname = "español";
                         break;
                     }
                 default:
@@ -294,18 +294,14 @@ namespace IdentitySample.Controllers
             string final = "";
             switch (lang)
             {
-                case "English":
+               
+                case "Russian":
                     {
-
+                        var RussianCultureInfo = CultureInfo.CreateSpecificCulture("ru-RU");
                         int num = Convert.ToInt32(model.SNum.ToString());
-                        if (num <= 99)
-                        {
-                            final = num.ToOrdinalWords();
-                        }
-                        else
-                        {
-                            final = model.SNum.ToString() + "th";
-                        }
+                        
+                        final = num.ToOrdinalWords(RussianCultureInfo);
+                       
                         break;
                     }
                 case "French":
@@ -328,7 +324,16 @@ namespace IdentitySample.Controllers
                         int num = Convert.ToInt32(model.SNum.ToString());
                         if (num <= 10)
                         {
-                            final = num.ToOrdinalWords(spanishCultureInfo);
+                            if (num == 1 || num == 3)
+                            {
+                                final = Toordinalspanish(num.ToString());
+                                final = final.Remove(final.Length - 1);
+                            }
+                            // final = num.ToOrdinalWords(spanishCultureInfo);
+                            else
+                            {
+                                final = Toordinalspanish(num.ToString());
+                            }
                         }
                         else
                         {
@@ -346,6 +351,20 @@ namespace IdentitySample.Controllers
                         }
                         break;
                     }
+                default:
+                    {
+
+                        int num = Convert.ToInt32(model.SNum.ToString());
+                        if (num <= 99)
+                        {
+                            final = num.ToOrdinalWords();
+                        }
+                        else
+                        {
+                            final = model.SNum.ToString() + "th";
+                        }
+                        break;
+                    }
             }
 
             final = char.ToUpper(final[0]) + final.Substring(1);
@@ -360,7 +379,7 @@ namespace IdentitySample.Controllers
             int reppos = 0;
             int repposcom = 0;
             int countpos = 0;
-            
+            string[] info1 = info(model);
 
             //Create Date for Header
             string Fdate = model.date.ToString();
@@ -447,12 +466,16 @@ namespace IdentitySample.Controllers
             }
 
             string Fprep = "";
+            string Fpreps = "";
             string FprepW = "";
             string FprepWC = "";
+            string FprepWS = "";
             if (reppos != 0 && countpos!=0)
             {
                 Fprep = Reportnumber(model,SymStr[reppos], model.lang_ID, SymStr[countpos]);
+                Fpreps = Reportnumbers(model, SymStr[reppos], model.lang_ID, SymStr[countpos]);
                 FprepW = ReportnumberW(model, SymStr[reppos], model.lang_ID, SymStr[countpos]);
+                FprepWS = ReportnumberWS(model, SymStr[reppos], model.lang_ID, SymStr[countpos]);
                 FprepWC = ReportnumberWC(model, SymStr[reppos], model.lang_ID, SymStr[countpos]);
             }
             if (repposcom != 0 && countpos != 0)
@@ -465,6 +488,10 @@ namespace IdentitySample.Controllers
                 Fprep = Reportnumber(model, prep, model.lang_ID, SymStr[countpos]);
                 FprepW = ReportnumberW(model, prep, model.lang_ID, SymStr[countpos]);
                 FprepWC = ReportnumberWC(model, prep, model.lang_ID, SymStr[countpos]);
+                Fpreps = Reportnumbers(model, prep, model.lang_ID, SymStr[countpos]);
+                FprepWS = ReportnumberWS(model, prep, model.lang_ID, SymStr[countpos]);
+
+
             }
 
             string fCount = "";
@@ -493,12 +520,24 @@ namespace IdentitySample.Controllers
 
                 using (var str1 = new MemoryStream(content))
                 {
-                    Image image = template.AddImage(str1);
-                    Picture p = image.CreatePicture();
-                    Footer f = template.Footers.first;
-                    Table t = f.Tables[0];
-                    //t.Rows[0].Cells[1].Paragraphs.First().AppendPicture(pR);
-                    t.Rows[0].Cells[1].Paragraphs.First().AppendPicture(p);
+                    if (lang == "A")
+                    {
+                        Image image = template.AddImage(str1);
+                        Picture p = image.CreatePicture();
+                        Footer f = template.Footers.first;
+                        Table t = f.Tables[0];
+                        //t.Rows[0].Cells[1].Paragraphs.First().AppendPicture(pR);
+                        t.Rows[0].Cells[0].Paragraphs.First().AppendPicture(p);
+                    }
+                    else {
+                        Image image = template.AddImage(str1);
+                        Picture p = image.CreatePicture();
+                        Footer f = template.Footers.first;
+                        Table t = f.Tables[0];
+                        //t.Rows[0].Cells[1].Paragraphs.First().AppendPicture(pR);
+                        t.Rows[0].Cells[1].Paragraphs.First().AppendPicture(p);
+                    }
+                    
                 }
             }
 
@@ -567,11 +606,12 @@ namespace IdentitySample.Controllers
            // template.ReplaceText("stitle", Fstitle, false, RegexOptions.IgnoreCase);
 
             template.AddCustomProperty(new CustomProperty("prep", Fprep));
-          //  template.ReplaceText("prep", Fprep, false, RegexOptions.IgnoreCase);
+            template.AddCustomProperty(new CustomProperty("preps", Fpreps));
+            //  template.ReplaceText("prep", Fprep, false, RegexOptions.IgnoreCase);
 
             template.AddCustomProperty(new CustomProperty("prepw", FprepW));
             //template.ReplaceText("prepw", FprepW, false, RegexOptions.IgnoreCase);
-
+            template.AddCustomProperty(new CustomProperty("prepws", FprepWS));
             template.AddCustomProperty(new CustomProperty("prepwc", FprepWC));
          //   template.ReplaceText("prepwc", FprepWC, false, RegexOptions.IgnoreCase);
 
@@ -584,12 +624,27 @@ namespace IdentitySample.Controllers
          //   template.ReplaceText("bar", Fbar, false, RegexOptions.IgnoreCase);
 
             template.AddCustomProperty(new CustomProperty("Date-Generated", xxx));
-         
 
 
+            template.AddCustomProperty(new CustomProperty("Org", "OHCHR"));
+            template.AddCustomProperty(new CustomProperty("Entity", info1[0]));
+            template.AddCustomProperty(new CustomProperty("doctype", info1[1]));
+            template.AddCustomProperty(new CustomProperty("category", info1[2]));
             return template;
         }
-       
+        public static string[] info(UnogViewModel model)
+        {
+            gdgs1Entities db1 = new gdgs1Entities();
+            var item0 = db1.final_temp.FirstOrDefault(p => p.Name == model.tempname);
+            var item = db1.categories.FirstOrDefault(p => p.ID == item0.categories_ID);    
+            var item1 = db1.doc_type.FirstOrDefault(p => p.ID == item.type_ID);
+            var item2 = db1.committees.FirstOrDefault(p => p.ID == item1.committee_ID);
+            string[] info = new string[3];
+            info[0] = item.Name.ToString();
+            info[1] = item1.Name.ToString();
+            info[2] = item2.Name.ToString();
+            return info;
+        }
         public static string getlanguageQR(int id)
         {
             gdgs1Entities db1 = new gdgs1Entities();
@@ -615,14 +670,10 @@ namespace IdentitySample.Controllers
             var count = db1.countries.Where(x => x.languages_ID == model.lang_ID && x.ISO == iso).FirstOrDefault();
             string Cname = count.Short_Name.ToString();
             string Article = count.Article.ToString();
-            bool cat = false;
-            cat = categoryname(model);
             var item = db1.languages.Where(p => p.ID == model.lang_ID).FirstOrDefault();
             string lang = item.Lang_Name.ToString();
 
-            if (cat == true)
-            {
-                switch (lang)
+            switch (lang)
                 {
                     case "English":
                         {
@@ -631,7 +682,15 @@ namespace IdentitySample.Controllers
                         }
                     case "French":
                         {
+                        if (Article == "l'")
+                        {
+                            Cname = Article+ Cname;
+                        }
+                        else
+                        {
                             Cname = Article + " " + Cname;
+                        }
+                           
                             break;
                         }
                     case "Spanish":
@@ -644,12 +703,6 @@ namespace IdentitySample.Controllers
                             break;
                         }
                 }
-            }
-            else
-            {
-                return Cname;
-            }
-
 
           return Cname;
         }
@@ -660,14 +713,10 @@ namespace IdentitySample.Controllers
             var count = db1.countries.Where(x => x.languages_ID == model.lang_ID && x.ISO == iso).FirstOrDefault();
             string Cname = count.Short_Name.ToString();
             string Article = count.Article1.ToString();
-            
-            bool cat = false;
-            cat = categoryname(model);
             var item = db1.languages.Where(p => p.ID == model.lang_ID).FirstOrDefault();
             string lang = item.Lang_Name.ToString();
 
-            if (cat == true)
-            {
+           
                 switch (lang)
                 {
                     case "English":
@@ -681,6 +730,12 @@ namespace IdentitySample.Controllers
                             {
                                 break;
                             }
+                          if (Article == "l'")
+                             {
+                                Cname = Article + Cname;
+                                break;
+                            }
+                            
                             else
                             {
                                 Cname = Article + " " + Cname;
@@ -705,11 +760,7 @@ namespace IdentitySample.Controllers
                             break;
                         }
                 }
-            }
-            else
-            {
-                return Cname;
-            }
+            
 
 
             return Cname;
@@ -721,38 +772,7 @@ namespace IdentitySample.Controllers
             var count = db1.countries.Where(x => x.languages_ID == model.lang_ID && x.ISO == iso).FirstOrDefault();
             string Cname = count.Short_Name.ToString();
             string Article = count.Article.ToString();
-            bool cat = false;
-            cat = categoryname(model);
-           // var item = db1.languages.Where(p => p.ID == model.lang_ID).FirstOrDefault();
-           // string lang = item.Lang_Name.ToString();
-
-            //if (cat == true)
-            //{
-            //    switch (lang)
-            //    {
-            //        case "English":
-            //            {
-
-            //                break;
-            //            }
-            //        case "French":
-            //            {
-            //                Cname = Article + " " + Cname;
-            //                break;
-            //            }
-            //        case "Spanish":
-            //            {
-            //                Cname = Article + " " + Cname;
-            //                break;
-            //            }
-            //    }
-            //}
-            //else
-            //{
-            //    return Cname;
-            //}
-
-
+           
             return Cname;
         }
         public static string getCountwithSrticle(string iso, UnogViewModel model)
@@ -762,25 +782,15 @@ namespace IdentitySample.Controllers
             var count = db1.countries.Where(x => x.languages_ID == model.lang_ID && x.ISO == iso).FirstOrDefault();
             string Cname = count.Short_Name.ToString();
             string Article = count.Article.ToString();
-            return Article + " " + Cname;
-        }
-        public static bool categoryname(UnogViewModel model)
-        {
-            string str = model.tempname.ToString();
-            //str = str.Substring(0, str.Length-1);
-            gdgs1Entities db1 = new gdgs1Entities();
-            var item = db1.final_temp.FirstOrDefault(p => p.Name == str);
-            int x = item.categories_ID;
-            var item1 = db1.categories.FirstOrDefault(p => p.ID == x);
-            string cat = item1.Name.ToString();
-            if (cat == "Country Report" || cat== "Country Report -Optional Procedure")
+            if (Article == "l'")
             {
-                return false;
+                return Article + Cname;
             }
             else
             {
-                return true;
+                return Article + " " + Cname;
             }
+           
         }
         public static string ReportnumberWC(UnogViewModel model, string prep, int langg, string iso)
         {
@@ -790,112 +800,7 @@ namespace IdentitySample.Controllers
             string lang = item.Lang_Name.ToString();
 
             string final = "";
-            //string country = getCount(iso, model);
-            // string Country1 = getCountwithSrticle(iso, model);
-         //   bool cat = false;
-         //   cat = categoryname(model);
-        //    if (cat == true)
-       //     {
-         //       switch (lang)
-         //       {
-         //           case "English":
-         //               {
-         //                   string cc = prep;
-         //                   string[] com = cc.Split('-');
-
-         //                   //case single number
-         //                   if (com.Length == 1)
-         //                   {
-         //                       var engCultureInfo = CultureInfo.CreateSpecificCulture("en-US");
-         //                       int x = Convert.ToInt32(prep);
-         //                       final = x.ToOrdinalWords(engCultureInfo);
-         //                       if (final == "first")
-         //                       {
-         //                           final = "initial report";
-         //                       }
-         //                       else { final = final + " periodic report"; }
-         //                   }
-
-         //                   //case combined number
-         //                   if (com.Length > 1)
-         //                   {
-         //                       var engCultureInfo = CultureInfo.CreateSpecificCulture("en-US");
-         //                       int x = Convert.ToInt32(com[0]);
-         //                       int y = Convert.ToInt32(com[1]);
-         //                       string Fprep1 = x.ToOrdinalWords(engCultureInfo);
-         //                       string Fprep2 = y.ToOrdinalWords(engCultureInfo);
-         //                       //case 4 and 5 or 5 and 6
-         //                       if (x == y - 1)
-         //                       {
-         //                           if (Fprep1 == "first")
-         //                           {
-         //                               Fprep1 = "initial ";
-         //                               final = Fprep1 + "and " + Fprep2 + " combined reports";
-         //                           }
-         //                           else { final = Fprep1 + " and " + Fprep2 + " combined reports"; }
-         //                       }
-         //                       //case 1 - 5 or 3-10
-         //                       if (x != y - 1)
-         //                       {
-         //                           if (Fprep1 == "first")
-         //                           {
-         //                               Fprep1 = "initial ";
-         //                               final = Fprep1 + " to " + Fprep2 + " combined reports";
-         //                           }
-         //                           else { final = Fprep1 + " to " + Fprep2 + " combined reports"; }
-         //                       }
-
-         //                   }
-         //                   break;
-         //               }
-         //           case "French":
-         //               {
-         //                   string cc = prep;
-         //                   string[] com = cc.Split('-');
-         //                   var frenchCultureInfo = CultureInfo.CreateSpecificCulture("fr-fr");
-
-         //                   //case single number
-         //                   if (com.Length == 1)
-         //                   {
-         //                       int x = Convert.ToInt32(prep);
-         //                       final = x.ToOrdinalWords(frenchCultureInfo);
-         //                       if (final == "premier")
-         //                       {
-         //                           final = "rapport initial";
-         //                       }
-         //                       else { final = final + " rapport périodique"; }
-         //                   }
-         //                   //case combined number
-         //                   if (com.Length > 1)
-         //                   {
-         //                       int x = Convert.ToInt32(com[0]);
-         //                       int y = Convert.ToInt32(com[1]);
-         //                       string Fprep1 = x.ToOrdinalWords(frenchCultureInfo);
-         //                       string Fprep2 = y.ToOrdinalWords(frenchCultureInfo);
-         //                       //case 4 and 5 or 5 and 6
-
-
-         //                       if (Fprep1 == "premier")
-         //                       {
-         //                           Fprep1 = "rapport initial";
-         //                           final = "rapport valant " + Fprep1 + " à " + Fprep2 + " rapports périodiques";
-         //                       }
-         //                       else { final = "rapport valant " + Fprep1 + " à " + Fprep2 + " rapports périodiques"; }
-
-
-         //                   }
-         //                   break;
-         //               }
-         //           case "Spanish":
-         //               {
-         //                   final = SpanishNumW(model, prep, iso);
-
-         //                   break;
-         //               }
-         //       }
-         ////   }
-         //   //if (cat == false)
-         //   //{
+            
                 switch (lang)
                 {
                     case "English":
@@ -912,7 +817,7 @@ namespace IdentitySample.Controllers
                                 final = final.Substring(0, 1).ToUpperInvariant() + final.Substring(1);
                                 if (final == "First")
                                 {
-                                    final = "Initial report ";
+                                    final = "Initial report";
                                 }
                                 else { final = final + " periodic report "; }
                             }
@@ -929,26 +834,81 @@ namespace IdentitySample.Controllers
                                 {
                                     if (Fprep1 == "first")
                                     {
-                                        Fprep1 = "Initial ";
-                                        final = Fprep1 + "and " + Fprep2 + " combined reports ";
+                                        Fprep1 = "initial";
+                                    final = "Combined " + Fprep1 + " and " + Fprep2 + " reports " ;
                                     }
-                                    else { Fprep1 = Fprep1 + " and " + Fprep2 + " combined reports "; }
+                                    else { final = "Combined " + Fprep1 + " and " + Fprep2 + " reports "; }
                                 }
                                 //case 1 - 5 or 3-10
                                 if (x != y - 1)
                                 {
                                     if (Fprep1 == "first")
                                     {
-                                        Fprep1 = "Initial ";
-                                        final = Fprep1 + "- " + Fprep2 + " combined reports";
-                                    }
-                                    else { Fprep1 = Fprep1 + " - " + Fprep2 + " combined reports "; }
+                                        Fprep1 = "initial";
+                                    final = "Combined " + Fprep1 + " to " + Fprep2 + " reports ";
+                                }
+                                    else { final = "Combined " + Fprep1 + " to " + Fprep2 + " reports "; }
                                 }
 
                             }
+
                             break;
                         }
-                    case "French":
+                //case "Russian":
+                //    {
+                //        string cc = prep;
+                //        string[] com = cc.Split('-');
+
+                //        //case single number
+                //        if (com.Length == 1)
+                //        {
+                //            var RusCultureInfo = CultureInfo.CreateSpecificCulture("ru-RU");
+                //            int x = Convert.ToInt32(prep);
+                //            final = x.ToOrdinalWords(RusCultureInfo);
+                //            final = final.Substring(0, 1).ToUpperInvariant() + final.Substring(1);
+                //            if (final == "Первый")
+                //            {
+                //                final = "Первоначальные доклады";
+                //            }
+                //            else { final = final + " периодические доклады"; }
+                //        }
+
+                //        //case combined number
+                //        if (com.Length > 1)
+                //        {
+                //            var RusCultureInfo = CultureInfo.CreateSpecificCulture("ru-RU");
+                //            int x = Convert.ToInt32(com[0]);
+                //            int y = Convert.ToInt32(com[1]);
+                //            string Fprep1 = x.ToOrdinalWords(RusCultureInfo);
+                //            string Fprep2 = y.ToOrdinalWords(RusCultureInfo);
+                //            //case 4 and 5 or 5 and 6
+                //            if (x == y - 1)
+                //            {
+                //                if (Fprep1 == "первый")
+                //                {
+                //                    Fprep1 = "первоначальному ";
+                //                    Fprep1 = Fprep1.Substring(0, 1).ToUpperInvariant() + Fprep1.Substring(1);
+                //                    final = Fprep1 + " и " + Fprep2 + " периодическим докладам";
+                //                }
+                //                else { Fprep1 = "объединенным " +Fprep1 + " и " + Fprep2 + " периодическим докладам"; }
+                //            }
+                //            //case 1 - 5 or 3-10
+                //            if (x != y - 1)
+                //            {
+                //                if (Fprep1 == "первый")
+                //                {
+                //                    Fprep1 = "первоначальному ";
+                //                    Fprep1 = Fprep1.Substring(0, 1).ToUpperInvariant() + Fprep1.Substring(1);
+                //                    final = Fprep1 + "- " + Fprep2 + " периодическим докладам";
+                //                }
+                //                else { Fprep1 = "объединенным " + Fprep1 + " - " + Fprep2 + " периодическим докладам"; }
+                //            }
+
+                //        }
+                //        break;
+                //    }
+
+                case "French":
                         {
                             string cc = prep;
                             string[] com = cc.Split('-');
@@ -973,9 +933,19 @@ namespace IdentitySample.Controllers
                                 int y = Convert.ToInt32(com[1]);
                                 string Fprep1 = x.ToOrdinalWords(frenchCultureInfo);
                                 string Fprep2 = y.ToOrdinalWords(frenchCultureInfo);
-                                //case 4 and 5 or 5 and 6
+                            //case 4 and 5 or 5 and 6
+                            if (x == y - 1)
+                            {
+                                if (Fprep1 == "premier")
+                                {
+                                    Fprep1 = "initial ";
+                                    final = "Rapport valant " + Fprep1 + " et " + Fprep2 + " rapports périodiques";
+                                }
+                                else { final = "Rapport valant " + Fprep1 + " et " + Fprep2 + " rapports périodiques"; }
 
-
+                            }
+                            if (x != y - 1)
+                            {
                                 if (Fprep1 == "premier")
                                 {
                                     Fprep1 = "initial ";
@@ -983,8 +953,10 @@ namespace IdentitySample.Controllers
                                 }
                                 else { final = "Rapport valant " + Fprep1 + " à " + Fprep2 + " rapports périodiques"; }
 
-
                             }
+
+
+                        }
                             break;
                         }
                     case "Spanish":
@@ -993,6 +965,11 @@ namespace IdentitySample.Controllers
 
                             break;
                         }
+                default:
+                    {
+                        final = "Not Supported";
+                        break;
+                    }
                 }
 
             //}
@@ -1045,20 +1022,20 @@ namespace IdentitySample.Controllers
                                 {
                                     if (Fprep1 == "first")
                                     {
-                                        Fprep1 = "initial ";
-                                        final = Fprep1 + "and " + Fprep2 + " combined reports";
+                                        Fprep1 = "initial";
+                                    final = "combined " + Fprep1 + " and " + Fprep2 + " reports ";
                                     }
-                                    else { final = Fprep1 + " and " + Fprep2 + " combined reports"; }
+                                    else { final = "combined " + Fprep1 + " and " + Fprep2 + " reports "; }
                                 }
                                 //case 1 - 5 or 3-10
                                 if (x != y - 1)
                                 {
                                     if (Fprep1 == "first")
                                     {
-                                        Fprep1 = "initial ";
-                                        final = Fprep1 + " to " + Fprep2 + " combined reports";
-                                    }
-                                    else { final = Fprep1 + " to " + Fprep2 + " combined reports"; }
+                                        Fprep1 = "initial";
+                                    final = "combined " + Fprep1 + " to " + Fprep2 + " reports ";
+                                }
+                                    else { final = "combined " + Fprep1 + " to " + Fprep2 + " reports "; }
                                 }
 
                             }
@@ -1088,9 +1065,20 @@ namespace IdentitySample.Controllers
                                 int y = Convert.ToInt32(com[1]);
                                 string Fprep1 = x.ToOrdinalWords(frenchCultureInfo);
                                 string Fprep2 = y.ToOrdinalWords(frenchCultureInfo);
-                                //case 4 and 5 or 5 and 6
+                            //case 4 and 5 or 5 and 6
 
+                            if (x == y - 1)
+                            {
+                                if (Fprep1 == "premier")
+                                {
+                                    Fprep1 = "rapport initial";
+                                    final = "rapport valant " + Fprep1 + " et " + Fprep2 + " rapports périodiques";
+                                }
+                                else { final = "rapport valant " + Fprep1 + " et " + Fprep2 + " rapports périodiques"; }
 
+                            }
+                            if (x != y - 1)
+                            {
                                 if (Fprep1 == "premier")
                                 {
                                     Fprep1 = "rapport initial";
@@ -1098,8 +1086,10 @@ namespace IdentitySample.Controllers
                                 }
                                 else { final = "rapport valant " + Fprep1 + " à " + Fprep2 + " rapports périodiques"; }
 
-
                             }
+
+
+                        }
                             break;
                         }
                     case "Spanish":
@@ -1108,7 +1098,246 @@ namespace IdentitySample.Controllers
 
                             break;
                         }
-                }
+                default:
+                    {
+                        final = "Not Supported";
+                        break;
+                    }
+            }
+            //}
+            //if (cat == false)
+            //{
+            //    switch (lang)
+            //    {
+            //        case "English":
+            //            {
+            //                string cc = prep;
+            //                string[] com = cc.Split('-');
+
+            //                //case single number
+            //                if (com.Length == 1)
+            //                {
+            //                    var engCultureInfo = CultureInfo.CreateSpecificCulture("en-US");
+            //                    int x = Convert.ToInt32(prep);
+            //                    final = x.ToOrdinalWords(engCultureInfo);
+            //                    final = final.Substring(0, 1).ToUpperInvariant() + final.Substring(1);
+            //                    if (final == "First")
+            //                    {
+            //                        final = "Initial report ";
+            //                    }
+            //                    else { final = final + " periodic report "; }
+            //                }
+
+            //                //case combined number
+            //                if (com.Length > 1)
+            //                {
+            //                    int x = Convert.ToInt32(com[0]);
+            //                    int y = Convert.ToInt32(com[1]);
+            //                    string Fprep1 = x.ToOrdinalWords();
+            //                    string Fprep2 = y.ToOrdinalWords();
+            //                    //case 4 and 5 or 5 and 6
+            //                    if (x == y - 1)
+            //                    {
+            //                        if (Fprep1 == "first")
+            //                        {
+            //                            Fprep1 = "Initial ";
+            //                            final = Fprep1 + "and " + Fprep2 + " combined reports ";
+            //                        }
+            //                        else { Fprep1 = Fprep1 + " and " + Fprep2 + " combined reports "; }
+            //                    }
+            //                    //case 1 - 5 or 3-10
+            //                    if (x != y - 1)
+            //                    {
+            //                        if (Fprep1 == "first")
+            //                        {
+            //                            Fprep1 = "Initial ";
+            //                            final = Fprep1 + "- " + Fprep2 + " combined reports";
+            //                        }
+            //                        else { Fprep1 = Fprep1 + " - " + Fprep2 + " combined reports "; }
+            //                    }
+
+            //                }
+            //                break;
+            //            }
+            //        case "French":
+            //            {
+            //                string cc = prep;
+            //                string[] com = cc.Split('-');
+            //                var frenchCultureInfo = CultureInfo.CreateSpecificCulture("fr-fr");
+
+            //                //case single number
+            //                if (com.Length == 1)
+            //                {
+            //                    int x = Convert.ToInt32(prep);
+            //                    final = x.ToOrdinalWords(frenchCultureInfo);
+            //                    final = final.Substring(0, 1).ToUpper() + final.Substring(1);
+            //                    if (final == "Premier")
+            //                    {
+            //                        final = "Rapport initiaux ";
+            //                    }
+            //                    else { final = final + " rapport périodique "; }
+            //                }
+            //                //case combined number
+            //                if (com.Length > 1)
+            //                {
+            //                    int x = Convert.ToInt32(com[0]);
+            //                    int y = Convert.ToInt32(com[1]);
+            //                    string Fprep1 = x.ToOrdinalWords(frenchCultureInfo);
+            //                    string Fprep2 = y.ToOrdinalWords(frenchCultureInfo);
+            //                    //case 4 and 5 or 5 and 6
+
+
+            //                    if (Fprep1 == "premier")
+            //                    {
+            //                        Fprep1 = "initial ";
+            //                        final = "Rapport valant " + Fprep1 + " à " + Fprep2 + " rapports périodiques";
+            //                    }
+            //                    else { final = "Rapport valant " + Fprep1 + " à " + Fprep2 + " rapports périodiques"; }
+
+
+            //                }
+            //                break;
+            //            }
+            //        case "Spanish":
+            //            {
+            //                final = SpanishNum1(model, prep, iso);
+
+            //                break;
+            //            }
+            //    }
+
+            //}
+            return final;
+        }
+        public static string ReportnumberWS(UnogViewModel model, string prep, int langg, string iso)
+        {
+            gdgs1Entities db1 = new gdgs1Entities();
+
+            var item = db1.languages.Where(p => p.ID == langg).FirstOrDefault();
+            string lang = item.Lang_Name.ToString();
+
+            string final = "";
+            //string country = getCount(iso, model);
+            // string Country1 = getCountwithSrticle(iso, model);
+            //  bool cat = false;
+            //  cat = categoryname(model);
+            //if (cat == true)
+            //{
+            switch (lang)
+            {
+                case "English":
+                    {
+                        string cc = prep;
+                        string[] com = cc.Split('-');
+
+                        //case single number
+                        if (com.Length == 1)
+                        {
+                            var engCultureInfo = CultureInfo.CreateSpecificCulture("en-US");
+                            int x = Convert.ToInt32(prep);
+                            final = x.ToOrdinalWords(engCultureInfo);
+                            if (final == "first")
+                            {
+                                final = "initial report";
+                            }
+                            else { final = final + " periodic report"; }
+                        }
+
+                        //case combined number
+                        if (com.Length > 1)
+                        {
+                            var engCultureInfo = CultureInfo.CreateSpecificCulture("en-US");
+                            int x = Convert.ToInt32(com[0]);
+                            int y = Convert.ToInt32(com[1]);
+                            string Fprep1 = x.ToOrdinalWords(engCultureInfo);
+                            string Fprep2 = y.ToOrdinalWords(engCultureInfo);
+                            //case 4 and 5 or 5 and 6
+                            if (x == y - 1)
+                            {
+                                if (Fprep1 == "first")
+                                {
+                                    Fprep1 = "initial";
+                                    final = "combined " + Fprep1 + " and " + Fprep2 + " reports";
+                                }
+                                else { final = "combined " + Fprep1 + " and " + Fprep2 + " reports"; }
+                            }
+                            //case 1 - 5 or 3-10
+                            if (x != y - 1)
+                            {
+                                if (Fprep1 == "first")
+                                {
+                                    Fprep1 = "initial";
+                                    final = "combined " + Fprep1 + " to " + Fprep2 + " reports";
+                                }
+                                else { final = "combined " + Fprep1 + " to " + Fprep2 + " reports"; }
+                            }
+
+                        }
+                        break;
+                    }
+                case "French":
+                    {
+                        string cc = prep;
+                        string[] com = cc.Split('-');
+                        var frenchCultureInfo = CultureInfo.CreateSpecificCulture("fr-fr");
+
+                        //case single number
+                        if (com.Length == 1)
+                        {
+                            int x = Convert.ToInt32(prep);
+                            final = x.ToOrdinalWords(frenchCultureInfo);
+                            if (final == "premier")
+                            {
+                                final = "rapport initial";
+                            }
+                            else { final = final + " rapport périodique"; }
+                        }
+                        //case combined number
+                        if (com.Length > 1)
+                        {
+                            int x = Convert.ToInt32(com[0]);
+                            int y = Convert.ToInt32(com[1]);
+                            string Fprep1 = x.ToOrdinalWords(frenchCultureInfo);
+                            string Fprep2 = y.ToOrdinalWords(frenchCultureInfo);
+                            //case 4 and 5 or 5 and 6
+
+                            if (x == y - 1)
+                            {
+                                if (Fprep1 == "premier")
+                                {
+                                    Fprep1 = "rapport initial";
+                                    final = "rapport valant " + Fprep1 + " et " + Fprep2 + " rapports périodiques";
+                                }
+                                else { final = "rapport valant " + Fprep1 + " et " + Fprep2 + " rapports périodiques"; }
+
+                            }
+                            if (x != y - 1)
+                            {
+                                if (Fprep1 == "premier")
+                                {
+                                    Fprep1 = "rapport initial";
+                                    final = "rapport valant " + Fprep1 + " à " + Fprep2 + " rapports périodiques";
+                                }
+                                else { final = "rapport valant " + Fprep1 + " à " + Fprep2 + " rapports périodiques"; }
+
+                            }
+
+
+                        }
+                        break;
+                    }
+                case "Spanish":
+                    {
+                        final = SpanishNumWithoutArticle(model, prep, iso);
+
+                        break;
+                    }
+                default:
+                    {
+                        final = "Not Supported";
+                        break;
+                    }
+            }
             //}
             //if (cat == false)
             //{
@@ -1261,20 +1490,21 @@ namespace IdentitySample.Controllers
                                 {
                                     if (Fprep1 == "first")
                                     {
-                                        Fprep1 = "initial ";
-                                        final = Fprep1 + "and " + Fprep2 + " combined reports " + Country1;
+                                        Fprep1 = "initial";
+                                    final = "combined " + Fprep1 + " and " + Fprep2 + " reports " + Country1;
+                                  
                                     }
-                                    else { final = Fprep1 + " and " + Fprep2 + " combined reports " + Country1; }
+                                    else { final = "combined " + Fprep1 + " and " + Fprep2 + " reports " + Country1; }
                                 }
                                 //case 1 - 5 or 3-10
                                 if (x != y - 1)
                                 {
                                     if (Fprep1 == "first")
                                     {
-                                        Fprep1 = "initial ";
-                                        final = Fprep1 + " to " + Fprep2 + " combined reports " + Country1;
+                                        Fprep1 = "initial";
+                                    final = "combined " + Fprep1 + " to " + Fprep2 + " reports " + Country1;
                                     }
-                                    else { final = Fprep1 + " to " + Fprep2 + " combined reports " + Country1; }
+                                    else { final = "combined " + Fprep1 + " to " + Fprep2 + " reports " + Country1; }
                                 }
 
                             }
@@ -1304,9 +1534,19 @@ namespace IdentitySample.Controllers
                                 int y = Convert.ToInt32(com[1]);
                                 string Fprep1 = x.ToOrdinalWords(frenchCultureInfo);
                                 string Fprep2 = y.ToOrdinalWords(frenchCultureInfo);
-                                //case 4 and 5 or 5 and 6
+                            //case 4 and 5 or 5 and 6
+                            if (x == y - 1)
+                            {
+                                if (Fprep1 == "premier")
+                                {
+                                    Fprep1 = "rapport initial";
+                                    final = "rapport " + Country1 + " valant " + Fprep1 + " et " + Fprep2 + " rapports périodiques";
+                                }
+                                else { final = "rapport " + Country1 + " valant " + Fprep1 + " et " + Fprep2 + " rapports périodiques"; }
 
-
+                            }
+                            if (x != y - 1)
+                            {
                                 if (Fprep1 == "premier")
                                 {
                                     Fprep1 = "rapport initial";
@@ -1314,8 +1554,10 @@ namespace IdentitySample.Controllers
                                 }
                                 else { final = "rapport " + Country1 + " valant " + Fprep1 + " à " + Fprep2 + " rapports périodiques"; }
 
-
                             }
+
+
+                        }
                             break;
                         }
                     case "Spanish":
@@ -1324,7 +1566,12 @@ namespace IdentitySample.Controllers
 
                             break;
                         }
-                }
+                default:
+                    {
+                        final = "Not Supported";
+                        break;
+                    }
+            }
             //}
             //if (cat == false)
             //{
@@ -1430,119 +1677,240 @@ namespace IdentitySample.Controllers
             //}
             return final;
         }
-        //public static string SpanishNum1(UnogViewModel model, string prep,string iso)
-        //{
-        //    string num1 = prep;
-        //    string[] str = num1.Split('-');
-        //    string final = "";
-        //    var spanishCultureInfo = CultureInfo.CreateSpecificCulture("es-ES");
-        //    if (str.Length == 1)
-        //    {
+        public static string Reportnumbers(UnogViewModel model, string prep, int langg, string iso)
+        {
+            gdgs1Entities db1 = new gdgs1Entities();
+
+            var item = db1.languages.Where(p => p.ID == langg).FirstOrDefault();
+            string lang = item.Lang_Name.ToString();
+
+            string final = "";
+            //string country = getCount(iso , model);
+            string Country1 = getCountwithSrticle(iso, model);
+            //bool cat = false;
+            //cat = categoryname(model);
+            //if (cat == true)
+            //{
+            switch (lang)
+            {
+                case "English":
+                    {
+                        string cc = prep;
+                        string[] com = cc.Split('-');
+
+                        //case single number
+                        if (com.Length == 1)
+                        {
+                            var engCultureInfo = CultureInfo.CreateSpecificCulture("en-US");
+                            int x = Convert.ToInt32(prep);
+                            final = x.ToOrdinalWords(engCultureInfo);
+                            if (final == "first")
+                            {
+                                final = "initial report " + Country1;
+                            }
+                            else { final = final + " periodic report " + Country1; }
+                        }
+
+                        //case combined number
+                        if (com.Length > 1)
+                        {
+                            var engCultureInfo = CultureInfo.CreateSpecificCulture("en-US");
+                            int x = Convert.ToInt32(com[0]);
+                            int y = Convert.ToInt32(com[1]);
+                            string Fprep1 = x.ToOrdinalWords(engCultureInfo);
+                            string Fprep2 = y.ToOrdinalWords(engCultureInfo);
+                            //case 4 and 5 or 5 and 6
+                            if (x == y - 1)
+                            {
+                                if (Fprep1 == "first")
+                                {
+                                    Fprep1 = "initial";
+                                    final = "combined " + Fprep1 + " and " + Fprep2 + " reports " + Country1;
+                                }
+                                else { final = "combined " + Fprep1 + " and " + Fprep2 + " reports " + Country1; }
+                            }
+                            //case 1 - 5 or 3-10
+                            if (x != y - 1)
+                            {
+                                if (Fprep1 == "first")
+                                {
+                                    Fprep1 = "initial";
+                                    final = "combined " + Fprep1 + " to " + Fprep2 + " reports " + Country1;
+                                }
+                                else { final = "combined " + Fprep1 + " to " + Fprep2 + " reports " + Country1; }
+                            }
+
+                        }
+                        break;
+                    }
+                case "French":
+                    {
+                        string cc = prep;
+                        string[] com = cc.Split('-');
+                        var frenchCultureInfo = CultureInfo.CreateSpecificCulture("fr-fr");
+
+                        //case single number
+                        if (com.Length == 1)
+                        {
+                            int x = Convert.ToInt32(prep);
+                            final = x.ToOrdinalWords(frenchCultureInfo);
+                            if (final == "premier")
+                            {
+                                final = "rapport initial " + Country1;
+                            }
+                            else { final = final + " rapport périodique " + Country1; }
+                        }
+                        //case combined number
+                        if (com.Length > 1)
+                        {
+                            int x = Convert.ToInt32(com[0]);
+                            int y = Convert.ToInt32(com[1]);
+                            string Fprep1 = x.ToOrdinalWords(frenchCultureInfo);
+                            string Fprep2 = y.ToOrdinalWords(frenchCultureInfo);
+                            //case 4 and 5 or 5 and 6
+                            if (x == y - 1)
+                            {
+                                if (Fprep1 == "premier")
+                                {
+                                    Fprep1 = "rapport initial";
+                                    final = "rapport " + Country1 + " valant " + Fprep1 + " et " + Fprep2 + " rapports périodiques";
+                                }
+                                else { final = "rapport " + Country1 + " valant " + Fprep1 + " et " + Fprep2 + " rapports périodiques"; }
+
+                            }
+                            if (x != y - 1)
+                            {
+                                if (Fprep1 == "premier")
+                                {
+                                    Fprep1 = "rapport initial";
+                                    final = "rapport " + Country1 + " valant " + Fprep1 + " à " + Fprep2 + " rapports périodiques";
+                                }
+                                else { final = "rapport " + Country1 + " valant " + Fprep1 + " à " + Fprep2 + " rapports périodiques"; }
+
+                            }
 
 
-        //        int num = Convert.ToInt32(prep);
+                        }
+                        break;
+                    }
+                case "Spanish":
+                    {
+                        final = SpanishNums(model, prep, iso);
 
-        //        if (num <= 10)
-        //        {
+                        break;
+                    }
+                default:
+                    {
+                        final = "Not Supported";
+                        break;
+                    }
+            }
+            //}
+            //if (cat == false)
+            //{
+            //    switch (lang)
+            //    {
+            //        case "English":
+            //            {
+            //                string cc =prep;
+            //                string[] com = cc.Split('-');
 
-        //            final = num.ToOrdinalWords(spanishCultureInfo);
-        //            final = final.Substring(0, 1).ToUpper() + final.Substring(1);
-        //            if (final == "Primer")
-        //            {
-        //                final = "Informe iniciales";
-        //            }
-        //            else
-        //            {
+            //                //case single number
+            //                if (com.Length == 1)
+            //                {
+            //                    var engCultureInfo = CultureInfo.CreateSpecificCulture("en-US");
+            //                    int x = Convert.ToInt32(prep);
+            //                    final = x.ToOrdinalWords(engCultureInfo);
+            //                    final = final.Substring(0, 1).ToUpperInvariant() + final.Substring(1);
+            //                    if (final == "First")
+            //                    {
+            //                        final = "Initial report ";
+            //                    }
+            //                    else { final = final + " periodic report "; }
+            //                }
+
+            //                //case combined number
+            //                if (com.Length > 1)
+            //                {
+            //                    int x = Convert.ToInt32(com[0]);
+            //                    int y = Convert.ToInt32(com[1]);
+            //                    string Fprep1 = x.ToOrdinalWords();
+            //                    string Fprep2 = y.ToOrdinalWords();
+            //                    //case 4 and 5 or 5 and 6
+            //                    if (x == y - 1)
+            //                    {
+            //                        if (Fprep1 == "first")
+            //                        {
+            //                            Fprep1 = "Initial ";
+            //                            final = Fprep1 + "and " + Fprep2 + " combined reports ";
+            //                        }
+            //                        else { Fprep1 = Fprep1 + " and " + Fprep2 + " combined reports "; }
+            //                    }
+            //                    //case 1 - 5 or 3-10
+            //                    if (x != y - 1)
+            //                    {
+            //                        if (Fprep1 == "first")
+            //                        {
+            //                            Fprep1 = "Initial ";
+            //                            final = Fprep1 + "- " + Fprep2 + " combined reports";
+            //                        }
+            //                        else { Fprep1 = Fprep1 + " - " + Fprep2 + " combined reports "; }
+            //                    }
+
+            //                }
+            //                break;
+            //            }
+            //        case "French":
+            //            {
+            //                string cc = prep;
+            //                string[] com = cc.Split('-');
+            //                var frenchCultureInfo = CultureInfo.CreateSpecificCulture("fr-fr");
+
+            //                //case single number
+            //                if (com.Length == 1)
+            //                {
+            //                    int x = Convert.ToInt32(prep);
+            //                    final = x.ToOrdinalWords(frenchCultureInfo);
+            //                    final = final.Substring(0, 1).ToUpper() + final.Substring(1);
+            //                    if (final == "Premier")
+            //                    {
+            //                        final = "Rapport initiaux ";
+            //                    }
+            //                    else { final = final + " rapport périodique "; }
+            //                }
+            //                //case combined number
+            //                if (com.Length > 1)
+            //                {
+            //                    int x = Convert.ToInt32(com[0]);
+            //                    int y = Convert.ToInt32(com[1]);
+            //                    string Fprep1 = x.ToOrdinalWords(frenchCultureInfo);
+            //                    string Fprep2 = y.ToOrdinalWords(frenchCultureInfo);
+            //                    //case 4 and 5 or 5 and 6
 
 
-        //                final = num.ToOrdinalWords(spanishCultureInfo) + " informe periódico ";
-        //            }
-        //        }
-        //        else
-        //        {
+            //                    if (Fprep1 == "premier")
+            //                    {
+            //                        Fprep1 = "initial ";
+            //                        final = "Rapport valant " + Fprep1 + " à " + Fprep2 + " rapports périodiques";
+            //                    }
+            //                    else { final = "Rapport valant " + Fprep1 + " à " + Fprep2 + " rapports périodiques"; }
 
-        //            string chr = num1.Last().ToString();
-        //            if (chr == "1" || chr == "3")
-        //            {
-        //                final = num1 + "\u1D49" + "\u02B3" + " informe periódico";
-        //                final = final.Substring(0, 1).ToUpper() + final.Substring(1);
-        //            }
-        //            else
-        //            {
-        //                final = num1 + "\u1D52" + " informe periódico";
-        //                final = final.Substring(0, 1).ToUpper() + final.Substring(1);
-        //            }
 
-        //        }
-        //    }
-        //    if (str.Length > 1)
-        //    {
-        //        int x = Convert.ToInt32(str[0]);
-        //        int y = Convert.ToInt32(str[1]);
+            //                }
+            //                break;
+            //            }
+            //        case "Spanish":
+            //            {
+            //                final = SpanishNum1(model,prep,iso);
 
-        //        if (x <= 10 & y <= 10)
-        //        {
+            //                break;
+            //            }
+            //    }
 
-        //            string str1 = x.ToOrdinalWords(spanishCultureInfo);
-        //            string str2 = y.ToOrdinalWords(spanishCultureInfo);
-        //            if (x == y - 1)
-        //            {
-        //                final = "Informes periódicos " + str1 + " y " + str2 + " combinados ";
-        //                if (str1 == "primer")
-        //                {
-        //                    final = "Informes periódicos inicial y " + str2 + " combinados ";
-        //                }
-
-        //            }
-        //            else
-        //            {
-        //                final = "Informes periódicos " + str1 + " a " + str2 + " combinados ";
-        //                if (str1 == "primer")
-        //                {
-        //                    final = "Informes periódicos inicial a " + str2 + " combinados ";
-        //                }
-        //            }
-
-        //        }
-        //        if (x <= 10 & y > 10)
-        //        {
-        //            string chr = str[0].Last().ToString();
-        //            string final1 = "";
-        //            string final2 = "";
-        //            final1 = str[0] + "\u1D52";
-        //            final2 = str[1] + "\u1D52";
-
-        //            if (x == y - 1)
-        //            {
-        //                final = "Informes periódicos " + final1 + " y " + final2 + " combinados ";
-        //            }
-        //            else
-        //            {
-        //                final = "Informes periódicos " + final1 + " a " + final2 + " combinados ";
-        //            }
-        //        }
-        //        if (x > 10 & y > 10)
-        //        {
-
-        //            string chr = str[0].Last().ToString();
-        //            string final1 = "";
-        //            string final2 = "";
-        //            final1 = str[0] + "\u1D52";
-        //            final2 = str[1] + "\u1D52";
-
-        //            if (x == y - 1)
-        //            {
-        //                final = "Informes periódicos " + final1 + " y " + final2 + " combinados ";
-        //            }
-        //            else
-        //            {
-        //                final = "Informes periódicos " + final1 + " a " + final2 + " combinados ";
-        //            }
-        //        }
-        //    }
-        //    return final;
-
-        //}
+            //}
+            return final;
+        }
+       
         public static string SpanishNum1(UnogViewModel model, string prep, string iso)
         {
             string num1 = prep;
@@ -1562,13 +1930,19 @@ namespace IdentitySample.Controllers
                      final = final.Substring(0, 1).ToUpper() + final.Substring(1);
                     if (final == "Primero")
                     {
-                        final = "Informes iniciales";
+                        final = "Informe inicial ";
                     }
-                    else
+                else if (final == "Tercero")
+                    {
+                        final = final.Remove(final.Length - 1);
+                    final = final.Substring(0, 1).ToUpper() + final.Substring(1);
+                    final = final + " informe periódico ";
+                    }
+                else
                     {
                     final = Toordinalspanish(prep);
                     final = final.Substring(0, 1).ToUpper() + final.Substring(1);
-                    final = final+"s" + " informes periódicos ";
+                    final = final + " informe periódico ";
                     }
                 //}
                 //else
@@ -1600,19 +1974,19 @@ namespace IdentitySample.Controllers
                         string str2 = Toordinalspanish(str[1]);
                     if (x == y - 1)
                     {
-                        final = "Informes periódicos " + str1+"s" + " y " + str2+"s" + " combinados ";
-                        if (str1 == "primer")
+                        final = "Informes periódicos " + str1 + " y " + str2 + " combinados ";
+                        if (str1 == "primero")
                         {
-                            final = "Informes periódicos inicial y " + str2+"s" + " combinados ";
+                            final = "Informes periódicos inicial y " + str2 + " combinados ";
                         }
 
                     }
                     else
                     {
-                        final = "Informes periódicos " + str1+"s" + " a " + str2+"s" + " combinados ";
-                        if (str1 == "primer")
+                        final = "Informes periódicos " + str1 + " a " + str2 + " combinados ";
+                        if (str1 == "primero")
                         {
-                            final = "Informes periódicos inicial a " + str2+"s" + " combinados ";
+                            final = "Informes periódicos inicial a " + str2 + " combinados ";
                         }
                     }
 
@@ -1674,10 +2048,16 @@ namespace IdentitySample.Controllers
 
                 if (num <= 10)
                 {
-                    final = num.ToOrdinalWords(spanishCultureInfo);
-                    if (final == "primer")
+                   // final = num.ToOrdinalWords(spanishCultureInfo);
+                    final = Toordinalspanish(num.ToString());
+                    if (final == "primero")
                     {
                         final = "al informe inicial " + Country1;
+                    }
+                    else if (final == "tercero")
+                    {
+                        final = final.Remove(final.Length - 1);
+                        final = "al " + final + " informe periódico " + Country1;
                     }
                     else
                     {
@@ -1706,12 +2086,16 @@ namespace IdentitySample.Controllers
 
                 if (x <= 10 & y <= 10)
                 {
-                    string str1 = x.ToOrdinalWords(spanishCultureInfo);
-                    string str2 = y.ToOrdinalWords(spanishCultureInfo);
+                   // string str1 = x.ToOrdinalWords(spanishCultureInfo);
+                 //   string str2 = y.ToOrdinalWords(spanishCultureInfo);
+
+                    string str1 = Toordinalspanish(x.ToString());
+                    string str2 = Toordinalspanish(y.ToString());
+
                     if (x == y - 1)
                     {
                         final = "a los informes periódicos " + str1 + " y " + str2 + " combinados " + Country1;
-                        if (str1 == "primer")
+                        if (str1 == "primero")
                         {
                             final = "a los informes periódicos primero y " + str2 + " combinados " + Country1;
                         }
@@ -1720,7 +2104,7 @@ namespace IdentitySample.Controllers
                     else
                     {
                         final = "a los informes periódicos " + str1 + " a " + str2 + " combinados " + Country1;
-                        if (str1 == "primer")
+                        if (str1 == "primero")
                         {
                             final = "a los informes periódicos primero a " + str2 + " combinados " + Country1;
                         }
@@ -1766,7 +2150,126 @@ namespace IdentitySample.Controllers
             return final;
 
         }
-      
+        public static string SpanishNums(UnogViewModel model, string prep, string iso)
+        {
+            string num1 = prep;
+            string[] str = num1.Split('-');
+            string final = "";
+            string Country1 = getCountwithSrticle(iso, model);
+            var spanishCultureInfo = CultureInfo.CreateSpecificCulture("es-es");
+
+            //just one number no x-y
+            if (str.Length == 1)
+            {
+
+
+                int num = Convert.ToInt32(prep);
+
+                if (num <= 10)
+                {
+                    // final = num.ToOrdinalWords(spanishCultureInfo);
+                    final = Toordinalspanish(num.ToString());
+                    if (final == "primero")
+                    {
+                        final = "informe inicial " + Country1;
+                    }
+                    else if (final == "tercero")
+                    {
+                        final = final.Remove(final.Length - 1);
+                        final = final + " informe periódico " + Country1;
+                    }
+                    else
+                    {
+                        final =final + " informe periódico " + Country1;
+                    }
+                }
+                else
+                {
+
+                    string chr = num1.Last().ToString();
+                    if (chr == "1" || chr == "3")
+                    {
+                        final =num1 + "\u1D49" + "\u02B3" + " informe periódico " + Country1;
+                    }
+                    else
+                    {
+                        final =num1 + "\u1D52" + " informe periódico " + Country1;
+                    }
+
+                }
+            }
+            if (str.Length > 1)
+            {
+                int x = Convert.ToInt32(str[0]);
+                int y = Convert.ToInt32(str[1]);
+
+                if (x <= 10 & y <= 10)
+                {
+                    // string str1 = x.ToOrdinalWords(spanishCultureInfo);
+                    //   string str2 = y.ToOrdinalWords(spanishCultureInfo);
+
+                    string str1 = Toordinalspanish(x.ToString());
+                    string str2 = Toordinalspanish(y.ToString());
+
+                    if (x == y - 1)
+                    {
+                        final = "informes periódicos " + str1 + " y " + str2 + " combinados " + Country1;
+                        if (str1 == "primero")
+                        {
+                            final = "informes periódicos primero y " + str2 + " combinados " + Country1;
+                        }
+
+                    }
+                    else
+                    {
+                        final = "informes periódicos " + str1 + " a " + str2 + " combinados " + Country1;
+                        if (str1 == "primero")
+                        {
+                            final = "informes periódicos primero a " + str2 + " combinados " + Country1;
+                        }
+                    }
+
+                }
+                if (x <= 10 & y > 10)
+                {
+                    string chr = str[0].Last().ToString();
+                    string final1 = "";
+                    string final2 = "";
+                    final1 = str[0] + "\u1D52";
+                    final2 = str[1] + "\u1D52";
+
+                    if (x == y - 1)
+                    {
+                        final = "informes periódicos " + final1 + " y " + final2 + " combinados " + Country1;
+                    }
+                    else
+                    {
+                        final = "informes periódicos " + final1 + " a " + final2 + " combinados " + Country1;
+                    }
+                }
+                if (x > 10 & y > 10)
+                {
+                    string chr = str[0].Last().ToString();
+                    string final1 = "";
+                    string final2 = "";
+                    final1 = str[0] + "\u1D52";
+                    final2 = str[1] + "\u1D52";
+
+                    if (x == y - 1)
+                    {
+                        final = "informes periódicos " + final1 + " y " + final2 + " combinados " + Country1;
+                    }
+                    else
+                    {
+                        final = "informes periódicos " + final1 + " a " + final2 + " combinados " + Country1;
+                    }
+                }
+
+            }
+            return final;
+
+        }
+
         public static string SpanishNumW(UnogViewModel model, string prep, string iso)
         {
             string num1 = prep;
@@ -1783,10 +2286,16 @@ namespace IdentitySample.Controllers
                 if (num <= 10)
                 {
 
-                    final = num.ToOrdinalWords(spanishCultureInfo);
-                    if (final == "primer")
+               //     final = num.ToOrdinalWords(spanishCultureInfo);
+                    final = Toordinalspanish(num.ToString());
+                    if (final == "primero")
                     {
                         final = "al informe inicial ";
+                    }
+                    else if (final == "tercero")
+                    {
+                        final = final.Remove(final.Length - 1);
+                        final = "al " + final + " informe periódico ";
                     }
                     else
                     {
@@ -1815,12 +2324,14 @@ namespace IdentitySample.Controllers
 
                 if (x <= 10 & y <= 10)
                 {
-                    string str1 = x.ToOrdinalWords(spanishCultureInfo);
-                    string str2 = y.ToOrdinalWords(spanishCultureInfo);
+                  //  string str1 = x.ToOrdinalWords(spanishCultureInfo);
+                 //   string str2 = y.ToOrdinalWords(spanishCultureInfo);
+                    string str1 = Toordinalspanish(x.ToString());
+                    string str2 = Toordinalspanish(y.ToString());
                     if (x == y - 1)
                     {
                         final = "a los informes periódicos " + str1 + " y " + str2 + " combinados";
-                        if (str1 == "primer")
+                        if (str1 == "primero")
                         {
                             final = "a los informes periódicos inicial y " + str2 + " combinados";
                         }
@@ -1829,7 +2340,7 @@ namespace IdentitySample.Controllers
                     else
                     {
                         final = "a los informes periódicos " + str1 + " a " + str2 + " combinados";
-                        if (str1 == "primer")
+                        if (str1 == "primero")
                         {
                             final = "a los informes periódicos inicial a " + str2 + " combinados";
                         }
@@ -1868,6 +2379,122 @@ namespace IdentitySample.Controllers
                     else
                     {
                         final = "a los informes periódicos " + final1 + " a " + final2 + " combinados";
+                    }
+                }
+
+            }
+            return final;
+
+        }
+        public static string SpanishNumWithoutArticle(UnogViewModel model, string prep, string iso)
+        {
+            string num1 = prep;
+            string[] str = num1.Split('-');
+            string final = "";
+            string Country1 = getCountwithSrticle(iso, model);
+            var spanishCultureInfo = CultureInfo.CreateSpecificCulture("es-es");
+            if (str.Length == 1)
+            {
+
+
+                int num = Convert.ToInt32(prep);
+
+                if (num <= 10)
+                {
+
+                    //     final = num.ToOrdinalWords(spanishCultureInfo);
+                    final = Toordinalspanish(num.ToString());
+                    if (final == "primero")
+                    {
+                        final = "informe inicial ";
+                    }
+                    else if (final == "tercero")
+                    {
+                        final = final.Remove(final.Length - 1);
+                        final = final + " informe periódico ";
+                    }
+                    else
+                    {
+                        final =final + " informe periódico ";
+                    }
+                }
+                else
+                {
+
+                    string chr = num1.Last().ToString();
+                    if (chr == "1" || chr == "3")
+                    {
+                        final =num1 + "\u1D49" + "\u02B3" + " informe periódico";
+                    }
+                    else
+                    {
+                        final =num1 + "\u1D52" + " informe periódico";
+                    }
+
+                }
+            }
+            if (str.Length > 1)
+            {
+                int x = Convert.ToInt32(str[0]);
+                int y = Convert.ToInt32(str[1]);
+
+                if (x <= 10 & y <= 10)
+                {
+                    //  string str1 = x.ToOrdinalWords(spanishCultureInfo);
+                    //   string str2 = y.ToOrdinalWords(spanishCultureInfo);
+                    string str1 = Toordinalspanish(x.ToString());
+                    string str2 = Toordinalspanish(y.ToString());
+                    if (x == y - 1)
+                    {
+                        final = "informes periódicos " + str1 + " y " + str2 + " combinados";
+                        if (str1 == "primero")
+                        {
+                            final = "informes periódicos inicial y " + str2 + " combinados";
+                        }
+
+                    }
+                    else
+                    {
+                        final = "informes periódicos " + str1 + " a " + str2 + " combinados";
+                        if (str1 == "primero")
+                        {
+                            final = "informes periódicos inicial a " + str2 + " combinados";
+                        }
+                    }
+
+                }
+                if (x <= 10 & y > 10)
+                {
+                    string chr = str[0].Last().ToString();
+                    string final1 = "";
+                    string final2 = "";
+                    final1 = str[0] + "\u1D52";
+                    final2 = str[1] + "\u1D52";
+
+                    if (x == y - 1)
+                    {
+                        final = "informes periódicos " + final1 + " y " + final2 + " combinados";
+                    }
+                    else
+                    {
+                        final = "informes periódicos " + final1 + " a " + final2 + " combinados";
+                    }
+                }
+                if (x > 10 & y > 10)
+                {
+                    string chr = str[0].Last().ToString();
+                    string final1 = "";
+                    string final2 = "";
+                    final1 = str[0] + "\u1D52";
+                    final2 = str[1] + "\u1D52";
+
+                    if (x == y - 1)
+                    {
+                        final = "informes periódicos " + final1 + " y " + final2 + " combinados";
+                    }
+                    else
+                    {
+                        final = "informes periódicos " + final1 + " a " + final2 + " combinados";
                     }
                 }
 

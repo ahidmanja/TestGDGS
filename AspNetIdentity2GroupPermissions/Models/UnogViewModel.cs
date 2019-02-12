@@ -21,6 +21,20 @@ namespace IdentitySample.Models
         [Required]
         public string Sym { get; set; }
 
+        [DisplayName("Symbol 1")]
+        public string Sym2 { get; set; }
+
+        [DisplayName("Symbol 2")]
+        public string Sym3 { get; set; }
+
+        [DisplayName("Symbol 3")]
+        public string Sym4 { get; set; }
+
+        
+        [DisplayName("Symbol 4")]
+        public string Sym5 { get; set; }
+
+
         [DisplayName("Distribution")]
         [Required]
         public string dist { get; set; }
@@ -43,6 +57,8 @@ namespace IdentitySample.Models
         public DateTime date { get; set; }
 
         //Extra Info
+        [DisplayName("Location")]
+        public string Sloc { get; set; }
 
         [DisplayName("Author")]
         public string Author { get; set; }

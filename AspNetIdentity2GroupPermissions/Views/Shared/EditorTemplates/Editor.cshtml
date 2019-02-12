@@ -135,7 +135,7 @@
     <br />
     <div class="first">
         <b style="font-size:small">
-           Symbole:
+           Symbol:
         </b>
     </div>
     <div class="second">
@@ -153,10 +153,10 @@
         @Html.Kendo().TextBoxFor(model => model.Title).HtmlAttributes(new { style = "width: 100%;" })
     </div>
 </div>
+
+ 
 <div>
-    <br />
-    <div class="col-sm-8 col-md-offset-4">
-        <br />
+    <div class="col-lg-3">
         @(Html.Kendo().Upload()
         .Name("filesE")
         .Multiple(false)
@@ -171,11 +171,8 @@
                 //   .Success("onSuccess")
                 )
         )
-
     </div>
-@*</div>
-<div>*@
-    <div class="col-sm-8 col-md-offset-4">
+    <div class="col-lg-3">
         @(Html.Kendo().Upload()
         .Name("filesF")
         .Multiple(false)
@@ -189,11 +186,31 @@
                 .Remove("onRemove")
                 )
         )
+    </div>
+
+    <div class="col-lg-3">
+
+        @(Html.Kendo().Upload()
+        .Name("filesA")
+        .Multiple(false)
+        .Async(a => a
+            .Save("SaveA", "Upload")
+            .Remove("RemoveE", "Upload")
+            .AutoUpload(true)
+        )
+        .Events(c => c
+                .Upload("onUpload")
+                .Remove("onRemove")
+                //   .Success("onSuccess")
+                )
+        )
+
 
     </div>
-@*</div>
-<div>*@
-    <div class="col-sm-8 col-md-offset-4">
+    
+</div>
+<div>
+    <div class="col-lg-3">
         @(Html.Kendo().Upload()
         .Name("filesS")
         .Multiple(false)
@@ -207,53 +224,166 @@
                 .Remove("onRemove")
                 )
         )
-
     </div>
-</div>
-<script>
-    $(document).ready(function () {
+    <div class="col-lg-3">
+        @(Html.Kendo().Upload()
+        .Name("filesR")
+        .Multiple(false)
+        .Async(a => a
+            .Save("SaveR", "Upload")
+            .Remove("RemoveR", "Upload")
+            .AutoUpload(true)
+        )
+        .Events(c => c
+                .Upload("onUpload")
+                .Remove("onRemove")
+                )
+        )
+    </div>
+    <div class="col-lg-3">
+        @(Html.Kendo().Upload()
+        .Name("filesC")
+        .Multiple(false)
+        .Async(a => a
+            .Save("SaveC", "Upload")
+            .Remove("RemoveC", "Upload")
+            .AutoUpload(true)
+        )
+        .Events(c => c
+                .Upload("onUpload")
+                .Remove("onRemove")
+                )
+        )
+    </div>
+    </div>
+<div>
+    <div class="col-lg-3">
+        @(Html.Kendo().Upload()
+        .Name("filesSR")
+        .Multiple(false)
+        .Async(a => a
+            .Save("SaveSR", "Upload")
+            .Remove("RemoveSR", "Upload")
+            .AutoUpload(true)
+        )
+        .Events(c => c
+                .Upload("onUpload")
+                .Remove("onRemove")
+                )
+        )
+    </div>
+    <div class="col-lg-3">
+        @(Html.Kendo().Upload()
+        .Name("filesSRR")
+        .Multiple(false)
+        .Async(a => a
+            .Save("SaveSRR", "Upload")
+            .Remove("RemoveSR", "Upload")
+            .AutoUpload(true)
+        )
+        .Events(c => c
+                .Upload("onUpload")
+                .Remove("onRemove")
+                )
+        )
+    </div>
+    </div>
 
-        $("#filesE").closest(".k-upload-button")
-               .find("span")
-               .text("English");
-        $("#filesF").closest(".k-upload-button")
-              .find("span")
-              .text("French");
-        $("#filesS").closest(".k-upload-button")
-              .find("span")
-              .text("Spanish");
+    <script>
+        $(document).ready(function () {
 
-    });
+            $("#filesE").closest(".k-upload-button")
+                   .find("span")
+                   .text("English");
+            $("#filesSR").closest(".k-upload-button")
+                   .find("span")
+                   .text("SR");
+            $("#filesSRR").closest(".k-upload-button")
+                   .find("span")
+                   .text("SRR");
+            $("#filesC").closest(".k-upload-button")
+                  .find("span")
+                  .text("Chinese");
+            $("#filesR").closest(".k-upload-button")
+          .find("span")
+          .text("Russian");
 
-    //function onSuccess(e) {
-    //    var Newname = e.response.name;
-    //}
+            $("#filesA").closest(".k-upload-button")
+                   .find("span")
+                   .text("Arabic");
+            $("#filesF").closest(".k-upload-button")
+                  .find("span")
+                  .text("French");
+            $("#filesS").closest(".k-upload-button")
+                  .find("span")
+                  .text("Spanish");
 
-</script>
-<style>
+        });
 
-  
-    div.wrapper11 {
-        width: 500px;
-        padding-left: 0.5em;
-        clear: both;
-    }
-        div.wrapper111 {
-        width: 700px;
-        padding-left: 0.5em;
-        clear: both;
-    }
+        //function onSuccess(e) {
+        //    var Newname = e.response.name;
+        //}
 
-    div.first {
-        padding-left: 0.9em;
-        text-align: left;
-        width: 100px;
-        float: left;
-    }
+    </script>
+    <style>
+        div.wrapper11 {
+            width: 500px;
+            padding-left: 0.5em;
+            clear: both;
+        }
 
-    div.second {
-        width: 250px;
-        float: left;
-    }
-</style>
+        div.lan {
+            width: 1000px;
+            padding-left: 0.5em;
+            clear: both;
+        }
+
+        div.first {
+            padding-left: 0.9em;
+            text-align: left;
+            width: 100px;
+            float: left;
+        }
+
+        div.second {
+            width: 250px;
+            float: left;
+        }
+
+        div.lan1 {
+            padding-left: 0.9em;
+            width: 100px;
+            float: left;
+        }
+
+        div.lan1 {
+            padding-left: 0.9em;
+            width: 100px;
+            float: left;
+        }
+
+        div.lan3 {
+            padding-left: 0.9em;
+            width: 100px;
+            float: left;
+        }
+
+        div.lan4 {
+            padding-left: 0.9em;
+            width: 100px;
+            float: left;
+        }
+
+        div.lan5 {
+            padding-left: 0.9em;
+            width: 100px;
+            float: left;
+        }
+
+        div.lan6 {
+            padding-left: 0.9em;
+            width: 100px;
+            float: left;
+        }
+    </style>
 

@@ -5,7 +5,7 @@
     .Name("Dist")
     .Columns(columns =>
     {
-        columns.Bound(p => p.DName).Title("Distrbution Name").Width(200);
+        columns.Bound(p => p.DName).Title("Distribution Name").Width(200);
         columns.ForeignKey(p => p.Lang_ID, (System.Collections.IEnumerable)ViewData["languages"], "ID", "Name")
          .Title("Languages").Width(200);
         columns.Command(command => { command.Edit(); command.Destroy(); }).Width(200);
@@ -24,10 +24,10 @@
         .PageSize(20)
         .Events(events => events.Error("error_handler"))
         .Model(model => model.Id(p => p.ID))
-        .Create(update => update.Action("Create", "Distrbution"))
-                    .Read(read => read.Action("Read", "Distrbution"))
-                    .Update(update => update.Action("Update", "Distrbution"))
-                    .Destroy(update => update.Action("Destroy", "Distrbution"))
+        .Create(update => update.Action("Create", "Distribution"))
+                    .Read(read => read.Action("Read", "Distribution"))
+                    .Update(update => update.Action("Update", "Distribution"))
+                    .Destroy(update => update.Action("Destroy", "Distribution"))
     )
 )
 <script type="text/javascript">

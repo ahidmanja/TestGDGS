@@ -11,47 +11,29 @@
         <div class="form-horizontal">
             <h4 style="text-align:left;padding-left:16px"><b>Template Information*</b> </h4>
             <hr />
-            <div class="form-group">
-                <label class="control-label col-sm-5" for="Type" style="font-size:14px !important">Organ*</label>
-                <div class="col-sm-4 col-md-4">
-                  @(Html.Kendo().DropDownList()
-          .Name("organ")
-          .DataTextField("Text")
-          .DataValueField("Value")
-          
-          .BindTo(new List<SelectListItem>() {
-              new SelectListItem() {
-                  Text = "OHCHR",
-                  Value = "1"
-              }
-          })
-          .Value("1")
-          .Enable(false)
-          .HtmlAttributes(new { style = "width: 100%" })
-    )
 
-                </div>
-            </div>
                 <div class="form-group">
 
-                    <label class="control-label col-sm-5" for="Type" style="font-size:14px !important">Template Type*</label>
+                    <label class="control-label col-sm-5" for="Type" style="font-size:14px !important">Organ*</label>
                     <div class="col-sm-4 col-md-4">
-                        @(Html.Kendo().DropDownList()
-              .Name("temptype_ID")
-              .Filter("Contains")
-              .OptionLabel("Please Select Template Type ....")
-              .HtmlAttributes(new { required = "required", data_required_msg = "Select Template Type", style = "width: 100%" })
-              .DataTextField("Name")
-              .DataValueField("ID")
-              .DataSource(source =>
-              {
-                  source.Read(read =>
-                  {
-                      read.Action("GetTempType", "Helper");
-                  });
+                           @(Html.Kendo().DropDownList()
+                          .Name("temptype_ID")
+                          .Filter("Contains")
+                          .OptionLabel("Please Select Organ ....")
+                          .HtmlAttributes(new { required = "required", data_required_msg = "Select Template Type", style = "width: 100%" })
+                          .DataTextField("Name")
+                          .DataValueField("ID")
 
-              })
-                        )
+                          .DataSource(source =>
+                          {
+                              source.Read(read =>
+                              {
+                                  read.Action("GetTempTypeOHCHR", "Helper");
+                              });
+
+                          })
+                          
+                          )
                         <span class="k-invalid-msg" data-for="Type"></span>
 
 
@@ -193,14 +175,14 @@
                 <span class="k-invalid-msg" data-for="count"></span>
             </div>
                 <div class="form-group">
-                    <label class="control-label col-sm-5" for="dist" style="font-size:14px !important">Distrbution*</label>
+                    <label class="control-label col-sm-5" for="dist" style="font-size:14px !important">Distribution*</label>
                     <div class="col-sm-4 col-md-4">
                         @(Html.Kendo().DropDownListFor(m => m.dist)
                         .Name("dist")
                         .OptionLabel("Select distribution")
                         .DataTextField("Name")
                         .DataValueField("ID")
-                        .HtmlAttributes(new { required = "required", data_required_msg = "Select Distrbution", style = "width: 100%" })
+                        .HtmlAttributes(new { style = "width: 100%" })
                         .DataSource(source =>
                         {
                             source.Read(read =>
@@ -214,7 +196,7 @@
                       .AutoBind(false)
                       .CascadeFrom("lang_ID")
                         )
-                        <span class="k-invalid-msg" data-for="dist"></span>
+                        
                     </div>
                 </div>
 

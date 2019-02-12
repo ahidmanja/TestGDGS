@@ -1,0 +1,522 @@
+﻿@model IdentitySample.Models.DataViewModel
+
+<div id="mdivG">
+
+    <div class="form-horizontal">
+        <h4 style="text-align:left;padding-left:16px"><b>Search Indexed Documents</b> </h4>
+        <hr />
+        <div class="form-group">
+            <label class="control-label col-sm-1" for="Entity" style="font-size:14px !important">Organization</label>
+            <div class="col-sm-1 col-md-2">
+                @(Html.Kendo().AutoCompleteFor(a => a.Org)
+.Name("Org")
+.DataTextField("Org")
+.Filter("contains")
+.MinLength(1)
+.HtmlAttributes(new { style = "width:100%" })
+.DataSource(source =>
+{
+    source.Read(read =>
+    {
+        read.Action("ServerFiltering_GetOrg", "Helper")
+            .Data("onAdditionalData11");
+    })
+    .ServerFiltering(true);
+})
+                )
+            </div>
+            <label class="control-label col-sm-1" for="Entity" style="font-size:14px !important">Entity Name</label>
+            <div class="col-sm-1 col-md-2">
+                @(Html.Kendo().AutoCompleteFor(a => a.Entity)
+.Name("Entity")
+.DataTextField("Entity")
+.Filter("contains")
+.MinLength(1)
+.HtmlAttributes(new { style = "width:100%" })
+.DataSource(source =>
+{
+    source.Read(read =>
+    {
+        read.Action("ServerFiltering_GetComs", "Helper")
+            .Data("onAdditionalData");
+    })
+    .ServerFiltering(true);
+})
+                )
+            </div>
+            <label class="control-label col-sm-1" for="Entity" style="font-size:14px !important">Document Type</label>
+            <div class="col-sm-1 col-md-1">
+                @(Html.Kendo().AutoCompleteFor(a => a.DocType)
+             .Name("DocType")
+              .DataTextField("DocType")
+              .Filter("contains")
+              .MinLength(1)
+              .HtmlAttributes(new { style = "width:100%" })
+              .DataSource(source =>
+              {
+                  source.Read(read =>
+                  {
+                      read.Action("ServerFiltering_GetdocT", "Helper")
+                          .Data("onAdditionalData1");
+                  })
+                  .ServerFiltering(true);
+              })
+                )
+            </div>
+            <label class="control-label col-sm-1" for="Entity" style="font-size:14px !important">Document Category</label>
+            <div class="col-sm-1 col-md-2">
+                @(Html.Kendo().AutoCompleteFor(a => a.Category)
+             .Name("Category")
+              .DataTextField("Category")
+              .Filter("contains")
+              .MinLength(1)
+              .HtmlAttributes(new { style = "width:100%" })
+              .DataSource(source =>
+              {
+                  source.Read(read =>
+                  {
+                      read.Action("ServerFiltering_Getcat", "Helper")
+                          .Data("onAdditionalData2");
+                  })
+                  .ServerFiltering(true);
+              })
+                )
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-1" for="Entity" style="font-size:14px !important">Original Language</label>
+            <div class="col-sm-1 col-md-2">
+                @(Html.Kendo().AutoCompleteFor(a => a.Olang)
+             .Name("Olang")
+              .DataTextField("Olang")
+              .Filter("contains")
+              .MinLength(1)
+              .HtmlAttributes(new { style = "width:100%" })
+              .DataSource(source =>
+              {
+                  source.Read(read =>
+                  {
+                      read.Action("ServerFiltering_Getolang", "Helper")
+                          .Data("onAdditionalData3");
+                  })
+                  .ServerFiltering(true);
+              })
+                )
+            </div>
+
+
+            <label class="control-label col-sm-1" for="Entity" style="font-size:14px !important">Distribution</label>
+            <div class="col-sm-1 col-md-2">
+                @(Html.Kendo().AutoCompleteFor(a => a.Dist)
+.Name("Dist")
+.DataTextField("Dist")
+.Filter("contains")
+.MinLength(1)
+.HtmlAttributes(new { style = "width:100%" })
+.DataSource(source =>
+{
+    source.Read(read =>
+    {
+        read.Action("ServerFiltering_GetDist", "Helper")
+            .Data("onAdditionalData4");
+    })
+    .ServerFiltering(true);
+})
+                )
+            </div>
+            <label class="control-label col-sm-1" for="Entity" style="font-size:14px !important">Date</label>
+            <div class="col-sm-1 col-md-2">
+                @(Html.Kendo().AutoCompleteFor(a => a.Date)
+                            .Name("Date")
+                            .DataTextField("Date")
+                            .Filter("contains")
+                            .MinLength(1)
+                            .HtmlAttributes(new { style = "width:100%" })
+                            .DataSource(source =>
+                            {
+                                source.Read(read =>
+                                {
+                                    read.Action("ServerFiltering_GetDate", "Helper")
+                                        .Data("onAdditionalData5");
+                                })
+                                .ServerFiltering(true);
+                            })
+                )
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-1" for="Entity" style="font-size:14px !important">Session Number</label>
+            <div class="col-sm-1 col-md-2">
+                @(Html.Kendo().AutoCompleteFor(a => a.Snum)
+                            .Name("Snum")
+                            .DataTextField("Snum")
+                            .Filter("contains")
+                            .MinLength(1)
+                            .HtmlAttributes(new { style = "width:100%" })
+                            .DataSource(source =>
+                            {
+                                source.Read(read =>
+                                {
+                                    read.Action("ServerFiltering_GetSnmu", "Helper")
+                                        .Data("onAdditionalData6");
+                                })
+                                .ServerFiltering(true);
+                            })
+                )
+            </div>
+            <label class="control-label col-sm-1" for="Entity" style="font-size:14px !important">Session Date</label>
+            <div class="col-sm-1 col-md-2">
+                @(Html.Kendo().AutoCompleteFor(a => a.Sdate)
+                            .Name("Sdate")
+                            .DataTextField("Sdate")
+                            .Filter("contains")
+                            .MinLength(1)
+                            .HtmlAttributes(new { style = "width:100%" })
+                            .DataSource(source =>
+                            {
+                                source.Read(read =>
+                                {
+                                    read.Action("ServerFiltering_GetSdate", "Helper")
+                                        .Data("onAdditionalData7");
+                                })
+                                .ServerFiltering(true);
+                            })
+                )
+            </div>
+            <label class="control-label col-sm-1" for="Entity" style="font-size:14px !important">Agenda Title</label>
+            <div class="col-sm-1 col-md-2">
+                @(Html.Kendo().AutoCompleteFor(a => a.Atitle)
+                            .Name("Atitle")
+                            .DataTextField("Atitle")
+                            .Filter("contains")
+                            .MinLength(1)
+                            .HtmlAttributes(new { style = "width:100%" })
+                            .DataSource(source =>
+                            {
+                                source.Read(read =>
+                                {
+                                    read.Action("ServerFiltering_GetAtitle", "Helper")
+                                        .Data("onAdditionalData8");
+                                })
+                                .ServerFiltering(true);
+                            })
+                )
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-sm-1" for="Entity" style="font-size:14px !important">Agenda Number</label>
+            <div class="col-sm-1 col-md-2">
+                @(Html.Kendo().AutoCompleteFor(a => a.Anum)
+                            .Name("Anum")
+                            .DataTextField("Anum")
+                            .Filter("contains")
+                            .MinLength(1)
+                            .HtmlAttributes(new { style = "width:100%" })
+                            .DataSource(source =>
+                            {
+                                source.Read(read =>
+                                {
+                                    read.Action("ServerFiltering_GetAnum", "Helper")
+                                        .Data("onAdditionalData9");
+                                })
+                                .ServerFiltering(true);
+                            })
+                )
+            </div>
+            <label class="control-label col-sm-1" for="Entity" style="font-size:14px !important">Country</label>
+            <div class="col-sm-1 col-md-2">
+                @(Html.Kendo().AutoCompleteFor(a => a.Count)
+                            .Name("Count")
+                            .DataTextField("Count")
+                            .Filter("contains")
+                            .MinLength(1)
+                            .HtmlAttributes(new { style = "width:100%" })
+                            .DataSource(source =>
+                            {
+                                source.Read(read =>
+                                {
+                                    read.Action("ServerFiltering_GetCount", "Helper")
+                                        .Data("onAdditionalData12");
+                                })
+                                .ServerFiltering(true);
+                            })
+                )
+            </div>
+            
+                <label class="control-label col-sm-1" for="Entity" style="font-size:14px !important">Symbol</label>
+            <div class="col-sm-1 col-md-2">
+                @(Html.Kendo().AutoCompleteFor(a => a.Symh)
+                .Name("Symh")
+                .DataTextField("Symh")
+                .Filter("contains")
+                .MinLength(1)
+                .HtmlAttributes(new { style = "width:100%" })
+                .DataSource(source =>
+                {
+                source.Read(read =>
+                {
+                read.Action("ServerFiltering_GetSym", "Helper")
+                .Data("onAdditionalData13");
+                })
+                .ServerFiltering(true);
+                })
+                )
+            </div>
+        </div>
+        <div class="form-group">
+            <div style="text-align:center">
+                <input type="submit" value="Search" class="btn btn-default" id="search" />
+            </div>
+        </div>
+        </div>
+    </div>
+
+
+
+
+
+<br />
+<br />
+
+
+
+@(Html.Kendo().Grid<IdentitySample.Models.DataViewModel>()
+    .Name("DataGrid")
+    .ClientDetailTemplateId("template")
+    .Columns(columns =>
+    {
+        columns.Bound(p => p.Org).Width(150).Title("Organization").Filterable(ftb => ftb.Cell(cell => cell.Operator("contains").SuggestionOperator(FilterType.Contains)));
+        columns.Bound(p => p.Entity).Width(150).Title("Entity").Filterable(ftb => ftb.Cell(cell => cell.Operator("contains").SuggestionOperator(FilterType.Contains)));
+        columns.Bound(p => p.DocType).Width(150).Title("Document Type").Filterable(ftb => ftb.Cell(cell => cell.Operator("contains").SuggestionOperator(FilterType.Contains)));
+        columns.Bound(p => p.Category).Width(200).Title("Category").Filterable(ftb => ftb.Cell(cell => cell.Operator("contains").SuggestionOperator(FilterType.Contains)));
+        columns.Bound(p => p.Count).Width(150).Title("Country").Filterable(ftb => ftb.Cell(cell => cell.Operator("contains").SuggestionOperator(FilterType.Contains)));
+        columns.Bound(p => p.Symh).Width(150).Title("Symbol").Filterable(ftb => ftb.Cell(cell => cell.Operator("contains").SuggestionOperator(FilterType.Contains)));
+        columns.Bound(p => p.Olang).Width(150).Title("Original Language").Filterable(ftb => ftb.Cell(cell => cell.Operator("contains").SuggestionOperator(FilterType.Contains)));
+        columns.Bound(p => p.Date).Width(150).Filterable(ftb => ftb.Cell(cell => cell.Operator("contains").SuggestionOperator(FilterType.Contains)));
+        columns.Command(command => command.Custom("Download").Click("showDetails")).Width(180);
+    }
+)
+    .Pageable()
+    .Sortable()
+    .HtmlAttributes(new { style = "height:550px;" })
+    .Scrollable()
+    .Filterable(ftb => ftb.Mode(GridFilterMode.Row))
+    .DataSource(dataSource => dataSource
+        .Ajax()
+        .PageSize(20)
+        .Read(read => read.Action("ReadOHCHR", "OIndex").Data("Extra"))
+     )
+      .Events(events => events.DataBound("dataBound"))
+)
+<script id = "template" type = "text/kendo-tmpl" >
+    @(Html.Kendo().TabStrip()
+            .Name("tabStrip_#=ID#")
+            .SelectedIndex(0)
+            .Animation(animation => animation.Open(open => open.Fade(FadeDirection.In)))
+            .Items(items =>
+            {
+            items.Add().Text("Extra Info").Content(@<text>
+        @(Html.Kendo().Grid<IdentitySample.Models.DataViewModel>()
+                        .Name("grid_#=ID#") // template expression, to be evaluated in the master context
+                        .Columns(columns =>
+                        {
+                            columns.Bound(o => o.Dist).Title("Distrbution").Width(100);
+                            columns.Bound(o => o.Snum).Title("Session Number").Width(150);
+                            columns.Bound(o => o.Sdate).Title("Session Dates").Width(150);
+                            columns.Bound(o => o.Atitle).Title("Agenda Title").Width(150);
+                            columns.Bound(o => o.Anum).Title("Agenda Number").Width(100);// escaped template expression, to be evaluated in the child/detail context
+                           
+                        })
+                        .DataSource(dataSource => dataSource
+                            .Ajax()
+                            .PageSize(5)
+                            .Read(read => read.Action("DetailTemplate_HierarchyBinding_Doc", "OIndex", new { ID = "#=ID#" }))
+                        )
+                        .Pageable()
+                        .Sortable()
+                        .ToClientTemplate())
+                </text>
+                );
+               
+            })
+            .ToClientTemplate())
+</script>
+
+
+<script type="text/javascript">
+    function dataBound() {
+        this.expandRow(this.tbody.find("tr.k-master-row").first());
+    }
+    function onAdditionalData6() {
+        return {
+            text: $("#Snum").val(),
+            org: $("#Org").val()
+        };
+    }
+    function onAdditionalData8() {
+        return {
+            text: $("#Atitle").val(),
+            org: $("#Org").val()
+        };
+    }
+    function onAdditionalData9() {
+        return {
+            text: $("#Anum").val(),
+            org: $("#Org").val()
+        };
+    }
+    function onAdditionalData11() {
+        return {
+            text: $("#Org").val(),
+          
+        };
+    }
+    function onAdditionalData12() {
+        return {
+            text: $("#Count").val(),
+            org: $("#Org").val()
+        };
+    }
+    function onAdditionalData7() {
+        return {
+            text: $("#Sdate").val(),
+            org: $("#Org").val()
+        };
+    }
+    function onAdditionalData1() {
+        return {
+            text: $("#DocType").val(),
+            org: $("#Org").val()
+        };
+    }
+    function onAdditionalData5() {
+        return {
+            text: $("#Date").val(),
+            org: $("#Org").val()
+        };
+    }
+    function onAdditionalData4() {
+        return {
+            text: $("#Dist").val(),
+            org: $("#Org").val()
+        };
+    }
+    function onAdditionalData() {
+        return {
+            text: $("#Entity").val(),
+            org: $("#Org").val()
+        };
+    }
+    function onAdditionalData2() {
+        return {
+            text: $("#Category").val(),
+            org: $("#Org").val()
+        };
+    }
+    function onAdditionalData3() {
+        return {
+            text: $("#Olang").val(),
+            org: $("#Org").val()
+        };
+       
+    }
+    function onAdditionalData13() {
+        return {
+            text: $("#Symh").val(),
+            org: $("#Org").val()
+        };
+    }
+                function Extra() {
+                    return {
+                        Category: $("#Category").val(),
+                        Entity: $("#Entity").val(),
+                        Olang: $("#Olang").val(),
+                        Date: $("#Date").val(),
+                        DocType: $("#DocType").val(),
+                        Sdate: $("#Sdate").val(),
+                        Count: $("#Count").val(),
+                        Anum: $("#Anum").val(),
+                        Atitle: $("#Atitle").val(),
+                        Stitle: $("#Stitle").val(),
+                        Org: $("#Org").val(),
+                       
+                    }
+                }
+                $('#search').click(function (e) {
+                    //  $("#DataGrid").Show();
+                    $("#DataGrid").data("kendoGrid").dataSource.read();
+                    //  $("#DataGrid").data("kendoGrid").Refresh();
+                });
+                var detailsTemplate = kendo.template($("#template").html());
+
+                function showDetails(e) {
+                    e.preventDefault();
+                    var dataItem = this.dataItem($(e.currentTarget).closest("tr"));
+                    var x = dataItem.FName;
+                   // var PostData1 = $("#FName").val()
+                    window.location.href = "/GDGS/oindex/download?name=" + dataItem.FName;
+                    @*location.href = '@Html.GetUrl("Action", "Controller", new { foo=Model.Foo })';
+                    location.href = '@(Url.Content("~/Account/ForgotPassword/)+ " ? id = " + docID.ToString()';*@
+
+                    // location.href = @*@Html.Raw(Url.Content("~/OIndex/Download?name=" + x.ToString()));*@
+                        //var dataItem = this.dataItem($(e.currentTarget).closest("tr"));
+                        //var wnd = $("#Details").data("kendoWindow");
+
+                        //wnd.content(detailsTemplate(dataItem));
+                        //wnd.center().open();
+                    }
+</script>
+<style>
+     .k-detail-cell .k-tabstrip .k-content {
+        padding: 0.2em;
+    }
+    .employee-details ul
+    {
+        list-style:none;
+        font-style:italic;
+        margin: 15px;
+        padding: 0;
+    }
+    .employee-details ul li
+    {
+        margin: 0;
+        line-height: 1.7em;
+    }
+
+    .employee-details label
+    {
+        display:inline-block;
+        width:90px;
+        padding-right: 10px;
+        text-align: right;
+        font-style:normal;
+        font-weight:bold;
+    }
+       #mdiv {
+        margin: auto;
+        width: 50%;
+        padding: 10px;
+    }
+
+    #mdivG {
+        margin: auto;
+        width: 1400px;
+        height: auto;
+        padding: 0px;
+        background-color: #ffffff;
+        border: 2px solid #2a6496;
+        border-radius: 5px;
+        /*background-image: url('/assets/UN-Logo (1).png');
+            background-size: 300px 300px;*/
+        background-repeat: no-repeat;
+        background-position: 90% 30%;
+    }
+
+
+    #mdiv section {
+        margin-left: auto;
+        margin-right: auto;
+        display: block;
+    }
+</style>

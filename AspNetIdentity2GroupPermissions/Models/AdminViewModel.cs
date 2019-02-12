@@ -53,7 +53,7 @@ namespace IdentitySample.Models
         public string Id { get; set; }
         [Required(AllowEmptyStrings = false)]
         public string Name { get; set; }
-        [Display(Name = "Organaization")]
+        [Display(Name = "Organization")]
         public int Org { get; set; }
         [Display(Name = "Description")]
         public string Description { get; set; }

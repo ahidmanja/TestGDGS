@@ -1,0 +1,258 @@
+﻿
+@model IdentitySample.Models.SRViewModel
+<br />
+<br />
+<br />
+<div id="mdivG">
+    @using (Html.BeginForm("Download", "UNCTAD", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+    {
+        @Html.AntiForgeryToken()
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-horizontal">
+            <h4 style="text-align:left;padding-left:16px"><b>Research Paper Information*</b> </h4>
+            <hr />
+            <div class="form-group">
+                <label class="control-label col-sm-3" for="lang" style="font-size:14px !important">Paper Language*</label>
+                <div class="col-sm-4 col-md-4">
+                    @(Html.Kendo().DropDownListFor(m => m.lang_ID)
+                        .Name("lang_ID")
+                        .OptionLabel("Select language...")
+                        .DataTextField("Name")
+                        .DataValueField("ID")
+                        .HtmlAttributes(new { required = "required", data_required_msg = "Select Language", style = "width: 100%" })
+                        // .Events(e => e.Change("ChangeLang"))
+                        .DataSource(source =>
+                        {
+                            source.Read(read =>
+                            {
+                                read.Action("GetLanguages", "helper");
+                            });
+
+                        }
+                        )
+                      //  .Value("1")
+                       // .Enable(false)
+                    )
+                    <span class="k-invalid-msg" data-for="lang"></span>
+                </div>
+               
+                </div>
+            <div class="form-group">
+                <label class="control-label col-sm-3" for="DType" style="font-size:14px !important">Date*</label>
+                <div class="col-sm-4 col-md-4">
+                    @(Html.Kendo().DatePicker()
+
+                    .Name("monthpicker")
+                    .Start(CalendarView.Year)
+                    .Depth(CalendarView.Year)
+                    .Format("MMMM yyyy")
+                    .Value("November 2011")
+                    .HtmlAttributes(new { style = "width: 100%", title = "monthpicker" })
+                    )
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-3" for="date" style="font-size:14px !important">Paper NO.</label>
+                <div class="col-sm-4 col-md-4">
+                    @(Html.Kendo().TextBox().Name("RNUm").HtmlAttributes(new { placeholder = "Research Paper NO.", style = "width: 100%" }))
+                </div>
+                @*<div class="col-sm-4 col-md-4">
+                    <button class="button button5">i</button>
+                </div>*@
+            </div>
+            
+           <div class="form-group">
+                <label class="control-label col-sm-3" for="name" style="font-size:14px !important">Research Authors*</label>
+                <div class="col-sm-8 col-md-8">
+                    @Html.TextArea("textarea", "", new { @class = "k-textbox", style = "width: 100%;", @rows = 5 })
+                </div>
+
+          </div>
+            <div class="form-group">
+                <label class="control-label col-sm-3" for="name" style="font-size:14px !important">Research Title*</label>
+                <div class="col-sm-8 col-md-8">
+                    @Html.TextArea("textarea", "", new { @class = "k-textbox", style = "width: 100%;", @rows=5 })
+                </div>
+            </div>
+        
+         <div class="form-group">
+                <div style="text-align:center">
+                    <input type="submit" value="Generate" class="k-button" id="next" style="font-size:14px !important" />
+                </div>
+            </div>
+
+        </div>
+
+
+
+    }
+</div>
+<script type="text/javascript">
+   
+    $(function () {
+        $("form").kendoValidator();
+    });
+    function filterdiste() {
+        return {
+            t: $("#lang_ID").val()
+        };
+    }
+    //$("#next").one("click", function() {
+    //    //$("#Sym3").data("kendoTextBoxFor").wrapper.Show();
+    //    //$("#Sym4").data("kendoTextBoxFor").wrapper.hide();
+    //    //$("#Sym5").data("kendoTextBoxFor").wrapper.hide();
+
+    //    if ($('#Sym3').is(':hidden'))
+    //    {
+    //        document.getElementById("Sym3").style.display = "inline";
+    //    }
+    //    else if ($('#Sym3').is(':visible') & $('#Sym4').is(':hidden'))
+    //    {
+    //        document.getElementById("Sym4").style.display = "inline";
+    //    }
+    //    else if ($('#Sym3').is(':visible') & $('#Sym4').is(':visible') & $('#Sym5').is(':hidden')) {
+    //        document.getElementById("Sym5").style.display = "inline";
+    //    }
+    //    else { }
+
+    //});
+    function filterOlang() {
+        return {
+            t: $("#lang_ID").val()
+        };
+    }
+</script>
+<script type="text/javascript">
+    var counter = 2;
+    var sym = "Sym";
+    $(document).ready(function () {
+        $("#next").click(function () {
+            document.getElementById(sym + counter).style.display = "inline";
+            counter++;
+        });
+    });
+            $(function () {
+                $("form").kendoValidator();
+            });
+
+            function filtercount() {
+                return {
+                    t: $("#lang_ID").val(),
+                    Filter: $("#count_ID").data("kendoComboBox").input.val()
+                };
+            }
+            function filterdiste() {
+                return {
+                    t: $("#lang_ID").val()
+                };
+            }
+            //function ChangeLang() {
+            //    $("#version1").data("kendoMultiSelect").dataSource.read();
+            //}
+
+            function FilterTempT() {
+                return {
+                    t: $("#temptype_ID").val()
+                };
+            }
+            function filtercomm() {
+                return {
+                    comm: $("#com_ID").val()
+                };
+            }
+            function LangID() {
+                return {
+                    t: $("#lang_ID").val()
+                };
+            }
+            function filterdoct1() {
+                return {
+                    tt: $("#Doctype_ID").val(),
+                    Filter: $("#Cat").data("kendoComboBox").input.val()
+                 //   catfilter: $("#Cat").input.val()
+                    // tt:8
+                };
+            }
+            //function onchange(e) {
+            //    if (e.type == "update") {
+            //        $("#FTemp").data("kendoGrid").dataSource.read();
+            //    }
+            //    if (e.type == "create") {
+            //        $("#FTemp").data("kendoGrid").dataSource.read();
+            //    }
+            //}
+            function error_handler(e) {
+                if (e.errors) {
+                    var message = "Errors:\n";
+                    $.each(e.errors, function (key, value) {
+                        if ('errors' in value) {
+                            $.each(value.errors, function () {
+                                message += this + "\n";
+                            });
+                        }
+                    });
+                    alert(message);
+                }
+            }
+</script>
+<style>
+    /*span.k-widget.k-tooltip-validation {
+        display: inline-block;
+        float:left;
+        width: 160px;
+        text-align: left;
+        border: 0;
+        padding: 0;
+        margin: 0;
+        background: none;
+        box-shadow: none;
+        color: red;
+    }
+
+    .k-tooltip-validation .k-warning {
+        display: none;
+    }*/
+    #mdiv {
+        margin: auto;
+        width: 50%;
+        padding: 10px;
+    }
+
+    #mdivG {
+        margin: auto;
+        width: 800px;
+        height: auto;
+        padding: 0px;
+        background-color: #ffffff;
+        border: 2px solid #2a6496;
+        border-radius: 5px;
+        /*background-image: url('/assets/UN-Logo (1).png');
+            background-size: 300px 300px;*/
+        background-repeat: no-repeat;
+        background-position: 90% 30%;
+    }
+
+
+    #mdiv section {
+        margin-left: auto;
+        margin-right: auto;
+        display: block;
+    }
+    .button {
+    background-color:#ebe3e3 ;
+    border: none;
+    color: blue;
+ 
+ 
+    font-size: 14px;
+  
+}
+
+.button1 {border-radius: 2px;}
+.button2 {border-radius: 4px;}
+.button3 {border-radius: 8px;}
+.button4 {border-radius: 12px;}
+.button5 {border-radius: 50%;}
+
+</style>

@@ -1,0 +1,169 @@
+﻿@model IdentitySample.Models.datum
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_AdminLteLayout.cshtml";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>datum</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.tlang)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.tlang)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.olang)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.olang)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.sdate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.sdate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.anum)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.anum)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.atitle)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.atitle)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.count)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.count)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.prep)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.prep)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.stitle)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.stitle)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.gdoc)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.gdoc)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.bar)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.bar)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.symh)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.symh)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.dist)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.dist)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.date)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.date)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ldate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ldate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.dname)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.dname)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.loca)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.loca)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.snum)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.snum)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.mnum)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.mnum)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

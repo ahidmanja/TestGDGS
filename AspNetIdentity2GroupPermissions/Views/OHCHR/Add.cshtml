@@ -22,7 +22,7 @@
                 </div>
             </div>
             <div class="form-group">
-                <label class="control-label col-sm-2" for="addu" style="font-size:14px !important">Addendendum*</label>
+                <label class="control-label col-sm-2" for="addu" style="font-size:14px !important">Addendum*</label>
                 <div class="col-sm-3 col-md-3">
                     @(Html.Kendo().TextBoxFor(m => m.Add)
                  .Name("Add")
@@ -81,7 +81,7 @@
             <div class="form-group">
                 <label class="control-label col-sm-2" for="name" style="font-size:14px !important">   Versions Required</label>
                 <div class="col-sm-3 col-md-3">
-                    @(Html.Kendo().MultiSelectFor(m => m.version)
+                    @(Html.Kendo().MultiSelect()
                                 .Name("version1")
                                 .Placeholder("Select Versions...")
                                 .DataTextField("Text")

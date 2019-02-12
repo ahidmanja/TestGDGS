@@ -1,0 +1,565 @@
+﻿@model IdentitySample.Models.SRViewModel
+<br />
+<br />
+<br />
+<div id="mdivG">
+    @using (Html.BeginForm("FindTemplate", "SR", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+    {
+        @Html.AntiForgeryToken()
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-horizontal">
+            <h4 style="text-align:left;padding-left:16px"><b>Document Information*</b> </h4>
+            <hr />
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="lang" style="font-size:14px !important">Original Language*</label>
+                <div class="col-sm-4 col-md-4">
+                    @(Html.Kendo().DropDownListFor(m => m.lang_ID)
+                        .Name("lang_ID")
+                        .OptionLabel("Select language...")
+                        .DataTextField("Name")
+                        .DataValueField("ID")
+                        .HtmlAttributes(new { required = "required", data_required_msg = "Select Language", style = "width: 100%" })
+                        // .Events(e => e.Change("ChangeLang"))
+                        .DataSource(source =>
+                        {
+                            source.Read(read =>
+                            {
+                                read.Action("GetLanguages", "helper");
+                            });
+
+                        }
+                        )
+                        .Value("1")
+                        .Enable(false)
+                    )
+                    <span class="k-invalid-msg" data-for="lang"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="date" style="font-size:14px !important">gDoc Num</label>
+                <div class="col-sm-4 col-md-4">
+                    @(Html.Kendo().TextBoxFor(m => m.Gdoc).Name("Gdoc").HtmlAttributes(new { placeholder = "gDoc Number", style = "width: 100%" }))
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="Entity" style="font-size:14px !important">Select Entity*</label>
+                <div class="col-sm-4 col-md-4">
+                    @(Html.Kendo().DropDownList()
+                      .Name("com_ID")
+                      .OptionLabel("Please Select Committee ....")
+                     .HtmlAttributes(new { required = "required", data_required_msg = "Select Entity", style = "width: 100%" })
+
+                      //.Filter("contains")
+                      .DataTextField("Name")
+                      .DataValueField("ID")
+                      .DataSource(source =>
+                      {
+            source.Read(read =>
+
+                read.Action("getcascadecommittees", "helper",new {t=2 })
+
+            )
+                .ServerFiltering(true);
+        })
+                      //.Enable(false)
+                      //.AutoBind(false)
+                    //.CascadeFrom("temptype_ID")
+                    )
+                    <span class="k-invalid-msg" data-for="Entity"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="DType" style="font-size:14px !important">Part*</label>
+                <div class="col-sm-4 col-md-4">
+                    @(Html.Kendo().DropDownList()
+                      .Name("Doctype_ID")
+                      .OptionLabel("Please Select Part ....")
+                      .HtmlAttributes(new { required = "required", data_required_msg = "Select Part", style = "width: 100%" })
+                      .DataTextField("Name")
+                      .DataValueField("ID")
+                      //.Events(e => e.Select("doctselect"))
+                      .DataSource(source =>
+                      {
+        source.Read(read =>
+        {
+            read.Action("getcascadedoct", "helper")
+                .Data("filtercomm");
+        })
+             .ServerFiltering(true);
+    })
+                     .Enable(false)
+                     .AutoBind(false)
+                     .CascadeFrom("com_ID")
+                    )
+                    <span class="k-invalid-msg" data-for="DType"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="Cat" style="font-size:14px !important">Meeting Type*</label>
+                <div class="col-sm-4 col-md-4">
+                    @(Html.Kendo().ComboBoxFor(model => model.Cat)
+                      .Name("Cat")
+                      //.OptionLabel("Please Select Category....")
+                      .Placeholder("Please Select Meeting Type....")
+                       .HtmlAttributes(new { required = "required", data_required_msg = "Select Meeting Type", style = "width: 100%" })
+                       .Filter(FilterType.Contains)
+                      // .Events(e => e.Open("oncascade"))
+                      .DataValueField("CID")
+                      .DataTextField("CName")
+                      .DataSource(source =>
+                      {
+                          source.Read(read =>
+                          {
+                              read.Action("GetCascadeCat", "Helper")
+                                  .Data("filterdoct1");
+                          })
+                          .ServerFiltering(true);
+                      })
+                      .Enable(false)
+                      .AutoBind(false)
+                      .CascadeFrom("Doctype_ID")
+                    )
+                    <span class="k-invalid-msg" data-for="Cat"></span>
+                </div>
+            @*</div>
+            <div class="form-group">*@
+                @*<label class="control-label col-sm-2" for="Cat" style="font-size:14px !important"></label>*@
+                <label class="control-label col-sm-3" for="name" style="font-size:12px !important">Check box if previous meeting(s) had no SR coverage</label>
+                <div class="col-sm-0 col-md-1">
+                    @(Html.Kendo().CheckBoxFor(m => m.RC)
+                    .Name("RC")
+                 .HtmlAttributes(new { style = "width: 100%" })
+                    )
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="name" style="font-size:14px !important">Meeting Number*</label>
+                <div class="col-sm-3 col-md-3">
+                    @(Html.Kendo().TextBoxFor(m => m.Prep)
+                    .Name("Prep")
+                 .HtmlAttributes(new { placeholder = "Meeting Number", required = "required", data_required_msg = "Meeting Number", style = "width: 100%" })
+                    )
+                </div>
+            </div>
+               
+                @*<div class="form-group">
+                    <label class="control-label col-sm-2" for="dist" style="font-size:14px !important">Distribution*</label>
+                    <div class="col-sm-4 col-md-4">
+                        @(Html.Kendo().DropDownListFor(m => m.dist)
+                        .Name("dist")
+                        .OptionLabel("Select distribution")
+                        .DataTextField("Name")
+                        .DataValueField("Name")
+                        .HtmlAttributes(new { required = "required", data_required_msg = "Select Distribution", style = "width: 100%" })
+                        .DataSource(source =>
+                        {
+                            source.Read(read =>
+                            {
+                                read.Action("GetCascadedist", "helper")
+                                   .Data("filterdiste");
+                            })
+                             .ServerFiltering(true);
+                        })
+                      .Enable(false)
+                      .AutoBind(false)
+                      .CascadeFrom("lang_ID")
+                        )
+                        <span class="k-invalid-msg" data-for="dist"></span>
+                    </div>
+                </div>*@
+
+                @*<div class="form-group">
+                <label class="control-label col-sm-2" for="name" style="font-size:14px !important">   Versions Required</label>
+                <div class="col-sm-3 col-md-3">
+                    @(Html.Kendo().MultiSelectFor(m => m.version)
+                                .Name("version1")
+                                .Placeholder("Select Versions...")
+                                .DataTextField("Text")
+                                .DataValueField("Text")
+                                .DataSource(source =>
+                                {
+                                    source.Read(read =>
+                                    {
+                                        read.Action("GetVersions", "Helper")
+                                            .Data("LangID");
+                                    });
+
+                                }
+
+
+                                )
+                    )
+                </div>
+            </div>*@
+
+
+
+
+
+                <div class="form-group">
+                    <label class="control-label col-sm-2" for="name" style="font-size:14px !important">Location*</label>
+
+                    <div class="col-sm-3 col-md-3">
+                        @(Html.Kendo().DropDownListFor(model => model.loca)
+          .Name("loca")
+          .DataTextField("Text")
+          .DataValueField("Value")
+
+          .BindTo(new List<SelectListItem>() {
+              new SelectListItem() {
+                  Text = "Palais des Nations",
+                  Value = "Palais des Nations"
+              },
+              new SelectListItem() {
+                  Text = "Palais Wilson",
+                  Value = "Palais Wilson"
+              }
+          })
+          .Value("Palais des Nations")
+          .HtmlAttributes(new { style = "width: 100%" })
+                        )
+                    </div>
+                    <div class="col-sm-2 col-md-2">
+                        @(Html.Kendo().DropDownListFor(model => model.locb)
+          .Name("locb")
+          .DataTextField("Text")
+          .DataValueField("Value")
+
+          .BindTo(new List<SelectListItem>() {
+              new SelectListItem() {
+                  Text = "Geneva",
+                  Value = "Geneva"
+              }
+          })
+          .Value("Geneva")
+          .HtmlAttributes(new { style = "width: 100%" })
+                        )
+                    </div>
+
+                    <div class="col-sm-2 col-md-2">
+                        @(Html.Kendo().DatePickerFor(m => m.ldate).Name("ldate").HtmlAttributes(new { required = "required", style = "width: 100%" }))
+                        <span class="k-invalid-msg" data-for="date"></span>
+
+
+                    </div>
+                    <div class="col-sm-2 col-md-2">
+                        @(Html.Kendo().DropDownListFor(model => model.time)
+          .Name("time")
+          .DataTextField("Text")
+          .DataValueField("Value")
+
+          .BindTo(new List<SelectListItem>() {
+              new SelectListItem() {
+                  Text = "AM",
+                  Value = "at 10 a.m."
+              },
+              new SelectListItem() {
+                  Text = "PM",
+                  Value = "at 3 p.m."
+              }
+
+          })
+          //.Value("at 10 a.m.")
+          .HtmlAttributes(new { style = "width: 100%" })
+                        )
+                    </div>
+
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-2" for="name" style="font-size:14px !important">Session Info*</label>
+                    <div class="col-sm-3 col-md-3">
+                        @(Html.Kendo().TextBoxFor(m => m.sNum)
+                    .Name("sNum")
+                 .HtmlAttributes(new { placeholder = "Session Number", required = "required", data_required_msg = "Session Number", style = "width: 100%" })
+                        )
+                    </div>
+                    <div class="col-sm-3 col-md-3">
+                        @(Html.Kendo().DropDownListFor(model => model.Ctitle)
+          .Name("Ctitle")
+          .DataTextField("Text")
+          .DataValueField("Value")
+
+          .BindTo(new List<SelectListItem>() {
+              new SelectListItem() {
+                  Text = "Mr.",
+                  Value = "Mr. "
+              },
+              new SelectListItem() {
+                  Text = "Ms.",
+                  Value = "Ms. "
+              },
+               new SelectListItem() {
+                  Text = "Sir ",
+                  Value = "Sir "
+              }
+
+          })
+          .Value("Mr.")
+          .HtmlAttributes(new { style = "width: 100%" })
+                        )
+                    </div>
+                    <div class="col-sm-3 col-md-3">
+                        @(Html.Kendo().TextBoxFor(m => m.Cname)
+                    .Name("Cname")
+                    .HtmlAttributes(new { @placeholder = "Chair Name" })
+                        )
+                    </div>
+
+                    <div class="col-sm-3 col-md-3"></div>
+                </div>
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="name" style="font-size:14px !important"></label>
+                <label class="control-label col-sm-3" for="name" style="font-size:14px !important">Later Name</label>
+                <div class="col-sm-3 col-md-3">
+                    @(Html.Kendo().DropDownListFor(model => model.L1title)
+          .Name("L1title")
+          .DataTextField("Text")
+          .DataValueField("Value")
+
+          .BindTo(new List<SelectListItem>() {
+              new SelectListItem() {
+                  Text = "Mr.",
+                  Value = "Mr. "
+              },
+              new SelectListItem() {
+                  Text = "Ms.",
+                  Value = "Ms. "
+              },
+               new SelectListItem() {
+                  Text = "Sir ",
+                  Value = "Sir "
+              }
+
+          })
+          .Value("Mr.")
+          .HtmlAttributes(new { style = "width: 100%" })
+                    )
+                </div>
+                <div class="col-sm-3 col-md-3">
+                    @(Html.Kendo().TextBoxFor(m => m.L1name)
+                    .Name("L1name")
+                    .HtmlAttributes(new { @placeholder = "Later1" })
+                    )
+                </div>
+                @*<div class="col-sm-2 col-md-2">
+                    @(Html.Kendo().DropDownListFor(model => model.L2title)
+          .Name("L2title")
+          .DataTextField("Text")
+          .DataValueField("Value")
+
+          .BindTo(new List<SelectListItem>() {
+              new SelectListItem() {
+                  Text = "Mr.",
+                  Value = "Mr. "
+              },
+              new SelectListItem() {
+                  Text = "Ms.",
+                  Value = "Ms. "
+              }
+
+          })
+          .Value("Mr.")
+          .HtmlAttributes(new { style = "width: 100%" })
+                    )
+                </div>
+                <div class="col-sm-3 col-md-3">
+                    @(Html.Kendo().TextBoxFor(m => m.L2name)
+                    .Name("L2name")
+                    .HtmlAttributes(new { @placeholder = "Later2" })
+                    )
+                </div>*@
+                @*<div class="col-sm-3 col-md-3"></div>*@
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="name" style="font-size:14px !important"></label>
+                <label class="control-label col-sm-3" for="name" style="font-size:14px !important">Later Name</label>
+                <div class="col-sm-3 col-md-3">
+                    @(Html.Kendo().DropDownListFor(model => model.L2title)
+          .Name("L2title")
+          .DataTextField("Text")
+          .DataValueField("Value")
+
+          .BindTo(new List<SelectListItem>() {
+              new SelectListItem() {
+                  Text = "Mr.",
+                  Value = "Mr. "
+              },
+              new SelectListItem() {
+                  Text = "Ms.",
+                  Value = "Ms. "
+              },
+               new SelectListItem() {
+                  Text = "Sir ",
+                  Value = "Sir "
+              }
+
+          })
+          .Value("Mr.")
+          .HtmlAttributes(new { style = "width: 100%" })
+                    )
+                </div>
+                <div class="col-sm-3 col-md-3">
+                    @(Html.Kendo().TextBoxFor(m => m.L2name)
+                    .Name("L2name")
+                    .HtmlAttributes(new { @placeholder = "Later 2" })
+                    )
+                </div>
+                @*<div class="col-sm-2 col-md-2">
+                      @(Html.Kendo().DropDownListFor(model => model.L2title)
+            .Name("L2title")
+            .DataTextField("Text")
+            .DataValueField("Value")
+
+            .BindTo(new List<SelectListItem>() {
+                new SelectListItem() {
+                    Text = "Mr.",
+                    Value = "Mr. "
+                },
+                new SelectListItem() {
+                    Text = "Ms.",
+                    Value = "Ms. "
+                }
+
+            })
+            .Value("Mr.")
+            .HtmlAttributes(new { style = "width: 100%" })
+                      )
+                  </div>
+                  <div class="col-sm-3 col-md-3">
+                      @(Html.Kendo().TextBoxFor(m => m.L2name)
+                      .Name("L2name")
+                      .HtmlAttributes(new { @placeholder = "Later2" })
+                      )
+                  </div>*@
+                @*<div class="col-sm-3 col-md-3"></div>*@
+            </div>
+  
+
+                @*<div class="form-group">
+                <div class="col-sm-12 col-md-12">
+                    <hr />
+                </div>
+            </div>*@
+                <div class="form-group">
+                    <div style="text-align:center">
+                        <input type="submit" value="Next" class="btn btn-default" id="next" style="font-size:14px !important" />
+                    </div>
+                </div>
+
+            </div>
+
+
+
+    }
+</div>
+<script type="text/javascript">
+
+            $(function () {
+                $("form").kendoValidator();
+            });
+
+            function filtercount() {
+                return {
+                    t: $("#lang_ID").val(),
+                    Filter: $("#count_ID").data("kendoComboBox").input.val()
+                };
+            }
+            function filterdiste() {
+                return {
+                    t: $("#lang_ID").val()
+                };
+            }
+            //function ChangeLang() {
+            //    $("#version1").data("kendoMultiSelect").dataSource.read();
+            //}
+
+            function FilterTempT() {
+                return {
+                    t: $("#temptype_ID").val()
+                };
+            }
+            function filtercomm() {
+                return {
+                    comm: $("#com_ID").val()
+                };
+            }
+            function LangID() {
+                return {
+                    t: $("#lang_ID").val()
+                };
+            }
+            function filterdoct1() {
+                return {
+                    tt: $("#Doctype_ID").val(),
+                    Filter: $("#Cat").data("kendoComboBox").input.val()
+                 //   catfilter: $("#Cat").input.val()
+                    // tt:8
+                };
+            }
+            //function onchange(e) {
+            //    if (e.type == "update") {
+            //        $("#FTemp").data("kendoGrid").dataSource.read();
+            //    }
+            //    if (e.type == "create") {
+            //        $("#FTemp").data("kendoGrid").dataSource.read();
+            //    }
+            //}
+            function error_handler(e) {
+                if (e.errors) {
+                    var message = "Errors:\n";
+                    $.each(e.errors, function (key, value) {
+                        if ('errors' in value) {
+                            $.each(value.errors, function () {
+                                message += this + "\n";
+                            });
+                        }
+                    });
+                    alert(message);
+                }
+            }
+</script>
+<style>
+    /*span.k-widget.k-tooltip-validation {
+        display: inline-block;
+        float:left;
+        width: 160px;
+        text-align: left;
+        border: 0;
+        padding: 0;
+        margin: 0;
+        background: none;
+        box-shadow: none;
+        color: red;
+    }
+
+    .k-tooltip-validation .k-warning {
+        display: none;
+    }*/
+    #mdiv {
+        margin: auto;
+        width: 50%;
+        padding: 10px;
+    }
+
+    #mdivG {
+        margin: auto;
+        width: 800px;
+        height: auto;
+        padding: 0px;
+        background-color: #ffffff;
+        border: 2px solid #2a6496;
+        border-radius: 5px;
+        /*background-image: url('/assets/UN-Logo (1).png');
+            background-size: 300px 300px;*/
+        background-repeat: no-repeat;
+        background-position: 90% 30%;
+    }
+
+
+    #mdiv section {
+        margin-left: auto;
+        margin-right: auto;
+        display: block;
+    }
+</style>

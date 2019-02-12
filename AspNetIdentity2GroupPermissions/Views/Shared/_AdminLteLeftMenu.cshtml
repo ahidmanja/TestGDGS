@@ -48,33 +48,116 @@
                     </a>
                 </li>
             }
-            @if (Request.IsAuthenticated && User.IsInRole("OHCHR_Admin") || User.IsInRole("Super_Admin") || User.IsInRole("OHCHR_User"))
+            @if (User.IsInRole("Super_Admin") || User.IsInRole("OHCHR_Admin"))
             {
+
                 <li class="treeview">
-                    <a href="~/OHCHR/Index">
-                        <i class="fa fa-file-word-o"></i>
-                        <span>Generate From Template</span>
+                    <a href="#">
+                        <i class="fa fa-university"></i>
+                        <span>UNCTAD</span>
+                        <i class="fa fa-angle-left pull-right"></i>
                     </a>
+                    <ul class="treeview-menu">
+                        <li><a href="~/UNCTAD/Index"><i class="fa fa-search"></i>Research Paper</a></li>
+                        <li><a href="~/UNCTAD/Index"><i class="fa fa-file-word-o"></i>Policy Brief</a></li>
+                        <li><a href="~/UNCTAD/Index"><i class="fa fa-book"></i>Publication</a></li>
+
+                    </ul>
                 </li>
+
             }
             @if (Request.IsAuthenticated && User.IsInRole("OHCHR_Admin") || User.IsInRole("Super_Admin") || User.IsInRole("OHCHR_User"))
             {
+
                 <li class="treeview">
-                    <a href="~/OhchrSymb/Index">
-                        <i class="fa fa-file-word-o"></i>
-                        <span>Generate From Symbol</span>
+                    <a href="#">
+                        <i class="fa fa-university"></i>
+                        <span>OHCHR</span>
+                        <i class="fa fa-angle-left pull-right"></i>
                     </a>
+                    <ul class="treeview-menu">
+                        <li><a href="~/OHCHR/Index"><i class="fa fa-file-word-o"></i>Generate From Template</a></li>
+                        <li><a href="~/OhchrSymb/Index"><i class="fa fa-file-word-o"></i>Generate From Symbol</a></li>
+                       
+                    </ul>
                 </li>
+                
             }
-            @if (Request.IsAuthenticated && User.IsInRole("UNOG_Admin") || User.IsInRole("Super_Admin") || User.IsInRole("Unog_User"))
+           
+            @if (Request.IsAuthenticated && User.IsInRole("UNOG_Admin") || User.IsInRole("Super_Admin") || User.IsInRole("Unog_User") || User.IsInRole("SRT_User"))
             {
                 <li class="treeview">
-                    <a href="~/Unog/Index">
-                        <i class="fa fa-file-word-o"></i>
-                        <span>UNOG Generate</span>
+                    <a href="#">
+                        <i class="fa fa-university"></i>
+                        <span>UNOG</span>
+                        <i class="fa fa-angle-left pull-right"></i>
                     </a>
+                    <ul class="treeview-menu">
+                        <li><a href="~/Unog/Index"><i class="fa fa-file-word-o"></i>OHCHR Documents</a></li>
+                        <li><a href="~/SRT/Index"><i class="fa fa-file-word-o"></i>Summary Records</a></li>
+
+                    </ul>
                 </li>
+
+
             }
+            @if (Request.IsAuthenticated && User.IsInRole("UNOG_Admin") || User.IsInRole("Super_Admin") || User.IsInRole("ECE_User"))
+            {
+                <li class="treeview">
+                    <a href="#">
+                        <i class="fa fa-university"></i>
+                        <span>ECE</span>
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a href="~/ECE/Index"><i class="fa fa-file-word-o"></i>ECE Generate</a></li>
+                    </ul>
+                </li>
+                
+            }
+            @if (Request.IsAuthenticated && User.IsInRole("Super_Admin") || User.IsInRole("Unog_Admin") || User.IsInRole("UNON_User"))
+            {
+                <li class="treeview">
+                    <a href="#">
+                        <i class="fa fa-university"></i>
+                        <span>UNON</span>
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a href="~/UNON/Index"><i class="fa fa-file-word-o"></i>UNON Generate</a></li>
+                    </ul>
+                </li>
+
+            }
+            @if (User.IsInRole("Super_Admin") || User.IsInRole("JIU_User"))
+            {
+                <li class="treeview">
+                    <a href="#">
+                        <i class="fa fa-university"></i>
+                        <span>JIU</span>
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a href="~/JIU/Index"><i class="fa fa-file-word-o"></i>JIU Generate</a></li>
+                    </ul>
+                </li>
+                
+            }
+            @if (Request.IsAuthenticated && User.IsInRole("UNOG_Admin") || User.IsInRole("Super_Admin") || User.IsInRole("SR_User"))
+            {
+                <li class="treeview">
+                    <a href="#">
+                        <i class="fa fa-university"></i>
+                        <span>Summary Records</span>
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a href="~/SR/Index"><i class="fa fa-file-word-o"></i>SR Generate</a></li>
+                    </ul>
+                </li>
+              
+            }
+
             @if (Request.IsAuthenticated && User.IsInRole("Template_Admin") || User.IsInRole("Super_Admin") || User.IsInRole("OHCHR_Admin") || User.IsInRole("UNOG_Admin"))
             {
                 <li>
@@ -122,13 +205,29 @@
                         <i class="fa fa-angle-left pull-right"></i>
                     </a>
                     <ul class="treeview-menu">
-                        <li><a href="~/Organaizations/index"><i class="fa fa-share-alt"></i>Organaizations</a></li>
+                        <li><a href="~/Organaizations/index"><i class="fa fa-share-alt"></i>Organizations</a></li>
                         <li><a href="~/language/index"><i class="fa fa-file-text-o"></i>Document Language</a></li>
                         <li><a href="~/Olang/index"><i class="fa fa-language"></i>Original Languages</a></li>
-                        <li><a href="~/Distrbution/index"><i class="fa fa-align-center"></i>Distrbution Types</a></li>
+                        <li><a href="~/Distrbution/index"><i class="fa fa-align-center"></i>Distribution Types</a></li>
                         <li><a href="~/Countries/index"><i class="fa fa-globe"></i>Countries</a></li>
                     </ul>
                 </li>
+            }
+            @if (Request.IsAuthenticated && User.IsInRole("Super_Admin") )
+            {
+
+                <li class="treeview">
+                    <a href="#">
+                        <i class="fa fa-database"></i>
+                        <span>GDGS Indexing</span>
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a href="~/OIndex/Upload"><i class="fa fa-cloud-upload"></i>Index Documents</a></li>
+                        <li><a href="~/OIndex/Index"><i class="fa fa-search"></i>Search Indexed Doc</a></li>
+                    </ul>
+                </li>
+
             }
         </ul>
     </section>

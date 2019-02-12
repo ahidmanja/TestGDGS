@@ -98,7 +98,7 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Name" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="500" Nullable="false" />
           <Property Name="type_ID" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="committee">
@@ -121,6 +121,38 @@
           <Property Name="languages_ID" Type="int" Nullable="false" />
           <Property Name="ISO" Type="varchar" MaxLength="45" Nullable="false" />
         </EntityType>
+        <EntityType Name="data">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="tlang" Type="varchar" MaxLength="45" />
+          <Property Name="olang" Type="varchar" MaxLength="45" />
+          <Property Name="sdate" Type="varchar" MaxLength="45" />
+          <Property Name="anum" Type="varchar" MaxLength="45" />
+          <Property Name="atitle" Type="varchar" MaxLength="45" />
+          <Property Name="count" Type="varchar" MaxLength="45" />
+          <Property Name="prep" Type="varchar" MaxLength="500" />
+          <Property Name="stitle" Type="varchar" MaxLength="45" />
+          <Property Name="gdoc" Type="varchar" MaxLength="45" />
+          <Property Name="bar" Type="varchar" MaxLength="45" />
+          <Property Name="symh" Type="varchar" MaxLength="45" />
+          <Property Name="dist" Type="varchar" MaxLength="45" />
+          <Property Name="date" Type="varchar" MaxLength="45" />
+          <Property Name="ldate" Type="varchar" MaxLength="45" />
+          <Property Name="dname" Type="varchar" MaxLength="45" />
+          <Property Name="loca" Type="varchar" MaxLength="45" />
+          <Property Name="snum" Type="varchar" MaxLength="45" />
+          <Property Name="mnum" Type="varchar" MaxLength="45" />
+          <Property Name="file" Type="varchar" MaxLength="45" />
+          <Property Name="org" Type="varchar" MaxLength="100" />
+          <Property Name="entity" Type="varchar" MaxLength="45" />
+          <Property Name="doctype" Type="varchar" MaxLength="45" />
+          <Property Name="category" Type="varchar" MaxLength="500" />
+          <Property Name="lname1" Type="varchar" MaxLength="100" />
+          <Property Name="lname2" Type="varchar" MaxLength="100" />
+          <Property Name="subcat" Type="varchar" MaxLength="800" />
+        </EntityType>
         <EntityType Name="distrbution">
           <Key>
             <PropertyRef Name="ID" />
@@ -142,12 +174,12 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Name" Type="varchar" MaxLength="45" Nullable="false" />
-          <Property Name="Title" Type="varchar" MaxLength="100" />
+          <Property Name="Name" Type="varchar" MaxLength="500" Nullable="false" />
+          <Property Name="Title" Type="varchar" MaxLength="2500" />
           <Property Name="categories_ID" Type="int" Nullable="false" />
-          <Property Name="Symbole" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="Symbole" Type="varchar" MaxLength="500" Nullable="false" />
           <Property Name="Count" Type="int" Nullable="false" />
-          <Property Name="Reg" Type="varchar" MaxLength="500" Nullable="false" />
+          <Property Name="Reg" Type="varchar" MaxLength="800" Nullable="false" />
         </EntityType>
         <EntityType Name="languages">
           <Key>
@@ -234,6 +266,11 @@
           <Property Name="applicationId" Type="int" Nullable="false" />
           <Property Name="name" Type="varchar" MaxLength="255" Nullable="false" />
         </EntityType>
+        <!--Errors Found During Generation:
+warning 6013: The table/view 'def.gdgs1.my_aspnet_schemaversion' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
+        <EntityType Name="my_aspnet_schemaversion">
+          <Property Name="version" Type="int" />
+        </EntityType>-->
         <EntityType Name="my_aspnet_sessioncleanup">
           <Key>
             <PropertyRef Name="ApplicationId" />
@@ -498,6 +535,7 @@
           <EntitySet Name="categories" EntityType="Self.categories" Schema="gdgs1" store:Type="Tables" />
           <EntitySet Name="committee" EntityType="Self.committee" Schema="gdgs1" store:Type="Tables" />
           <EntitySet Name="countries" EntityType="Self.countries" Schema="gdgs1" store:Type="Tables" />
+          <EntitySet Name="data" EntityType="Self.data" Schema="gdgs1" store:Type="Tables" />
           <EntitySet Name="distrbution" EntityType="Self.distrbution" Schema="gdgs1" store:Type="Tables" />
           <EntitySet Name="doc_type" EntityType="Self.doc_type" Schema="gdgs1" store:Type="Tables" />
           <EntitySet Name="final_temp" EntityType="Self.final_temp" Schema="gdgs1" store:Type="Tables" />
@@ -1098,6 +1136,7 @@
             <End Role="category" EntitySet="categories" />
             <End Role="final_temp" EntitySet="final_temp" />
           </AssociationSet>
+          <EntitySet Name="data" EntityType="gdgs1Model.datum" />
         </EntityContainer>
         <EntityType Name="final_temp">
           <Key>
@@ -1126,6 +1165,38 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="datum">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="tlang" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="olang" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="sdate" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="anum" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="atitle" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="count" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="prep" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="stitle" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="gdoc" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="bar" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="symh" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="dist" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="date" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="ldate" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="dname" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="loca" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="snum" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="mnum" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="file" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="org" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="entity" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="doctype" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="category" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="lname1" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="lname2" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="subcat" Type="String" MaxLength="800" FixedLength="false" Unicode="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1456,6 +1527,39 @@
                 <ScalarProperty Name="Title" ColumnName="Title" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="data">
+            <EntityTypeMapping TypeName="gdgs1Model.datum">
+              <MappingFragment StoreEntitySet="data">
+                <ScalarProperty Name="subcat" ColumnName="subcat" />
+                <ScalarProperty Name="lname2" ColumnName="lname2" />
+                <ScalarProperty Name="lname1" ColumnName="lname1" />
+                <ScalarProperty Name="category" ColumnName="category" />
+                <ScalarProperty Name="doctype" ColumnName="doctype" />
+                <ScalarProperty Name="entity" ColumnName="entity" />
+                <ScalarProperty Name="org" ColumnName="org" />
+                <ScalarProperty Name="file" ColumnName="file" />
+                <ScalarProperty Name="mnum" ColumnName="mnum" />
+                <ScalarProperty Name="snum" ColumnName="snum" />
+                <ScalarProperty Name="loca" ColumnName="loca" />
+                <ScalarProperty Name="dname" ColumnName="dname" />
+                <ScalarProperty Name="ldate" ColumnName="ldate" />
+                <ScalarProperty Name="date" ColumnName="date" />
+                <ScalarProperty Name="dist" ColumnName="dist" />
+                <ScalarProperty Name="symh" ColumnName="symh" />
+                <ScalarProperty Name="bar" ColumnName="bar" />
+                <ScalarProperty Name="gdoc" ColumnName="gdoc" />
+                <ScalarProperty Name="stitle" ColumnName="stitle" />
+                <ScalarProperty Name="prep" ColumnName="prep" />
+                <ScalarProperty Name="count" ColumnName="count" />
+                <ScalarProperty Name="atitle" ColumnName="atitle" />
+                <ScalarProperty Name="anum" ColumnName="anum" />
+                <ScalarProperty Name="sdate" ColumnName="sdate" />
+                <ScalarProperty Name="olang" ColumnName="olang" />
+                <ScalarProperty Name="tlang" ColumnName="tlang" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

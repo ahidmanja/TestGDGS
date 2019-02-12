@@ -1,0 +1,112 @@
+﻿@*@(Html.Kendo().Grid<IdentitySample.Models.DataViewModel>()
+    .Name("Datagrid")
+    .Columns(columns =>
+    {
+        columns.Bound(p => p.ID).Filterable(ftb => ftb.Cell(cell => cell.ShowOperators(false))).Width(225);
+        columns.Bound(p => p.Anum).Width(200).Filterable(ftb => ftb.Cell(cell => cell.Operator("contains").SuggestionOperator(FilterType.Contains)));
+        columns.Bound(p => p.Atitle).Width(200).Filterable(ftb => ftb.Cell(cell => cell.Operator("contains").SuggestionOperator(FilterType.Contains)));
+        columns.Bound(p => p.Bar).Width(200).Filterable(ftb => ftb.Cell(cell => cell.Operator("contains").SuggestionOperator(FilterType.Contains)));
+        columns.Bound(p => p.Dname).Width(200).Filterable(ftb => ftb.Cell(cell => cell.Operator("contains").SuggestionOperator(FilterType.Contains)));
+        columns.Bound(p => p.Ldate).Width(200).Filterable(ftb => ftb.Cell(cell => cell.Operator("contains").SuggestionOperator(FilterType.Contains)));
+        columns.Bound(p => p.Loca).Width(200).Filterable(ftb => ftb.Cell(cell => cell.Operator("contains").SuggestionOperator(FilterType.Contains)));
+        columns.Bound(p => p.Mnum).Width(200).Filterable(ftb => ftb.Cell(cell => cell.Operator("contains").SuggestionOperator(FilterType.Contains)));
+        columns.Bound(p => p.Sdate).Width(200).Filterable(ftb => ftb.Cell(cell => cell.Operator("contains").SuggestionOperator(FilterType.Contains)));
+        columns.Bound(p => p.Stitle).Width(200).Filterable(ftb => ftb.Cell(cell => cell.Operator("contains").SuggestionOperator(FilterType.Contains)));
+    })
+    .Pageable()
+    .Sortable()
+    .Scrollable()
+    .Filterable(ftb => ftb.Mode(GridFilterMode.Row))
+    .HtmlAttributes(new { style = "height:550px;" })
+    .DataSource(dataSource => dataSource
+        .Ajax()
+        .PageSize(20)
+        .ServerOperation(true)
+        .Read(read => read.Action("Read", "data"))
+     )
+)*@
+
+@(Html.Kendo().Grid<IdentitySample.Models.DataViewModel>()
+    .Name("DataGrid")
+    .Columns(columns =>
+    {
+        columns.Bound(p => p.Symh).Width(200).Filterable(ftb => ftb.Cell(cell => cell.Operator("contains").SuggestionOperator(FilterType.Contains)));
+        columns.Bound(p => p.Olang).Width(200).Filterable(ftb => ftb.Cell(cell => cell.Operator("contains").SuggestionOperator(FilterType.Contains)));
+        columns.Bound(p => p.Tlang).Width(200).Filterable(ftb => ftb.Cell(cell => cell.Operator("contains").SuggestionOperator(FilterType.Contains)));
+        columns.Bound(p => p.Date).Width(200).Filterable(ftb => ftb.Cell(cell => cell.Operator("contains").SuggestionOperator(FilterType.Contains)));
+        columns.Bound(p => p.FName).Width(200).Filterable(ftb => ftb.Cell(cell => cell.Operator("contains").SuggestionOperator(FilterType.Contains)));
+        columns.Bound(p => p.Count).Width(200).Filterable(ftb => ftb.Cell(cell => cell.Operator("contains").SuggestionOperator(FilterType.Contains)));
+        columns.Bound(p => p.Dist).Width(200).Filterable(ftb => ftb.Cell(cell => cell.Operator("contains").SuggestionOperator(FilterType.Contains)));
+        columns.Command(command => command.Custom("ViewDetails").Click("showDetails")).Width(180);
+    })
+    .Pageable()
+    .Sortable()
+    .Scrollable()
+    .Filterable(ftb => ftb.Mode(GridFilterMode.Row))
+    .DataSource(dataSource => dataSource
+        .Ajax()
+        .PageSize(20)
+        .Read(read => read.Action("Read", "data"))
+     )
+)
+
+@(Html.Kendo().Window().Name("Details")
+    .Title("Document Details")
+    .Visible(false)
+    .Modal(true)
+    .Draggable(true)
+    .Width(750)
+)
+
+<script type="text/x-kendo-template" id="template">
+    <div id="details-container">
+        <h2 style="color:blue">#= Symh #</h2>
+        <em>#= Olang #</em>
+        <br />
+        <dl>
+            <dt><h4 style="color:blue">Report Number: </h4>#= Prep #</dt>
+            <br />
+            <dt><h4 style="color:blue">Session Details: </h1>#= Snum # </dt>
+            <br />
+            <dt><h4 style="color:blue">Session Number: </h1>#= Snum #</dt>
+            <br />
+            <dt><h4 style="color:blue">Session Number: </h1>#= Snum #</dt>
+            <br />
+            <dt><h4 style="color:blue">Session Number: </h1>#= Snum #</dt>
+            <br />
+            <dt><h4 style="color:blue">Session Number: </h1>#= Snum #</dt>
+        </dl>
+    </div>
+</script>
+<script type="text/javascript">
+    var detailsTemplate = kendo.template($("#template").html());
+
+    function showDetails(e) {
+        e.preventDefault();
+
+        var dataItem = this.dataItem($(e.currentTarget).closest("tr"));
+        var wnd = $("#Details").data("kendoWindow");
+
+        wnd.content(detailsTemplate(dataItem));
+        wnd.center().open();
+    }
+</script>
+
+<style type="text/css">
+    #details-container {
+        padding: 10px;
+    }
+
+        #details-container h2 {
+            margin: 0;
+        }
+
+        #details-container em {
+            color: #8c8c8c;
+        }
+
+        #details-container dt {
+            margin: 0;
+            display: inline;
+        }
+</style>

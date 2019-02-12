@@ -5,7 +5,7 @@
     .Name("org")
     .Columns(columns =>
     {
-        columns.Bound(p => p.OName).Title("Organaization Name").Width(200);
+        columns.Bound(p => p.OName).Title("Organization Name").Width(200);
        
         columns.Command(command => { command.Edit(); command.Destroy(); }).Width(200);
     })

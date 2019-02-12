@@ -18,10 +18,12 @@ namespace IdentitySample.Models
         [Required]
         public string Title { get; set; }
         [Required]
+        [StringLength(150)]
         public string Symbole { get; set; }
         [Required]
         public int Count { get; set; }
         [Required]
+        [StringLength(250)]
         public string Reg { get; set; }
 
         public string doctype { get; set; }

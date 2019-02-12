@@ -47,6 +47,7 @@
         <AssociationConnector Association="gdgs1Model.aspnetuserroles" ManuallyRouted="false" />
         <EntityTypeShape EntityType="gdgs1Model.final_temp" Width="1.5" PointX="14.75" PointY="7" />
         <AssociationConnector Association="gdgs1Model.fk_final_temp_categories1" />
+        <EntityTypeShape EntityType="gdgs1Model.datum" Width="1.5" PointX="5.375" PointY="16.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

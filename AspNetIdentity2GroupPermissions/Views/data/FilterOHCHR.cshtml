@@ -1,0 +1,26 @@
+﻿<div class="demo-section k-content">
+    <h4>Find a product</h4>
+    @(Html.Kendo().AutoComplete()
+          .Name("committees")
+          .DataTextField("Entity")
+          .Filter("contains")
+          .MinLength(1)
+          .HtmlAttributes(new { style = "width:100%" })
+          .DataSource(source =>
+          {
+              source.Read(read =>
+              {
+                  read.Action("ServerFiltering_GetComs", "Helper")
+                      .Data("onAdditionalData");
+              })
+              .ServerFiltering(true);
+          })
+    )
+</div>
+<script>
+    function onAdditionalData() {
+        return {
+            text: $("#committees").val()
+        };
+    }
+</script>

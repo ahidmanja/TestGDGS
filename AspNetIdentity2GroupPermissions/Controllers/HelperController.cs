@@ -11,6 +11,256 @@ namespace IdentitySample.Controllers
     {
         private gdgs1Entities db = new gdgs1Entities();
 
+        public JsonResult ServerFiltering_GetDate(string text , string org)
+        {
+
+
+            var date = db.data.Select(result => new DataViewModel
+            {
+
+                Date = result.date,
+                Org = result.org
+
+            });
+            date = date.Where(p => p.Org == org).Distinct();
+            if (!string.IsNullOrEmpty(text))
+            {
+                date = date.Where(p => p.Date.Contains(text)).Distinct();
+            }
+
+            return Json(date, JsonRequestBehavior.AllowGet);
+        }
+        public JsonResult ServerFiltering_GetSym(string text, string org)
+        {
+
+
+            var sym = db.data.Select(result => new DataViewModel
+            {
+
+                Symh = result.symh,
+                Org = result.org
+
+            });
+            sym = sym.Where(p => p.Org == org).Distinct();
+            if (!string.IsNullOrEmpty(text))
+            {
+                sym = sym.Where(p => p.Symh.Contains(text)).Distinct();
+            }
+
+            return Json(sym, JsonRequestBehavior.AllowGet);
+        }
+        public JsonResult ServerFiltering_GetOrg(string text)
+        {
+
+
+            var final = db.data.Select(result => new DataViewModel
+            {
+
+               
+                Org = result.org
+
+            });
+          
+            if (!string.IsNullOrEmpty(text))
+            {
+                final = final.Where(p => p.Org.Contains(text)).Distinct();
+            }
+
+            return Json(final, JsonRequestBehavior.AllowGet);
+        }
+        public JsonResult ServerFiltering_GetAtitle(string text , string org)
+        {
+
+
+            var atitle = db.data.Select(result => new DataViewModel
+            {
+
+                Atitle = result.atitle,
+                Org = result.org
+
+            });
+            atitle = atitle.Where(p => p.Org == org).Distinct();
+            if (!string.IsNullOrEmpty(text))
+            {
+                atitle = atitle.Where(p => p.Atitle.Contains(text)).Distinct();
+            }
+
+            return Json(atitle, JsonRequestBehavior.AllowGet);
+        }
+        public JsonResult ServerFiltering_GetAnum(string text, string org)
+        {
+
+
+            var anum = db.data.Select(result => new DataViewModel
+            {
+
+                Anum = result.anum,
+                Org = result.org
+
+            });
+            anum = anum.Where(p => p.Org == org).Distinct();
+            if (!string.IsNullOrEmpty(text))
+            {
+                anum = anum.Where(p => p.Anum.Contains(text)).Distinct();
+            }
+
+            return Json(anum, JsonRequestBehavior.AllowGet);
+        }
+        public JsonResult ServerFiltering_GetSdate(string text, string org)
+        {
+
+
+            var sdate = db.data.Select(result => new DataViewModel
+            {
+
+                Sdate = result.sdate,
+                Org = result.org
+
+            });
+            sdate = sdate.Where(p => p.Org == org).Distinct();
+            if (!string.IsNullOrEmpty(text))
+            {
+                sdate = sdate.Where(p => p.Sdate.Contains(text)).Distinct();
+            }
+
+            return Json(sdate, JsonRequestBehavior.AllowGet);
+        }
+        public JsonResult ServerFiltering_GetComs(string text, string org)
+        {
+
+
+            var committees = db.data.Select(result => new DataViewModel
+            {
+              
+                Entity = result.entity,
+                Org=result.org
+                
+            });
+            committees = committees.Where(p => p.Org == org).Distinct();
+            if (!string.IsNullOrEmpty(text))
+            {
+                committees = committees.Where(p => p.Entity.Contains(text)).Distinct();
+            }
+
+            return Json(committees, JsonRequestBehavior.AllowGet);
+        }
+        public JsonResult ServerFiltering_GetdocT(string text, string org)
+        {
+
+
+            var doc = db.data.Select(result => new DataViewModel
+            {
+
+                DocType = result.doctype,
+                Org = result.org
+
+            });
+            doc = doc.Where(p => p.Org == org).Distinct();
+            if (!string.IsNullOrEmpty(text))
+            {
+                doc = doc.Where(p => p.DocType.Contains(text)).Distinct();
+            }
+
+            return Json(doc, JsonRequestBehavior.AllowGet);
+        }
+        public JsonResult ServerFiltering_Getcat(string text, string org)
+        {
+
+
+            var cat = db.data.Select(result => new DataViewModel
+            {
+
+                Category = result.category,
+                Org = result.org
+
+            });
+            cat = cat.Where(p => p.Org == org).Distinct();
+            if (!string.IsNullOrEmpty(text))
+            {
+                cat = cat.Where(p => p.Category.Contains(text)).Distinct();
+            }
+
+            return Json(cat, JsonRequestBehavior.AllowGet);
+        }
+        public JsonResult ServerFiltering_Getolang(string text, string org)
+        {
+
+
+            var olang = db.data.Select(result => new DataViewModel
+            {
+
+                Olang = result.olang,
+                Org = result.org
+
+            });
+            olang = olang.Where(p => p.Org == org).Distinct();
+            if (!string.IsNullOrEmpty(text))
+            {
+                olang = olang.Where(p => p.Olang.Contains(text)).Distinct();
+            }
+
+            return Json(olang, JsonRequestBehavior.AllowGet);
+        }
+        
+             public JsonResult ServerFiltering_GetSnmu(string text, string org)
+        {
+
+
+            var snum = db.data.Select(result => new DataViewModel
+            {
+
+                Snum = result.snum,
+                Org = result.org
+
+            });
+            snum = snum.Where(p => p.Org == org).Distinct();
+            if (!string.IsNullOrEmpty(text))
+            {
+                snum = snum.Where(p => p.Snum.Contains(text)).Distinct();
+            }
+
+            return Json(snum, JsonRequestBehavior.AllowGet);
+        }
+        public JsonResult ServerFiltering_GetDist(string text, string org)
+        {
+
+
+            var dist = db.data.Select(result => new DataViewModel
+            {
+
+                Dist = result.dist,
+                Org = result.org
+
+            });
+            dist = dist.Where(p => p.Org == org);
+            if (!string.IsNullOrEmpty(text))
+            {
+                dist = dist.Where(p => p.Dist.Contains(text)).Distinct();
+            }
+
+            return Json(dist, JsonRequestBehavior.AllowGet);
+        }
+        public JsonResult ServerFiltering_GetCount(string text, string org)
+        {
+
+
+            var count = db.data.Select(result => new DataViewModel
+            {
+
+                Count = result.count,
+                Org = result.org
+
+            });
+            count = count.Where(p => p.Org == org);
+            if (!string.IsNullOrEmpty(text))
+            {
+                count = count.Where(p => p.Count.Contains(text)).Distinct();
+            }
+
+            return Json(count, JsonRequestBehavior.AllowGet);
+        }
+
+
         [HttpPost]
         public ActionResult Excel_Export_Save(string contentType, string base64, string fileName)
         {
@@ -73,7 +323,7 @@ namespace IdentitySample.Controllers
             var Item = db.olanguages.AsQueryable();
             
            
-           Item = Item.Where(p => p.languages_ID == 1);
+         //  Item = Item.Where(p => p.languages_ID == 1);
 
             return Json(Item.Select(p => new { Text = p.Name, Value = p.Name }), JsonRequestBehavior.AllowGet);
         }
@@ -148,6 +398,24 @@ namespace IdentitySample.Controllers
 
             return Json(db.template_type.Select(c => new { ID = c.ID, Name = c.Name }), JsonRequestBehavior.AllowGet);
         }
+        public JsonResult GetTempTypeOHCHR()
+        {
+            var Item = db.template_type.AsQueryable();
+
+            
+                Item = Item.Where(p => p.ID == 5);
+        
+            return Json(Item.Select(c => new { ID = c.ID, Name = c.Name }), JsonRequestBehavior.AllowGet);
+        }
+        public JsonResult GetTempTypeECE()
+        {
+            var Item = db.template_type.AsQueryable();
+
+            // add id for ece
+            Item = Item.Where(p => p.ID == 5);
+
+            return Json(Item.Select(c => new { ID = c.ID, Name = c.Name }), JsonRequestBehavior.AllowGet);
+        }
 
         public JsonResult GetCascadeCommittees(int? t)
         {
@@ -161,7 +429,16 @@ namespace IdentitySample.Controllers
 
             return Json(Item.Select(p => new { ID = p.ID, Name = p.Name }), JsonRequestBehavior.AllowGet);
         }
+        public JsonResult GetCascadeCommitteesECE()
+        {
 
+            var Item = db.committees.AsQueryable();
+
+            Item = Item.Where(p => p.template_type_ID == 3);
+            
+
+            return Json(Item.Select(p => new { ID = p.ID, Name = p.Name }), JsonRequestBehavior.AllowGet);
+        }
 
         public JsonResult GetCascadeDocT(int? comm)
         {
@@ -209,6 +486,45 @@ namespace IdentitySample.Controllers
             }
 
             return Json(item.Select(p => new { CID = p.ID, CName = p.Name }), JsonRequestBehavior.AllowGet);
+
+        }
+        public JsonResult GetCascadeSCat(int? tt, string Filter)
+        {
+
+       //     int id=-1;
+            var item = db.final_temp.AsQueryable();
+
+            if (tt != null)
+            {
+                item = item.Where(p => p.categories_ID == tt );
+
+                //item = item.Where(p => p.Title != p.category.Name);
+
+            }
+
+            //foreach (var it in item)
+            //{
+            //    if (it.Title == it.category.Name)
+            //    {
+            //        id = it.ID;
+            //    }
+               
+            //}
+      
+            if (!string.IsNullOrEmpty(Filter))
+            {
+                item = item.Where(p => p.Name.Contains(Filter));
+            }
+
+            //if (id >=0)
+            //{
+            //    item.Where(p => p.ID == id).Select(x => x.Title == "Not Applicable");
+            //}
+
+
+
+
+            return Json(item.Select(p => new { SCName = p.Title }), JsonRequestBehavior.AllowGet);
 
         }
 

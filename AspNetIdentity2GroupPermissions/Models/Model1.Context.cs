@@ -55,5 +55,6 @@ namespace IdentitySample.Models
         public virtual DbSet<organaization> organaizations { get; set; }
         public virtual DbSet<template_type> template_type { get; set; }
         public virtual DbSet<final_temp> final_temp { get; set; }
+        public virtual DbSet<datum> data { get; set; }
     }
 }

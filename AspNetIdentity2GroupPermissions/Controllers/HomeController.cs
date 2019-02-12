@@ -61,6 +61,14 @@ namespace IdentitySample.Controllers
             {
                 return RedirectToAction("DashBoard", "Home");
             }
+            if (User.IsInRole("SR_User"))
+            {
+                return RedirectToAction("Index", "SR");
+            }
+            if (User.IsInRole("SRT_User"))
+            {
+                return RedirectToAction("Index", "SRT");
+            }
             else { return RedirectToAction("DashBoard", "Home"); }
           
         }
