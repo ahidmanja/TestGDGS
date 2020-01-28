@@ -1,4 +1,7 @@
-﻿using IdentitySample.Models;
+﻿using DocumentFormat.OpenXml;
+using DocumentFormat.OpenXml.Packaging;
+using DocumentFormat.OpenXml.Wordprocessing;
+using IdentitySample.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +13,94 @@ namespace IdentitySample.Controllers
     public class HelperController : Controller
     {
         private gdgs1Entities db = new gdgs1Entities();
+        private void RemoveFields(string fname)
+        {
+            using (WordprocessingDocument pkgDoc = WordprocessingDocument.Open(fname, true))
+            {
+                string fieldList = string.Empty;
+                Document doc = pkgDoc.MainDocumentPart.Document;
+                //Get all field code elements in the document
+                IEnumerable<FieldChar> fldChars = doc.Descendants<FieldChar>();
+                if (fldChars == null) return; //No field codes in the document
 
+                // bool fldStart = false;
+                FieldChar fldCharStart = null;
+                FieldChar fldCharEnd = null;
+                FieldChar fldCharSep = null;
+                FieldCode fldCode = null;
+                string fldContent = String.Empty;
+                foreach (FieldChar fldChar in fldChars)
+                {
+                    string fldCharPart = fldChar.FieldCharType.ToString();
+                    switch (fldCharPart)
+                    {
+                        case "begin": //start of the field
+                            fldCharStart = fldChar;
+                            //get the field code, which will be an instrText element
+                            // either as sibling or as a child of the parent sibling
+                            fldCode = fldCharStart.Parent.Descendants<FieldCode>().FirstOrDefault();
+                            if (fldCode == null) //complex field
+                            {
+                                fldCode = fldCharStart.Parent.NextSibling<Run>().Descendants<FieldCode>().FirstOrDefault();
+                            }
+                            if (fldCode != null && fldCode.InnerText.Contains("MERGEFIELD"))
+                            {
+                                fldContent = fldCode.InnerText;
+                                fieldList += fldContent + "\n";
+                            }
+                            break;
+                        case "end": // end of the field
+                            fldCharEnd = fldChar;
+                            break;
+                        case "separate": //complex field with text result
+                                         //we want to put the database content in this text run
+                                         //yet still remove the field code
+                                         //If there's no "separate" field char for the current field,
+                                         //we need to insert it somewhere else
+                            fldCharSep = fldChar;
+                            break;
+                        default:
+                            break;
+                    }
+                    if ((fldCharStart != null) && (fldCharEnd != null)) //start and end field codes have been found
+                    {
+                        if (fldCharSep != null)
+                        {
+                            DocumentFormat.OpenXml.Wordprocessing.Text elemText = (DocumentFormat.OpenXml.Wordprocessing.Text)fldCharSep.Parent.NextSibling().Descendants<DocumentFormat.OpenXml.Wordprocessing.Text>().FirstOrDefault();
+                            elemText.Text = fldContent;
+                            //Delete all the field chars with their runs
+                            DeleteFieldChar(fldCharStart);
+                            DeleteFieldChar(fldCharEnd);
+                            DeleteFieldChar(fldCharSep);
+                            fldCode.Remove();
+                        }
+                        else
+                        {
+                            DocumentFormat.OpenXml.Wordprocessing.Text elemText = new DocumentFormat.OpenXml.Wordprocessing.Text(fldContent);
+                            fldCode.Parent.Append(elemText);
+                            fldCode.Remove();
+                            //Delete all the field chars with their runs
+                            DeleteFieldChar(fldCharStart);
+                            DeleteFieldChar(fldCharEnd);
+                            DeleteFieldChar(fldCharSep);
+                        }
+                        fldCharStart = null;
+                        fldCharEnd = null;
+                        fldCharSep = null;
+                        fldCode = null;
+                        fldContent = string.Empty;
+                    }
+
+                }
+             
+            }
+        }
+        private void DeleteFieldChar(OpenXmlElement fldCharStart)
+        {
+            Run fldRun = (Run)fldCharStart.Parent;
+            fldRun.RemoveAllChildren();
+            fldRun.Remove();
+        }
         public JsonResult ServerFiltering_GetDate(string text , string org)
         {
 

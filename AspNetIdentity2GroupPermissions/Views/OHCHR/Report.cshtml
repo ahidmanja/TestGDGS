@@ -1,4 +1,15 @@
-﻿@model IdentitySample.Models.OHCHRViewModel
+﻿<script src="@Url.Content("~/Scripts/kendo/2015.1.408/cultures/kendo.culture.en-GB.min.js")"></script>
+
+
+<script type="text/javascript">
+    //set culture of the Kendo UI
+    kendo.culture("en-GB");
+</script>
+
+@{
+    Culture = "en-GB";
+}
+@model IdentitySample.Models.OHCHRViewModel
 <br />
 <br />
 <br />
@@ -33,11 +44,11 @@
                     )
                 </div>
                 <div class="col-sm-3 col-md-3">
-                    @(Html.Kendo().DatePickerFor(m => m.Sdate).Name("Sdate").Value("").Format("MM/dd/yyyy").HtmlAttributes(new { @placeholder = "Start Date" }))
+                    @(Html.Kendo().DatePickerFor(m => m.Sdate).Name("Sdate").Value("").Format("dd/MM/yyyy").HtmlAttributes(new { @placeholder = "Start Date" }))
                 </div>
 
                 <div class="col-sm-3 col-md-3">
-                    @(Html.Kendo().DatePickerFor(m => m.Edate).Name("Edate").Value("").Format("MM/dd/yyyy").HtmlAttributes(new { @placeholder = "End Date" }))
+                    @(Html.Kendo().DatePickerFor(m => m.Edate).Name("Edate").Value("").Format("dd/MM/yyyy").HtmlAttributes(new { @placeholder = "End Date" }))
                 </div>
             </div>
             <div class="form-group">
@@ -65,7 +76,17 @@
             </div>
             <br />
             <br />
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="name" style="font-size:14px !important">Translation Required</label>
+                <div class="col-sm-3 col-md-3">
+                    @(Html.Kendo().CheckBoxFor(m => m.ntv)
+                    .Name("ntv")
+                    .Checked(true)
+                    .HtmlAttributes(new { onchange = "setDDL(this.checked);" })
 
+                    )
+                </div>
+            </div>
             <div class="form-group">
                 <label class="control-label col-sm-2" for="name" style="font-size:14px !important">   Versions Required</label>
                 <div class="col-sm-3 col-md-3">
@@ -273,6 +294,10 @@
             t: $("#lang_ID").val()
         };
     }
+    function setDDL(chk) {
+        var dropdownlist = $("#version1").data("kendoMultiSelect");
+        dropdownlist.enable(chk);
+    };
 </script>
 <style>
     #mdiv {

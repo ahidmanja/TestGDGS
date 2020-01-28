@@ -16,8 +16,9 @@ using System.Globalization;
 using Humanizer;
 using System.Net;
 using System.Text.RegularExpressions;
-using DocumentFormat.OpenXml.Packaging ;
+using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Wordprocessing;
+using DocumentFormat.OpenXml;
 
 namespace IdentitySample.Controllers
 {
@@ -151,8 +152,8 @@ namespace IdentitySample.Controllers
 
         public ActionResult download(string name)
         {
-            return File(Url.Content("/GDGS/OUT/" + name + ".docx"), "text/plain", name + ".docx");
-         // return File(Url.Content("/OUT/" + name + ".docx"), "text/plain", name + ".docx");
+           return File(Url.Content("/GDGS/OUT/" + name + ".docx"), "text/plain", name + ".docx");
+        // return File(Url.Content("/OUT/" + name + ".docx"), "text/plain", name + ".docx");
         }
         public static string getSym(ECEViewModel model)
         {
@@ -266,7 +267,7 @@ namespace IdentitySample.Controllers
             //    }
             //}
 
-            Fvirs = getVerisons(model);
+            //Fvirs = getVerisons(model);
 
             string Folang = "";
             Folang = Olanguage(model.lang_ID);
@@ -567,11 +568,44 @@ namespace IdentitySample.Controllers
 
 
             }
+            //using (WordprocessingDocument
 
+            // document = WordprocessingDocument.Open(source, true))
 
+            //{
+            //    var bookMarks = FindBookmarks(document.MainDocumentPart.Document);
+            //}
             // Return the template now that it has been modified to hold all of our custom data.
             return template;
 
+        }
+        private static Dictionary<string, BookmarkEnd> FindBookmarks(OpenXmlElement documentPart, Dictionary<string, BookmarkEnd> results = null, Dictionary<string, string> unmatched = null)
+        {
+            results = results ?? new Dictionary<string, BookmarkEnd>();
+            unmatched = unmatched ?? new Dictionary<string, string>();
+
+            foreach (var child in documentPart.Elements())
+            {
+                if (child is BookmarkStart)
+                {
+                    var bStart = child as BookmarkStart;
+                    unmatched.Add(bStart.Id, bStart.Name);
+                }
+
+                if (child is BookmarkEnd)
+                {
+                    var bEnd = child as BookmarkEnd;
+                    foreach (var orphanName in unmatched)
+                    {
+                        if (bEnd.Id == orphanName.Key)
+                            results.Add(orphanName.Value, bEnd);
+                    }
+                }
+
+                FindBookmarks(child, results, unmatched);
+            }
+
+            return results;
         }
         public static string getCat(int id)
         {
@@ -739,12 +773,12 @@ namespace IdentitySample.Controllers
                     {
                         if (s[1] == e[1])
                         {
-                            final = s[0] + "-" + e[0] + " " + e[1] + " " + e[2];
+                            final = s[0] + "—" + e[0] + " " + e[1] + " " + e[2];
                         }
                         if (s[1] != e[1])
                         {
 
-                            final = s[0] + " " + s[1] + "-" + e[0] + " " + e[1] + " " + e[2];
+                            final = s[0] + " " + s[1] + "—" + e[0] + " " + e[1] + " " + e[2];
                         }
                         //return final;
                         break;
@@ -981,28 +1015,28 @@ namespace IdentitySample.Controllers
                 string[] d = date.Split('/');
                 int[] convert = Array.ConvertAll<string, int>(d, int.Parse);
                 var frenchCultureInfo = CultureInfo.CreateSpecificCulture("fr-fr");
-                string month = frenchCultureInfo.DateTimeFormat.GetMonthName(convert[0]);
-                if (d[1] == "1")
+                string month = frenchCultureInfo.DateTimeFormat.GetMonthName(convert[1]);
+                if (d[0] == "1")
                 {
-                    d[1] = d[1] + "\u1D49" + "\u02B3";
+                    d[0] = d[0] + "\u1D49" + "\u02B3";
                 }
-                final = d[1] + " " + month + " " + d[2];
+                final = d[0] + " " + month + " " + d[2];
             }
             else if (lang == "Spanish")
             {
                 string[] d = date.Split('/');
                 int[] convert = Array.ConvertAll<string, int>(d, int.Parse);
                 var frenchCultureInfo = CultureInfo.CreateSpecificCulture("es-es");
-                string month = frenchCultureInfo.DateTimeFormat.GetMonthName(convert[0]);
-                final = d[1] + " de " + month + " de " + d[2];
+                string month = frenchCultureInfo.DateTimeFormat.GetMonthName(convert[1]);
+                final = d[0] + " de " + month + " de " + d[2];
             }
             else
             {
                 string[] d = date.Split('/');
                 int[] convert = Array.ConvertAll<string, int>(d, int.Parse);
                 var frenchCultureInfo = CultureInfo.CreateSpecificCulture("en-US");
-                string month = frenchCultureInfo.DateTimeFormat.GetMonthName(convert[0]);
-                final = d[1] + " " + month + " " + d[2];
+                string month = frenchCultureInfo.DateTimeFormat.GetMonthName(convert[1]);
+                final = d[0] + " " + month + " " + d[2];
             }
             return final;
         }

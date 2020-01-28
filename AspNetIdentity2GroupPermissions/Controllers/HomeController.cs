@@ -37,6 +37,7 @@ namespace IdentitySample.Controllers
         [Authorize]
         public ActionResult Index()
         {
+
             if (User.IsInRole("Super_Admin"))
             {
                 return RedirectToAction("DashBoard", "Home");

@@ -20,6 +20,20 @@
 	<script src="@Url.Content("~/Scripts/kendo/2015.1.408/kendo.all.min.js")"></script>
 	<script src="@Url.Content("~/Scripts/kendo/2015.1.408/kendo.aspnetmvc.min.js")"></script>
 	<script src="@Url.Content("~/Scripts/kendo.modernizr.custom.js")"></script>
+    <script src="@Url.Content("~/Scripts/jquery.validate.js")"></script>
+    <script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.js")"></script>
+    @*<script src="@Url.Content("~/Scripts/cultures/kendo.culture.en-IE.min.js")"></script>
+    <script>
+    kendo.culture("en-IE");
+    </script>
+    <script>
+    kendo.ui.validator.rules.mvcdate = function (input) {
+        //use the custom date format here
+        //kendo.parseDate - http://docs.telerik.com/kendo-ui/api/javascript/kendo#methods-parseDate
+
+        return input.val() === "" || kendo.parseDate(input.val(), "dd/MM/yyyy") !== null;
+    }
+    </script>*@
 </head>
 <body class="k-rtl">
     <div class="navbar navbar-inverse navbar-fixed-top">

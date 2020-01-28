@@ -85,18 +85,18 @@ namespace IdentitySample.Controllers
             string id = user.Id;
             var loggeduser = UserManager.FindByIdAsync(id);
             var userGroups = this.GroupManager.GetUserGroups(id);
-            string org = userGroups.OrderBy(f => f.Org).FirstOrDefault().Org.ToString();
+            string org = userGroups.FirstOrDefault().Org.ToString();
 
-            if (org != "1")
-            {
-                var final = userslist.Where(a => a.PhoneNumber == org).ToList<ApplicationUser>();
-                return View(final);
-            }
-            else
-            {
+            //if (org != "1")
+            //{
+            //    var final = userslist.Where(a => a.PhoneNumber == org).ToList<ApplicationUser>();
+            //    return View(final);
+            //}
+            //else
+            //{
                 var final1 = userslist.ToList<ApplicationUser>();
                 return View(final1);
-            }
+            //}
 
             // var Final = userslist.Select(u => u.UserName).ToList();
             //var final = userslist.Where(a => a.PhoneNumber == org).ToList<ApplicationUser>();
@@ -172,7 +172,6 @@ namespace IdentitySample.Controllers
                     Email = userViewModel.Email, 
                     Fname=userViewModel.Fname,
                     PhoneNumber=userViewModel.org_id,
-                    PhoneNumberConfirmed=false,
                     Lname=userViewModel.Lname
                    
                 };
@@ -192,7 +191,7 @@ namespace IdentitySample.Controllers
                     var code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
                     var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     //   await UserManager.SendEmailAsync(user.Id, "gDGS Account Created", "<b>Dear User</b></br>"+"An account has been created for you on Global Document Generation System gDGS.<br/>"+"Username:"+ user.Id +"<br/>"+ "Please follow this link in order to set your password and activate your account: <a href=\"" + callbackUrl + "\">link</a>");
-                    await UserManager.SendEmailAsync(user.Id, "gDGS Account Created", "<b>Dear "+ user.Fname+" "+user.Lname+ "</b><br /><br/>" + "An account has been created for you on Global Document Generation System gDGS.<br/> <br/>" + "<b>Username:</b>" + user.UserName + "<br/>" +"<b>Password:</b> United@12345 <br/>" +"Access Link : http://conf.unog.ch/GDGS <br/><br/>+"+ "Best regards,<br/>"+"gDGS Team");
+                    await UserManager.SendEmailAsync(user.Id, "gDGS Account Created", "<b>Dear"+ user.Fname+" "+user.Lname+ "</b><br /><br/>" + "An account has been created for you on Global Document Generation System gDGS.<br/> <br/>" + "<b>Username:</b>" + user.UserName + "<br/>" +"<b>Password:</b> United@12345 <br/>" +"Access Link : http://conf.unog.ch/GDGS <br/><br/>+"+ "Best regards,<br/>"+"gDGS Team");
                     ViewBag.Link = callbackUrl;
 
                     return View("ConfirmUserCreation", user);

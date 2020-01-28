@@ -79,6 +79,10 @@ namespace IdentitySample.Models
                 {
                     str[i] = "[0-9]+-{0,1}[0-9]*";
                 }
+                if (str[i] == "@")
+                {
+                    str[i] = "[0-9]{1,9}";
+                }
                 if (str[i].Contains("$"))
                 {
                     str[i] = str[i].Trim('$');

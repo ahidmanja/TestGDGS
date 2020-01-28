@@ -12,6 +12,9 @@ using System.Globalization;
 using Humanizer;
 using System.Net;
 using System.Text.RegularExpressions;
+using Aspose.Words;
+using System.Collections;
+using Aspose.Words.Fields;
 
 namespace IdentitySample.Controllers
 {
@@ -47,7 +50,6 @@ namespace IdentitySample.Controllers
 
             List = db1.final_temp.Where(p => p.Count == Count).Select(Item => new UnogViewModel
             {
-
                 tempname = Item.Name,
                 structure = Item.Symbole,
                 regx = Item.Reg,
@@ -89,6 +91,16 @@ namespace IdentitySample.Controllers
                     model.ver = string.Join(",", model.version1.ToArray());
                    // model.ver = model.version1.ToString();
                 }
+                model.datestring = model.date.ToString();
+
+                if (!String.IsNullOrEmpty(model.Sdate.ToString()))
+                {
+                    model.sdatestring = model.Sdate.ToString();
+                }
+                if (!String.IsNullOrEmpty(model.Edate.ToString()))
+                {
+                    model.edatestring = model.Edate.ToString();
+                }
                 return RedirectToAction("Generate", model);
             }
 
@@ -107,9 +119,20 @@ namespace IdentitySample.Controllers
         [HttpGet]
         public ActionResult Verify(UnogViewModel model)
         {
+            model.datestring = model.date.ToString();
+
+            if (!String.IsNullOrEmpty(model.Sdate.ToString()))
+            {
+                model.sdatestring = model.Sdate.ToString();
+            }
+            if (!String.IsNullOrEmpty(model.Edate.ToString()))
+            {
+                model.edatestring = model.Edate.ToString();
+            }
             return View(model);
 
         }
+
         [HttpPost]
         public ActionResult VerifyF(UnogViewModel model)
         {
@@ -124,7 +147,7 @@ namespace IdentitySample.Controllers
              string source = Server.MapPath(Path.Combine("/", "GDGS/IN/" + fname + ".docx"));
              string Dest = Server.MapPath(Path.Combine("/", "GDGS/OUT/" + fname + ".docx"));
 
-            //  string source = Server.MapPath(Path.Combine("/", "IN/" + fname + ".docx"));
+              //string source = Server.MapPath(Path.Combine("/", "IN/" + fname + ".docx"));
             // string Dest = Server.MapPath(Path.Combine("/", "OUT/" + fname + ".docx"));
 
             g_document = DocX.Load(source);
@@ -145,8 +168,8 @@ namespace IdentitySample.Controllers
              string source = Server.MapPath(Path.Combine("/", "GDGS/IN/" + fname + ".docx"));
              string Dest = Server.MapPath(Path.Combine("/", "GDGS/OUT/" + fname + ".docx"));
 
-          // string source = Server.MapPath(Path.Combine("/", "IN/" + fname + ".docx"));
-        //   string Dest = Server.MapPath(Path.Combine("/", "OUT/" + fname + ".docx"));
+        //  string source = Server.MapPath(Path.Combine("/", "IN/" + fname + ".docx"));
+         //  string Dest = Server.MapPath(Path.Combine("/", "OUT/" + fname + ".docx"));
 
 
             string tempname = fname.Remove(fname.Length - 1);
@@ -157,19 +180,131 @@ namespace IdentitySample.Controllers
             g_document.SaveAs(Dest);
             g_document.AddCoreProperty("dc:title", model.Sym.ToString());
             g_document.Save();
+            
             return RedirectToAction("download", "OhchrSymb", new { name = fname });
 
         }
         public ActionResult download(string name)
         {
-               return File(Url.Content("/GDGS/OUT/" + name + ".docx"), "text/plain", name + ".docx");
-             // return File(Url.Content("/OUT/" + name + ".docx"), "text/plain", name + ".docx");
+            string source1 = Server.MapPath(Path.Combine("/", "GDGS/OUT/" + name + ".docx"));
+            //string source1 = Server.MapPath(Path.Combine("/", "OUT/" + name + ".docx"));
+            //Open document
+
+            Document doc = new Document(source1);
+
+          
+
+            //Get collection of FiledStart nodes
+
+            ArrayList propertyStarts = new ArrayList();
+
+            NodeCollection starts = doc.GetChildNodes(NodeType.FieldStart, true);
+
+            foreach (FieldStart start in starts)
+
+            {
+
+                if (start.FieldType == FieldType.FieldDocProperty)
+
+                {
+
+                    propertyStarts.Add(start);
+
+                }
+
+            }
+
+            //For each DOCUMENTPROPERTY Field Start
+
+            foreach (FieldStart start in propertyStarts)
+
+            {
+
+                Node currentNode = start;
+
+                Node fieldSeparator = null;
+
+                //Remove field code
+
+                while (currentNode.NodeType != NodeType.FieldSeparator)
+
+                {
+
+                    currentNode = currentNode.NextSibling;
+
+                    currentNode.PreviousSibling.Remove();
+
+                }
+
+                fieldSeparator = currentNode;
+
+                //Move to Field End
+
+                while (currentNode.NodeType != NodeType.FieldEnd)
+
+                {
+
+                    currentNode = currentNode.NextSibling;
+
+                }
+
+                //Remove field separator
+
+                fieldSeparator.Remove();
+
+                //Romove field end
+
+                currentNode.Remove();
+
+            }
+
+            //Save document
+
+            doc.Save(source1);
+
+            return File(Url.Content("/GDGS/OUT/" + name + ".docx"), "text/plain", name + ".docx");
+           // return File(Url.Content("/OUT/" + name + ".docx"), "text/plain", name + ".docx");
         }
 
         public static string formatdate(string date, UnogViewModel model)
         {
-            gdgs1Entities db1 = new gdgs1Entities();
+            //gdgs1Entities db1 = new gdgs1Entities();
 
+            //var item = db1.languages.FirstOrDefault(p => p.ID == model.lang_ID);
+            //string lang = item.Lang_Name.ToString();
+
+            //string final = "day month year";
+            //if (lang == "French")
+            //{
+            //    string[] d = date.Split('/');
+            //    int[] convert = Array.ConvertAll<string, int>(d, int.Parse);
+            //    var frenchCultureInfo = CultureInfo.CreateSpecificCulture("fr-fr");
+            //    string month = frenchCultureInfo.DateTimeFormat.GetMonthName(convert[0]);
+            //    if (d[1] == "1")
+            //    {
+            //        d[1] = d[1] + "\u1D49" + "\u02B3";
+            //    }
+            //    final = d[1] + " " + month + " " + d[2];
+            //}
+            //else if (lang == "Spanish")
+            //{
+            //    string[] d = date.Split('/');
+            //    int[] convert = Array.ConvertAll<string, int>(d, int.Parse);
+            //    var frenchCultureInfo = CultureInfo.CreateSpecificCulture("es-es");
+            //    string month = frenchCultureInfo.DateTimeFormat.GetMonthName(convert[0]);
+            //    final = d[1] + " de " + month + " de " + d[2];
+            //}
+            //else
+            //{
+            //    string[] d = date.Split('/');
+            //    int[] convert = Array.ConvertAll<string, int>(d, int.Parse);
+            //    var frenchCultureInfo = CultureInfo.CreateSpecificCulture("en-US");
+            //    string month = frenchCultureInfo.DateTimeFormat.GetMonthName(convert[0]);
+            //    final = d[1] + " " + month + " " + d[2];
+            //}
+            //return final;
+            gdgs1Entities db1 = new gdgs1Entities();
+            
             var item = db1.languages.FirstOrDefault(p => p.ID == model.lang_ID);
             string lang = item.Lang_Name.ToString();
 
@@ -177,30 +312,47 @@ namespace IdentitySample.Controllers
             if (lang == "French")
             {
                 string[] d = date.Split('/');
+                
                 int[] convert = Array.ConvertAll<string, int>(d, int.Parse);
                 var frenchCultureInfo = CultureInfo.CreateSpecificCulture("fr-fr");
-                string month = frenchCultureInfo.DateTimeFormat.GetMonthName(convert[0]);
-                if (d[1] == "1")
+                string month = frenchCultureInfo.DateTimeFormat.GetMonthName(convert[1]);
+                string day = d[0].Substring(0,1);
+                if (day == "0")
                 {
-                    d[1] = d[1] + "\u1D49" + "\u02B3";
+                    d[0] = d[0].Remove(0, 1);
                 }
-                final = d[1] + " " + month + " " + d[2];
+               
+                if (d[0] == "1")
+                {
+                    d[0] = d[0] + "\u1D49" + "\u02B3";
+                }
+                final = d[0] + " " + month + " " + d[2];
             }
             else if (lang == "Spanish")
             {
                 string[] d = date.Split('/');
                 int[] convert = Array.ConvertAll<string, int>(d, int.Parse);
                 var frenchCultureInfo = CultureInfo.CreateSpecificCulture("es-es");
-                string month = frenchCultureInfo.DateTimeFormat.GetMonthName(convert[0]);
-                final = d[1] + " de " + month + " de " + d[2];
+                string month = frenchCultureInfo.DateTimeFormat.GetMonthName(convert[1]);
+                string day = d[0].Substring(0, 1);
+                if (day == "0")
+                {
+                    d[0] = d[0].Remove(0, 1);
+                }
+                final = d[0] + " de " + month + " de " + d[2];
             }
             else
             {
                 string[] d = date.Split('/');
                 int[] convert = Array.ConvertAll<string, int>(d, int.Parse);
                 var frenchCultureInfo = CultureInfo.CreateSpecificCulture("en-US");
-                string month = frenchCultureInfo.DateTimeFormat.GetMonthName(convert[0]);
-                final = d[1] + " " + month + " " + d[2];
+                string month = frenchCultureInfo.DateTimeFormat.GetMonthName(convert[1]);
+                string day = d[0].Substring(0, 1);
+                if (day == "0")
+                {
+                    d[0] = d[0].Remove(0, 1);
+                }
+                final = d[0] + " " + month + " " + d[2];
             }
             return final;
         }
@@ -263,38 +415,44 @@ namespace IdentitySample.Controllers
             string[] s = sdate.Split(' ');
             string[] e = edate.Split(' ');
             string lang = Olanguage(model.lang_ID);
-
-            switch (lang)
+            if (sdate == edate)
             {
-                case "Spanish":
-                    {
-                        if (s[2] == e[2])
+                final = sdate;
+                return final;
+            }
+            else {
+                switch (lang)
+                {
+                    case "Spanish":
                         {
-                            final = s[0] + " a " + e[0] + " de " + e[2] + " de " + e[4];
-                        }
-                        if (s[2] != e[2])
-                        {
+                            if (s[2] == e[2])
+                            {
+                                final = s[0] + " a " + e[0] + " de " + e[2] + " de " + e[4];
+                            }
+                            if (s[2] != e[2])
+                            {
 
-                            final = s[0] + " de " + s[2] + " a " + e[0] + " de " + e[2] + " " + e[4];
-                        }
-                        //return final;
-                        break;
+                                final = s[0] + " de " + s[2] + " a " + e[0] + " de " + e[2] + " " + e[4];
+                            }
+                            //return final;
+                            break;
 
-                    }
-                default:
-                    {
-                        if (s[1] == e[1])
-                        {
-                            final = s[0] + "-" + e[0] + " " + e[1] + " " + e[2];
                         }
-                        if (s[1] != e[1])
+                    default:
                         {
+                            if (s[1] == e[1])
+                            {
+                                final = s[0] + "-" + e[0] + " " + e[1] + " " + e[2];
+                            }
+                            if (s[1] != e[1])
+                            {
 
-                            final = s[0] + " " + s[1] + "-" + e[0] + " " + e[1] + " " + e[2];
+                                final = s[0] + " " + s[1] + "-" + e[0] + " " + e[1] + " " + e[2];
+                            }
+                            //return final;
+                            break;
                         }
-                        //return final;
-                        break;
-                    }
+                }
             }
             return final;
         }
@@ -387,7 +545,7 @@ namespace IdentitySample.Controllers
 
 
             //Create Date for Header
-            string Fdate = model.date.ToString();
+            string Fdate = model.datestring;
             string[] d = Fdate.Split(' ');
             Fdate = d[0];
             Fdate = formatdate(Fdate, model);
@@ -421,15 +579,15 @@ namespace IdentitySample.Controllers
             //Session Dates
             //Session Dates
             string Fsdate = "[Start-End Dates]";
-            if (model.Sdate != null & model.Edate != null)
+            if (!String.IsNullOrEmpty(model.sdatestring)  & !String.IsNullOrEmpty(model.edatestring))
             {
                 
-                string sdate = model.Sdate.ToString();
+                string sdate = model.sdatestring;
                 string[] sd = sdate.Split(' ');
                 sdate = sd[0];
                 sdate = formatdate(sdate, model);
 
-                string edate = model.Edate.ToString();
+                string edate = model.edatestring;
                 string[] ed = edate.Split(' ');
                 edate = ed[0];
                 edate = formatdate(edate, model);
@@ -564,7 +722,8 @@ namespace IdentitySample.Controllers
 
             //creat gdoc footer
             string Fgdocf = gdoc;
-            if (model.ver == null)
+            //no translation with no versions English only
+            if (model.ver == null & model.ntv==false)
             {
 
                 int deleteStart = 0;
@@ -589,8 +748,34 @@ namespace IdentitySample.Controllers
                     }
                 }
             }
-           //Create Virsions for Header
-                string Fvirs = "";
+            //translation with no versions (original English)
+            if (model.ver == null & model.ntv == true)
+            {
+
+                int deleteStart = 0;
+                int deleteEnd = 0;
+
+                //Get the array of the paragraphs containing the start and end catches
+                for (int i = 0; i < template.Paragraphs.Count; i++)
+                {
+                    if (template.Paragraphs[i].Text.Contains("virs"))
+                        deleteStart = i;
+                    if (template.Paragraphs[i].Text.Contains("virs"))
+                        deleteEnd = i;
+                }
+
+                if (deleteStart > 0 && deleteEnd > 0)
+                {
+                    //delete from the paraIndex as the arrays will shift when a paragraph is deleted
+                    int paraIndex = deleteStart;
+                    for (int i = deleteStart; i <= deleteEnd; i++)
+                    {
+                        template.RemoveParagraphAt(paraIndex);
+                    }
+                }
+            }
+            //Create Virsions for Header
+            string Fvirs = "";
 
           
                 Fvirs = getVerisons(model);
@@ -631,8 +816,7 @@ namespace IdentitySample.Controllers
             template.AddCustomProperty(new CustomProperty("category", info1[2]));
 
 
-
-
+          
 
             return template;
         }

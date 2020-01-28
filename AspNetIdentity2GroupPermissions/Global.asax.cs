@@ -1,5 +1,6 @@
 ﻿using IdentitySample.Models;
 using System.Data.Entity;
+using System.IO;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
@@ -12,6 +13,10 @@ namespace IdentitySample
     {
         protected void Application_Start()
         {
+            Aspose.Words.License license = new Aspose.Words.License();
+            //MemoryStream stream = new MemoryStream(File.ReadAllBytes(@"Aspose.Words.lic"));
+            license.SetLicense(@"Aspose.Words.lic");
+
             AreaRegistration.RegisterAllAreas();
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);

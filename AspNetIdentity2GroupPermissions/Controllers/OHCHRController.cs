@@ -11,7 +11,16 @@ using System.IO;
 using System.Globalization;
 using Humanizer;
 using System.Net;
+using NVImage = Novacode.Image;
+using NVPicture = Novacode.Picture;
+using NVTable = Novacode.Table;
+using NVFooter = Novacode.Footer;
+using DocumentFormat.OpenXml;
+using DocumentFormat.OpenXml.Packaging;
 
+using System.Collections;
+using Aspose.Words.Fields;
+using Aspose.Words;
 
 namespace IdentitySample.Controllers
 {
@@ -39,6 +48,10 @@ namespace IdentitySample.Controllers
             {
                 return View("Communication", model);
             }
+            if (s == "HCR")
+            {
+                return View("HCR", model);
+            }
             else
             {
                 return View("Report", model);
@@ -63,8 +76,8 @@ namespace IdentitySample.Controllers
                  string source = Server.MapPath(Path.Combine("/", "GDGS/IN/" + fname + ".docx"));
                  string Dest = Server.MapPath(Path.Combine("/", "GDGS/OUT/" + fname + ".docx"));
 
-                //string source = Server.MapPath(Path.Combine("/", "IN/" + fname + ".docx"));
-              //  string Dest = Server.MapPath(Path.Combine("/", "OUT/" + fname + ".docx"));
+               //string source = Server.MapPath(Path.Combine("/", "IN/" + fname + ".docx"));
+              // string Dest = Server.MapPath(Path.Combine("/", "OUT/" + fname + ".docx"));
 
                 g_document = DocX.Load(source);
                 g_document = CreateDocA(DocX.Load(source), model);
@@ -74,15 +87,199 @@ namespace IdentitySample.Controllers
                 g_document.AddCoreProperty("dc:title", model.tsym.ToString());
               
                 g_document.Save();
+                //RemoveFields(Dest);
 
                 return RedirectToAction("download", "OHCHR", new { name = fname });
             }
         }
+        //private void RemoveFields(string fname)
+        //{
+        //    using (WordprocessingDocument pkgDoc = WordprocessingDocument.Open(fname, true))
+        //    {
+        //        string fieldList = string.Empty;
+        //        Document doc = pkgDoc.MainDocumentPart.Document;
+        //        //Get all field code elements in the document
+        //        IEnumerable<FieldChar> fldChars = doc.Descendants<FieldChar>();
+        //        if (fldChars == null) return; //No field codes in the document
 
+        //        // bool fldStart = false;
+        //        FieldChar fldCharStart = null;
+        //        FieldChar fldCharEnd = null;
+        //        FieldChar fldCharSep = null;
+        //        FieldCode fldCode = null;
+        //        string fldContent = String.Empty;
+        //        //foreach (FieldChar fldChar in fldChars)
+        //        //{
+        //        //    string fldCharPart = fldChar.FieldCharType.ToString();
+        //        //    switch (fldCharPart)
+        //        //    {
+        //        //        case "begin": //start of the field
+        //        //            fldCharStart = fldChar;
+        //        //            //get the field code, which will be an instrText element
+        //        //            // either as sibling or as a child of the parent sibling
+        //        //            fldCode = fldCharStart.Parent.Descendants<FieldCode>().FirstOrDefault();
+        //        //            if (fldCode == null) //complex field
+        //        //            {
+        //        //                fldCode = fldCharStart.Parent.NextSibling<DocumentFormat.OpenXml.Wordprocessing.Run>().Descendants<FieldCode>().FirstOrDefault();
+        //        //            }
+        //        //            if (fldCode != null && fldCode.InnerText.Contains("MERGEFIELD"))
+        //        //            {
+        //        //                fldContent = fldCode.InnerText;
+        //        //                fieldList += fldContent + "\n";
+        //        //            }
+        //        //            break;
+        //        //        case "end": // end of the field
+        //        //            fldCharEnd = fldChar;
+        //        //            break;
+        //        //        case "separate": //complex field with text result
+        //        //                         //we want to put the database content in this text run
+        //        //                         //yet still remove the field code
+        //        //                         //If there's no "separate" field char for the current field,
+        //        //                         //we need to insert it somewhere else
+        //        //            fldCharSep = fldChar;
+        //        //            break;
+        //        //        default:
+        //        //            break;
+        //        //    }
+        //        //    if ((fldCharStart != null) && (fldCharEnd != null)) //start and end field codes have been found
+        //        //    {
+        //        //        if (fldCharSep != null)
+        //        //        {
+        //        //            DocumentFormat.OpenXml.Wordprocessing.Text elemText = (DocumentFormat.OpenXml.Wordprocessing.Text)fldCharSep.Parent.NextSibling().Descendants<DocumentFormat.OpenXml.Wordprocessing.Text>().FirstOrDefault();
+        //        //            elemText.Text = fldContent;
+        //        //            //Delete all the field chars with their runs
+        //        //            DeleteFieldChar(fldCharStart);
+        //        //            DeleteFieldChar(fldCharEnd);
+        //        //            DeleteFieldChar(fldCharSep);
+        //        //            fldCode.Remove();
+        //        //        }
+        //        //        else
+        //        //        {
+        //        //            DocumentFormat.OpenXml.Wordprocessing.Text elemText = new DocumentFormat.OpenXml.Wordprocessing.Text(fldContent);
+        //        //            fldCode.Parent.Append(elemText);
+        //        //            fldCode.Remove();
+        //        //            //Delete all the field chars with their runs
+        //        //            DeleteFieldChar(fldCharStart);
+        //        //            DeleteFieldChar(fldCharEnd);
+        //        //            DeleteFieldChar(fldCharSep);
+        //        //        }
+        //        //        fldCharStart = null;
+        //        //        fldCharEnd = null;
+        //        //        fldCharSep = null;
+        //        //        fldCode = null;
+        //        //        fldContent = string.Empty;
+        //        //    }
+
+        //        //}
+        //        string xxx = fieldList;
+        //        SimpleField[] fldSimples = doc.Descendants<SimpleField>().ToArray();
+        //        if (fldSimples != null)
+        //        {
+        //            for (int i = (fldSimples.Length) - 1; i >= 0; i--)
+        //            {
+        //                SimpleField fldSimple = fldSimples[i];
+        //                fldContent = fldSimple.Instruction.Value;
+        //                fieldList += fldContent;
+        //                DocumentFormat.OpenXml.Wordprocessing.Run r = (DocumentFormat.OpenXml.Wordprocessing.Run)fldSimple.Elements<DocumentFormat.OpenXml.Wordprocessing.Run>().FirstOrDefault().CloneNode(true);
+        //                r.Descendants<Text>().FirstOrDefault().Text = fldContent;
+        //                fldSimple.PreviousSibling().Append(r);
+        //                fldSimple.RemoveAllChildren();
+        //                fldSimple.Remove();
+        //            }
+        //        }
+
+        //    }
+        //}
+
+
+        //private void DeleteFieldChar(OpenXmlElement fldCharStart)
+        //{
+        //   DocumentFormat.OpenXml.Wordprocessing.Run fldRun = (DocumentFormat.OpenXml.Wordprocessing.Run)fldCharStart.Parent;
+        //    fldRun.RemoveAllChildren();
+        //    fldRun.Remove();
+        //}
         public ActionResult download(string name)
         {
-          return File(Url.Content("/GDGS/OUT/" + name + ".docx"), "text/plain", name + ".docx");
-         //  return File(Url.Content("/OUT/" + name + ".docx"), "text/plain", name + ".docx");
+
+            string source1 = Server.MapPath(Path.Combine("/", "GDGS/OUT/" + name + ".docx"));
+           // string source1 = Server.MapPath(Path.Combine("/", "OUT/" + name + ".docx"));
+            //Open document
+
+            Document doc = new Document(source1);
+
+
+
+            //Get collection of FiledStart nodes
+
+            ArrayList propertyStarts = new ArrayList();
+
+            NodeCollection starts = doc.GetChildNodes(NodeType.FieldStart, true);
+
+            foreach (FieldStart start in starts)
+
+            {
+
+                if (start.FieldType == FieldType.FieldDocProperty)
+
+                {
+
+                    propertyStarts.Add(start);
+
+                }
+
+            }
+
+            //For each DOCUMENTPROPERTY Field Start
+
+            foreach (FieldStart start in propertyStarts)
+
+            {
+
+                Node currentNode = start;
+
+                Node fieldSeparator = null;
+
+                //Remove field code
+
+                while (currentNode.NodeType != NodeType.FieldSeparator)
+
+                {
+
+                    currentNode = currentNode.NextSibling;
+
+                    currentNode.PreviousSibling.Remove();
+
+                }
+
+                fieldSeparator = currentNode;
+
+                //Move to Field End
+
+                while (currentNode.NodeType != NodeType.FieldEnd)
+
+                {
+
+                    currentNode = currentNode.NextSibling;
+
+                }
+
+                //Remove field separator
+
+                fieldSeparator.Remove();
+
+                //Romove field end
+
+                currentNode.Remove();
+
+            }
+
+            //Save document
+
+            doc.Save(source1);
+
+            
+           return File(Url.Content("/GDGS/OUT/" + name + ".docx"), "text/plain", name + ".docx");
+           //return File(Url.Content("/OUT/" + name + ".docx"), "text/plain", name + ".docx");
         }
         public static DocX CreateDocA(DocX template, OHCHRViewModel model)
         {
@@ -93,6 +290,11 @@ namespace IdentitySample.Controllers
             {
 
                 sym = sym.Replace("#", model.Prep.ToString());
+            }
+            if (!String.IsNullOrEmpty(model.SNum))
+            {
+
+                sym = sym.Replace("@", model.SNum.ToString());
             }
             if (!String.IsNullOrEmpty(model.Add))
             {
@@ -129,8 +331,11 @@ namespace IdentitySample.Controllers
             //Create Virsions for Header
             string Fvirs = "";
 
-            if (model.version1 != null)
+
+            //no translation with no versions English only
+            if (model.version1 == null & model.ntv == false)
             {
+
                 int deleteStart = 0;
                 int deleteEnd = 0;
 
@@ -153,6 +358,57 @@ namespace IdentitySample.Controllers
                     }
                 }
             }
+            //translation with no versions (original English)
+            if (model.version1 == null & model.ntv == true)
+            {
+
+                int deleteStart = 0;
+                int deleteEnd = 0;
+
+                //Get the array of the paragraphs containing the start and end catches
+                for (int i = 0; i < template.Paragraphs.Count; i++)
+                {
+                    if (template.Paragraphs[i].Text.Contains("virs"))
+                        deleteStart = i;
+                     if (template.Paragraphs[i].Text.Contains("virs"))
+                    deleteEnd = i;
+                }
+
+                if (deleteStart > 0 && deleteEnd > 0)
+                {
+                    //delete from the paraIndex as the arrays will shift when a paragraph is deleted
+                    int paraIndex = deleteStart;
+                    for (int i = deleteStart; i <= deleteEnd; i++)
+                    {
+                        template.RemoveParagraphAt(paraIndex);
+                    }
+                }
+            }
+
+            //if (model.version1 == null)
+            //{
+            //    int deleteStart = 0;
+            //    int deleteEnd = 0;
+
+            //    //Get the array of the paragraphs containing the start and end catches
+            //    for (int i = 0; i < template.Paragraphs.Count; i++)
+            //    {
+            //        if (template.Paragraphs[i].Text.Contains("Original"))
+            //            deleteStart = i;
+            //        if (template.Paragraphs[i].Text.Contains("olang"))
+            //            deleteEnd = i;
+            //    }
+
+            //    if (deleteStart > 0 && deleteEnd > 0)
+            //    {
+            //        //delete from the paraIndex as the arrays will shift when a paragraph is deleted
+            //        int paraIndex = deleteStart;
+            //        for (int i = deleteStart; i <= deleteEnd; i++)
+            //        {
+            //            template.RemoveParagraphAt(paraIndex);
+            //        }
+            //    }
+            //}
 
             Fvirs = getVerisons(model);
             string Folang = "";
@@ -247,18 +503,18 @@ namespace IdentitySample.Controllers
                         if (lang == "A")
                         {
                             Image image = template.AddImage(str);
-                            Picture p = image.CreatePicture();
-                            Footer f = template.Footers.first;
-                            Table t = f.Tables[0];
+                            NVPicture p = image.CreatePicture();
+                            NVFooter f = template.Footers.first;
+                            NVTable t = f.Tables[0];
                             //t.Rows[0].Cells[1].Paragraphs.First().AppendPicture(pR);
                             t.Rows[0].Cells[0].Paragraphs.First().AppendPicture(p);
                         }
                         else
                         {
-                            Image image = template.AddImage(str);
-                            Picture p = image.CreatePicture();
-                            Footer f = template.Footers.first;
-                            Table t = f.Tables[0];
+                            NVImage image = template.AddImage(str);
+                            NVPicture p = image.CreatePicture();
+                            NVFooter f = template.Footers.first;
+                            NVTable t = f.Tables[0];
                             //t.Rows[0].Cells[1].Paragraphs.First().AppendPicture(pR);
                             t.Rows[0].Cells[1].Paragraphs.First().AppendPicture(p);
                         }
@@ -297,11 +553,15 @@ namespace IdentitySample.Controllers
             template.AddCustomProperty(new CustomProperty("doctype", info1[1]));
             template.AddCustomProperty(new CustomProperty("category", info1[2]));
 
+         
+
             // Return the template now that it has been modified to hold all of our custom data.
             return template;
 
 
         }
+
+   
         public static string[] info(OHCHRViewModel model)
         {
             gdgs1Entities db1 = new gdgs1Entities();
@@ -2076,44 +2336,86 @@ namespace IdentitySample.Controllers
             string[] s = sdate.Split(' ');
             string[] e = edate.Split(' ');
             string lang = language(model.lang_ID);
-
-            switch (lang)
+            if (sdate == edate)
             {
-                case "Spanish":
-                    {
-                        if (s[2] == e[2])
+                final = sdate;
+                return final;
+            }
+            else
+            {
+                switch (lang)
+                {
+                    case "Spanish":
                         {
-                            final = s[0] + " a " + e[0] + " de " + e[2] + " de " + e[4];
-                        }
-                        if (s[2] != e[2])
-                        {
+                            if (s[2] == e[2])
+                            {
+                                final = s[0] + " a " + e[0] + " de " + e[2] + " de " + e[4];
+                            }
+                            if (s[2] != e[2])
+                            {
 
-                            final = s[0] + " de " + s[2] + " a " + e[0] + " de " + e[2] + " " + e[4];
-                        }
-                        //return final;
-                        break;
- 
-                    }
-                default:
-                    {
-                        if (s[1] == e[1])
-                        {
-                            final = s[0] + "-" + e[0] + " " + e[1] + " " + e[2];
-                        }
-                        if (s[1] != e[1])
-                        {
+                                final = s[0] + " de " + s[2] + " a " + e[0] + " de " + e[2] + " " + e[4];
+                            }
+                            //return final;
+                            break;
 
-                            final = s[0] + " " + s[1] + "-" + e[0] + " " + e[1] + " " + e[2];
                         }
-                        //return final;
-                        break;
-                    }
+                    default:
+                        {
+                            if (s[1] == e[1])
+                            {
+                                final = s[0] + "-" + e[0] + " " + e[1] + " " + e[2];
+                            }
+                            if (s[1] != e[1])
+                            {
+
+                                final = s[0] + " " + s[1] + "-" + e[0] + " " + e[1] + " " + e[2];
+                            }
+                            //return final;
+                            break;
+                        }
+                }
             }
             return final;
         }
 
         public static string formatdate(string date, OHCHRViewModel model)
         {
+            //gdgs1Entities db1 = new gdgs1Entities();
+
+            //var item = db1.languages.FirstOrDefault(p => p.ID == model.lang_ID);
+            //string lang = item.Lang_Name.ToString();
+
+            //string final = "day month year";
+            //if (lang == "French")
+            //{
+            //    string[] d = date.Split('/');
+            //    int[] convert = Array.ConvertAll<string, int>(d, int.Parse);
+            //    var frenchCultureInfo = CultureInfo.CreateSpecificCulture("fr-fr");
+            //    string month = frenchCultureInfo.DateTimeFormat.GetMonthName(convert[0]);
+            //    if(d[1]=="1")
+            //    {
+            //        d[1] = d[1] + "\u1D49" + "\u02B3";
+            //    }
+            //    final = d[1] + " " + month + " " + d[2];
+            //}
+            //else if (lang == "Spanish")
+            //{
+            //    string[] d = date.Split('/');
+            //    int[] convert = Array.ConvertAll<string, int>(d, int.Parse);
+            //    var frenchCultureInfo = CultureInfo.CreateSpecificCulture("es-es");
+            //    string month = frenchCultureInfo.DateTimeFormat.GetMonthName(convert[0]);
+            //    final = d[1] + " de " + month + " de " + d[2];
+            //}
+            //else
+            //{
+            //    string[] d = date.Split('/');
+            //    int[] convert = Array.ConvertAll<string, int>(d, int.Parse);
+            //    var frenchCultureInfo = CultureInfo.CreateSpecificCulture("en-US");
+            //    string month = frenchCultureInfo.DateTimeFormat.GetMonthName(convert[0]);
+            //    final = d[1] + " " + month + " " + d[2];
+            //}
+            //return final;
             gdgs1Entities db1 = new gdgs1Entities();
 
             var item = db1.languages.FirstOrDefault(p => p.ID == model.lang_ID);
@@ -2125,28 +2427,43 @@ namespace IdentitySample.Controllers
                 string[] d = date.Split('/');
                 int[] convert = Array.ConvertAll<string, int>(d, int.Parse);
                 var frenchCultureInfo = CultureInfo.CreateSpecificCulture("fr-fr");
-                string month = frenchCultureInfo.DateTimeFormat.GetMonthName(convert[0]);
-                if(d[1]=="1")
+                string month = frenchCultureInfo.DateTimeFormat.GetMonthName(convert[1]);
+                string day = d[0].Substring(0, 1);
+                if (day == "0")
                 {
-                    d[1] = d[1] + "\u1D49" + "\u02B3";
+                    d[0] = d[0].Remove(0, 1);
                 }
-                final = d[1] + " " + month + " " + d[2];
+                if (d[0] == "1")
+                {
+                    d[0] = d[0] + "\u1D49" + "\u02B3";
+                }
+                final = d[0] + " " + month + " " + d[2];
             }
             else if (lang == "Spanish")
             {
                 string[] d = date.Split('/');
                 int[] convert = Array.ConvertAll<string, int>(d, int.Parse);
                 var frenchCultureInfo = CultureInfo.CreateSpecificCulture("es-es");
-                string month = frenchCultureInfo.DateTimeFormat.GetMonthName(convert[0]);
-                final = d[1] + " de " + month + " de " + d[2];
+                string month = frenchCultureInfo.DateTimeFormat.GetMonthName(convert[1]);
+                string day = d[0].Substring(0, 1);
+                if (day == "0")
+                {
+                    d[0] = d[0].Remove(0, 1);
+                }
+                final = d[0] + " de " + month + " de " + d[2];
             }
             else
             {
                 string[] d = date.Split('/');
                 int[] convert = Array.ConvertAll<string, int>(d, int.Parse);
                 var frenchCultureInfo = CultureInfo.CreateSpecificCulture("en-US");
-                string month = frenchCultureInfo.DateTimeFormat.GetMonthName(convert[0]);
-                final = d[1] + " " + month + " " + d[2];
+                string month = frenchCultureInfo.DateTimeFormat.GetMonthName(convert[1]);
+                string day = d[0].Substring(0, 1);
+                if (day == "0")
+                {
+                    d[0] = d[0].Remove(0, 1);
+                }
+                final = d[0] + " " + month + " " + d[2];
             }
             return final;
         }
@@ -2403,11 +2720,17 @@ namespace IdentitySample.Controllers
             sym = sym.Replace("/", "");
             bool add = sym.Contains("$");
             bool comm = sym.Contains("*");
+            bool hcr = sym.Contains("@");
 
             if (add == true)
             {
                 return "Add";
             }
+            if (hcr == true)
+            {
+                return "HCR";
+            }
+
             if (comm == true)
             {
                 return "Communication";

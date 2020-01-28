@@ -1,0 +1,61 @@
+ public static void RemoveExtraLine(string source)
+        {
+            Document doc = new Document(source);
+            // Remove all empty paragraphs.
+
+            Node[] paragraphs = doc.GetChildNodes(NodeType.Paragraph, true).ToArray();
+
+            foreach (Paragraph paragraph in paragraphs)
+
+            {
+
+                if (!paragraph.HasChildNodes)
+
+                    paragraph.Remove();
+
+            }
+            doc.Save(source);
+        }
+        public static void FormatTable(string source)
+        {
+            double width = 0;
+            Document doc = new Document(source);
+
+            //Make table autofit with content
+            foreach (Table table in doc.GetChildNodes(NodeType.Table, true))
+            {
+                table.AutoFit(AutoFitBehavior.AutoFitToContents);
+                doc.Save(source);
+            }
+
+            //decide on table width
+            foreach (Table table in doc.GetChildNodes(NodeType.Table, true))
+            {
+                foreach (Cell cell in table.FirstRow.Cells)
+
+                {
+
+                    width += cell.CellFormat.Width;
+
+                }
+                if (width <= 368)
+                {
+                    table.PreferredWidth = PreferredWidth.FromPoints(368.504);
+
+                }
+                if (width <= 425 & width > 368)
+                {
+                    table.PreferredWidth = PreferredWidth.FromPoints(425.197);
+                   
+                }
+                if (width >= 481)
+                {
+                    table.PreferredWidth = PreferredWidth.FromPoints(481.89);
+                   
+                }
+                doc.Save(source);
+            }
+            doc.Save(source);
+        }
+    }
+}

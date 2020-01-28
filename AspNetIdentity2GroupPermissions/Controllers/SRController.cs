@@ -56,11 +56,11 @@ namespace IdentitySample.Controllers
             string fname = model.temp.ToString();
             g_assembly = Assembly.GetExecutingAssembly();
             
-          // string source = Server.MapPath(Path.Combine( "/"+"IN/" + fname + ".docx"));
-          //  string Dest = Server.MapPath(Path.Combine( "/"+"OUT/" + fname + ".docx"));
+           //string source = Server.MapPath(Path.Combine( "/"+"IN/" + fname + ".docx"));
+            //string Dest = Server.MapPath(Path.Combine( "/"+"OUT/" + fname + ".docx"));
 
               string source = Server.MapPath(Path.Combine("/", "GDGS/IN/" + fname + ".docx"));
-             string Dest = Server.MapPath(Path.Combine("/", "GDGS/OUT/" + fname + ".docx"));
+              string Dest = Server.MapPath(Path.Combine("/", "GDGS/OUT/" + fname + ".docx"));
 
             //string tempname = fname.Remove(fname.Length - 1);
             //model.tempname = tempname;
@@ -75,9 +75,9 @@ namespace IdentitySample.Controllers
         }
         public ActionResult download(string name)
         {
-             return File(Url.Content("/GDGS/OUT/" + name + ".docx"), "text/plain", name + ".docx");
+            return File(Url.Content("/GDGS/OUT/" + name + ".docx"), "text/plain", name + ".docx");
 
-           // return File(Url.Content("/OUT/" + name + ".docx"), "text/plain", name + ".docx");
+            //return File(Url.Content("/OUT/" + name + ".docx"), "text/plain", name + ".docx");
         }
         public static string formatdate(string date, SRViewModel model)
         {
@@ -112,8 +112,8 @@ namespace IdentitySample.Controllers
                 string[] d = date.Split('/');
                 int[] convert = Array.ConvertAll<string, int>(d, int.Parse);
                 var frenchCultureInfo = CultureInfo.CreateSpecificCulture("en-US");
-                string month = frenchCultureInfo.DateTimeFormat.GetMonthName(convert[0]);
-                final = d[1] + " " + month + " " + d[2];
+                string month = frenchCultureInfo.DateTimeFormat.GetMonthName(convert[1]);
+                final = d[0] + " " + month + " " + d[2];
             //}
             return final;
         }
@@ -126,12 +126,12 @@ namespace IdentitySample.Controllers
             string[] d = datex.Split('/');
            // int[] convert = Array.ConvertAll<string, int>(d, int.Parse);
             var frenchCultureInfo = CultureInfo.CreateSpecificCulture("en-US");
-            string month = frenchCultureInfo.DateTimeFormat.GetMonthName(Convert.ToInt32(d[0]));
+            string month = frenchCultureInfo.DateTimeFormat.GetMonthName(Convert.ToInt32(d[1]));
             string day = frenchCultureInfo.DateTimeFormat.GetDayName( date.DayOfWeek);
             string[] d2 = d[2].Split(' ');
             string[] d3 = d2[1].Split(':');
             //d2[2]=d
-            final = day+", "+d[1]+ " " + month + " " + d2[0]+", "+model.time.ToString();
+            final = day+", "+d[0]+ " " + month + " " + d2[0]+", "+model.time.ToString();
             //}
             return final;
         }

@@ -1,4 +1,16 @@
-﻿@model IdentitySample.Models.SRViewModel
+﻿<script src="@Url.Content("~/Scripts/kendo/2015.1.408/cultures/kendo.culture.en-GB.min.js")"></script>
+
+
+<script type="text/javascript">
+    //set culture of the Kendo UI
+    kendo.culture("en-GB");
+</script>
+
+@{
+    Culture = "en-GB";
+}
+
+@model IdentitySample.Models.SRViewModel
 <br />
 <br />
 <br />
@@ -238,7 +250,7 @@
                     </div>
 
                     <div class="col-sm-2 col-md-2">
-                        @(Html.Kendo().DatePickerFor(m => m.ldate).Name("ldate").HtmlAttributes(new { required = "required", style = "width: 100%" }))
+                        @(Html.Kendo().DatePickerFor(m => m.ldate).Name("ldate").Value(DateTime.Now).Format("dd/MM/yyyy").HtmlAttributes(new { required = "required", style = "width: 100%" }))
                         <span class="k-invalid-msg" data-for="date"></span>
 
 

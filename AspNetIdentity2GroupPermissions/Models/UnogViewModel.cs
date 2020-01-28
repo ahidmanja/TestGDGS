@@ -9,10 +9,13 @@ namespace IdentitySample.Models
 {
     public class UnogViewModel
     {
+        public String Filename { get; set; }
         [DisplayName("Section")]
         [Required]
         public int lang_ID { get; set; }
 
+        [DisplayName("No Translation / Version")]
+        public bool ntv { get; set; }
         [DisplayName("GDoc Number")]
         [Required]
         public string Gdoc { get; set; }
@@ -53,7 +56,7 @@ namespace IdentitySample.Models
         [DisplayName("Date")]
         [Required]
         [DataType(DataType.Date)]
-       [DisplayFormat(DataFormatString = "{dd MMMM yyyy}")]
+        [DisplayFormat(DataFormatString = "{dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime date { get; set; }
 
         //Extra Info
@@ -75,12 +78,15 @@ namespace IdentitySample.Models
 
         [DisplayName("Start Date")]
         [DataType(DataType.Date)]
-       [DisplayFormat(DataFormatString = "{dd MMMM yyyy}")]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime? Sdate { get; set; }
-
+        public string datestring { get; set; }
+        public string sdatestring { get; set; }
+        public string edatestring { get; set; }
         [DisplayName("End Date")]
         [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{dd MMMM yyyy}")]
+        // [DisplayFormat(DataFormatString = "{dd MMMM yyyy}")]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime? Edate { get; set; }
 
         //Used for template retrieve

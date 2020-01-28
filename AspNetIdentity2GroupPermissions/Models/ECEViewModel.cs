@@ -30,7 +30,7 @@ namespace IdentitySample.Models
         [DisplayName("Date")]
         [Required]
         [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{dd MMMM yyyy}")]
+        [DisplayFormat(DataFormatString = "{dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime date { get; set; }
 
 
@@ -76,12 +76,12 @@ namespace IdentitySample.Models
 
         [DisplayName("Start Date")]
         [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{dd MMMM yyyy}")]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime? Sdate { get; set; }
 
         [DisplayName("End Date")]
         [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{dd MMMM yyyy}")]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime? Edate { get; set; }
 
         [DisplayName("Place")]

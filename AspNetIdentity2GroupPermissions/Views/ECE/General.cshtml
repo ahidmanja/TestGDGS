@@ -1,4 +1,16 @@
-﻿@model IdentitySample.Models.ECEViewModel
+﻿<script src="@Url.Content("~/Scripts/kendo/2015.1.408/cultures/kendo.culture.en-GB.min.js")"></script>
+
+
+<script type="text/javascript">
+    //set culture of the Kendo UI
+    kendo.culture("en-GB");
+</script>
+
+@{
+    Culture = "en-GB";
+}
+
+@model IdentitySample.Models.ECEViewModel
 <br />
 <br />
 <br />
@@ -39,11 +51,11 @@
                     )
                 </div>
                 <div class="col-sm-3 col-md-3">
-                    @(Html.Kendo().DatePickerFor(m => m.Sdate).Name("Sdate").Value("").Format("MM/dd/yyyy").HtmlAttributes(new { @placeholder = "Start Date" }))
+                    @(Html.Kendo().DatePickerFor(m => m.Sdate).Name("Sdate").Value("").Format("dd/MM/yyyy").HtmlAttributes(new { @placeholder = "Start Date" }))
                 </div>
 
                 <div class="col-sm-3 col-md-3">
-                    @(Html.Kendo().DatePickerFor(m => m.Edate).Name("Edate").Value("").Format("MM/dd/yyyy").HtmlAttributes(new { @placeholder = "End Date" }))
+                    @(Html.Kendo().DatePickerFor(m => m.Edate).Name("Edate").Value("").Format("dd/MM/yyyy").HtmlAttributes(new { @placeholder = "End Date" }))
                 </div>
             </div>
             <div class="form-group">

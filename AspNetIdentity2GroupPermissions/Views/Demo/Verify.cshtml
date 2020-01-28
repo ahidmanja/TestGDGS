@@ -1,0 +1,119 @@
+﻿<script src="@Url.Content("~/Scripts/kendo/2015.1.408/cultures/kendo.culture.en-GB.min.js")"></script>
+
+
+<script type="text/javascript">
+    //set culture of the Kendo UI
+    kendo.culture("en-GB");
+</script>
+
+@{
+    Culture = "en-GB";
+}
+
+@model IdentitySample.Models.UnogViewModel
+<br />
+<br />
+<br />
+<div id="mdivG">
+    @using (Html.BeginForm("VerifyF", "Demo", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+    {
+        @Html.AntiForgeryToken()
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <br />
+        <br />
+        <br />
+        <div class="form-horizontal">
+            <div class="form-group">
+                <label class="control-label col-sm-3" for="name" style="font-size:16px !important">Template</label>
+                <div class="col-sm-4 col-md-4">
+                    @(Html.Kendo().DropDownListFor(m => m.tempname)
+                         .Name("tempname")
+                        .OptionLabel("Select your Template...")
+                        .DataTextField("tName")
+                        .DataValueField("tID")
+                       .DataSource(source =>
+                       {
+                           source.Read(read =>
+                           {
+                               read.Action("GetUTypes", "Helper")
+                                  .Data("filters");
+                           })
+                            .ServerFiltering(true);
+                       })
+                      .Enable(true)
+                      .AutoBind(false)
+
+                    )
+                    <script>
+                        function filters() {
+
+                    return {
+                        categories: ('@Model.structure')
+                    };
+                }
+                    </script>
+                </div>
+
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-3" for="name" style="font-size:11px !important"></label>
+                <div class="col-sm-4 col-md-4">
+                    <input type="submit" value="Next" class="btn btn-default" />
+                </div>
+            </div>
+
+        </div>
+        @(Html.HiddenFor(m => m.AgendaItem))
+        @(Html.HiddenFor(m => m.AgendaNum))
+        @(Html.HiddenFor(m => m.Author))
+        @(Html.HiddenFor(m => m.date))
+        @(Html.HiddenFor(m => m.datestring))
+        @(Html.HiddenFor(m => m.sdatestring))
+        @(Html.HiddenFor(m => m.edatestring))
+        @(Html.HiddenFor(m => m.dist))
+        @(Html.HiddenFor(m => m.Edate))
+        @(Html.HiddenFor(m => m.version))
+        @(Html.HiddenFor(m => m.ver))
+        @(Html.HiddenFor(m => m.Gdoc))
+        @(Html.HiddenFor(m => m.ntv))
+        @(Html.HiddenFor(m => m.Filename))
+        @(Html.HiddenFor(m => m.lang_ID))
+        @(Html.HiddenFor(m => m.Olang_ID))
+        @(Html.HiddenFor(m => m.Sdate))
+        @(Html.HiddenFor(m => m.SNum))
+        @(Html.HiddenFor(m => m.structure))
+        @(Html.HiddenFor(m => m.STitle))
+        @(Html.HiddenFor(m => m.version1))
+        @(Html.HiddenFor(m => m.Sym))
+
+    }
+</div>
+<style>
+    #mdiv {
+        margin: auto;
+        width: 50%;
+        padding: 10px;
+    }
+
+    #mdivG {
+        margin: auto;
+        width: 800px;
+        height: auto;
+        padding: 0px;
+        background-color: #ffffff;
+        border: 2px solid #2a6496;
+        border-radius: 5px;
+        /*background-image: url('/assets/UN-Logo (1).png');
+           background-size: 300px 300px;*/
+        background-repeat: no-repeat;
+        background-position: 90% 30%;
+    }
+
+
+    #mdiv section {
+        margin-left: auto;
+        margin-right: auto;
+        display: block;
+    }
+</style>

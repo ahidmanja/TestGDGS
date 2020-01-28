@@ -48,7 +48,7 @@
                     </a>
                 </li>
             }
-            @if (User.IsInRole("Super_Admin") || User.IsInRole("OHCHR_Admin"))
+            @*@if (User.IsInRole("Super_Admin") || User.IsInRole("OHCHR_Admin"))
             {
 
                 <li class="treeview">
@@ -65,7 +65,7 @@
                     </ul>
                 </li>
 
-            }
+            }*@
             @if (Request.IsAuthenticated && User.IsInRole("OHCHR_Admin") || User.IsInRole("Super_Admin") || User.IsInRole("OHCHR_User"))
             {
 
@@ -115,7 +115,7 @@
                 </li>
                 
             }
-            @if (Request.IsAuthenticated && User.IsInRole("Super_Admin") || User.IsInRole("Unog_Admin") || User.IsInRole("UNON_User"))
+            @*@if (Request.IsAuthenticated && User.IsInRole("Super_Admin") || User.IsInRole("Unog_Admin") || User.IsInRole("UNON_User"))
             {
                 <li class="treeview">
                     <a href="#">
@@ -128,7 +128,7 @@
                     </ul>
                 </li>
 
-            }
+            }*@
             @if (User.IsInRole("Super_Admin") || User.IsInRole("JIU_User"))
             {
                 <li class="treeview">
@@ -213,7 +213,7 @@
                     </ul>
                 </li>
             }
-            @if (Request.IsAuthenticated && User.IsInRole("Super_Admin") )
+            @*@if (Request.IsAuthenticated && User.IsInRole("Super_Admin") )
             {
 
                 <li class="treeview">
@@ -228,7 +228,7 @@
                     </ul>
                 </li>
 
-            }
+            }*@
         </ul>
     </section>
     <!-- /.sidebar -->

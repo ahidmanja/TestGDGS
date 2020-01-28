@@ -142,11 +142,11 @@ namespace IdentitySample.Controllers
             string fname = model.tempname.ToString();
             g_assembly = Assembly.GetExecutingAssembly();
 
-       //     string source = Server.MapPath(Path.Combine("/", "IN/" + fname + ".docx"));
+         //   string source = Server.MapPath(Path.Combine("/", "IN/" + fname + ".docx"));
          //  string Dest = Server.MapPath(Path.Combine("/", "OUT/" + fname + ".docx"));
 
-             string source = Server.MapPath(Path.Combine("/", "GDGS/IN/" + fname + ".docx"));
-             string Dest = Server.MapPath(Path.Combine("/", "GDGS/OUT/" + fname + ".docx"));
+            string source = Server.MapPath(Path.Combine("/", "GDGS/IN/" + fname + ".docx"));
+            string Dest = Server.MapPath(Path.Combine("/", "GDGS/OUT/" + fname + ".docx"));
 
             string tempname = fname.Remove(fname.Length - 1);
             model.tempname = tempname;
@@ -166,7 +166,7 @@ namespace IdentitySample.Controllers
         {
             return File(Url.Content("/GDGS/OUT/" + name + ".docx"), "text/plain", name + ".docx");
 
-           // return File(Url.Content("/OUT/" + name + ".docx"), "text/plain", name + ".docx");
+            //return File(Url.Content("/OUT/" + name + ".docx"), "text/plain", name + ".docx");
         }
         public static string Olanguage1(int id)
         {
@@ -359,15 +359,11 @@ namespace IdentitySample.Controllers
             template.AddCustomProperty(new CustomProperty("category", "Report"));
 
             using (WordprocessingDocument
-               
                document = WordprocessingDocument.Open(source, true))
 
             {
 
-                DocumentSettingsPart settingsPart =
-
-
-                document.MainDocumentPart.GetPartsOfType<DocumentSettingsPart>().First();
+                DocumentSettingsPart settingsPart = document.MainDocumentPart.GetPartsOfType<DocumentSettingsPart>().First();
 
 
 
@@ -387,6 +383,9 @@ namespace IdentitySample.Controllers
 
                 settingsPart.Settings.Save();
 
+
+                document.MainDocumentPart.Document.RemoveAllChildren<BookmarkStart>();
+                document.MainDocumentPart.Document.RemoveAllChildren<BookmarkEnd>();
 
 
             }

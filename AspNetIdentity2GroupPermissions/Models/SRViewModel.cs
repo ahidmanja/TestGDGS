@@ -23,9 +23,9 @@ namespace IdentitySample.Models
         //public string dist { get; set; }
 
         [DisplayName("Date")]
-        
+
         [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{dd MMMM yyyy}")]
+        [DisplayFormat(DataFormatString = "{dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime date { get; set; }
 
         [DisplayName("GDoc Number")]
@@ -42,7 +42,7 @@ namespace IdentitySample.Models
         [DisplayName("Time")]
         public string time { get; set; }
 
-       
+
         [DisplayName("Resumed Coverage")]
         public bool RC { get; set; }
 
@@ -66,10 +66,10 @@ namespace IdentitySample.Models
         public string locb { get; set; }
 
 
-        
+
         [DisplayName("Title")]
         public string Ctitle { get; set; }
-        
+
         [DisplayName("Name")]
         public string Cname { get; set; }
 
@@ -87,6 +87,7 @@ namespace IdentitySample.Models
 
         [Required]
         [DataType(DataType.DateTime)]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime ldate { get; set; }
 
 

@@ -27,7 +27,8 @@ namespace IdentitySample.Models
         [DisplayName("Date")]
         [Required]
         [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{dd MMMM yyyy}")]
+        [DisplayFormat(DataFormatString = "{dd/MM/yyyy}", ApplyFormatInEditMode = true)]
+
         public DateTime date { get; set; }
 
 
@@ -68,14 +69,17 @@ namespace IdentitySample.Models
         [DisplayName("QR Code")]
         public bool qrcode { get; set; }
 
+        [DisplayName("No Translation / Version")]
+        public bool ntv { get; set; }
+
         [DisplayName("Start Date")]
         [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{dd MMMM yyyy}")]
+       [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime? Sdate { get; set; }
 
         [DisplayName("End Date")]
         [DataType(DataType.Date)]
-       [DisplayFormat(DataFormatString = "{dd MMMM yyyy}")]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime? Edate { get; set; }
 
         public string tsym { get; set; }
